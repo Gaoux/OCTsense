@@ -2,6 +2,7 @@ import React, { useState, useContext } from 'react';
 import AuthLayout from '../../components/layouts/AuthLayout';
 import { useNavigate, Link } from 'react-router-dom';
 import { AuthContext } from '../../app/app';
+import axios from 'axios';
 
 const Login = () => {
   const navigate = useNavigate();
@@ -10,51 +11,57 @@ const Login = () => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
 
-  const handleLogin = () => {
+  const handleLogin = async () => {
     try {
-      const stored = JSON.parse(localStorage.getItem('users')) || {};
-      const foundUser = stored[username];
-
-      if (foundUser && foundUser.password === password) {
-        setUser(foundUser);
-        navigate('/home');
-      } else {
-        setError('Credenciales inválidas');
-      }
-    } catch {
-      setError('Error al leer los datos de usuario');
+      const response = await axios.post('http://localhost:8000/api/users/login/', {
+        username,
+        password
+      });
+      const { access, user } = response.data;
+      localStorage.setItem('token', access);
+      setUser(user);
+      navigate('/home');
+    } catch (err) {
+      setError('Credenciales inválidas');
     }
   };
 
   return (
-    <AuthLayout>
-      <h2 className="title">OCTsense</h2>
-      {error && <p className="error-text">{error}</p>}
-      <input
-        className="input"
-        placeholder="Nombre de usuario"
-        value={username}
-        onChange={(e) => setUsername(e.target.value)}
-      />
-      <input
-        className="input"
-        type="password"
-        placeholder="************"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-      />
-      <div className="checkbox-container">
-        <input type="checkbox" className="checkbox" />
-        <span className="checkbox-label">
-          Eres <span className="highlight">administrador</span>?
-        </span>
+    <div className="flex items-center justify-center min-h-screen bg-blue-150">
+      <div className="w-full max-w-md p-8 space-y-6 bg-white rounded-lg shadow-md">
+        <h2 className="text-4xl font-extrabold text-center text-cyan-700 mb-2 tracking-wide">
+          OCT<span className="text-emerald-500">sense</span>
+        </h2>
+        <p className="text-center text-gray-500 text-sm">Inicia sesión con tu cuenta</p>
+        {error && <p className="text-sm text-red-600">{error}</p>}
+        <div className="space-y-4">
+          <input
+            type="text"
+            placeholder="Usuario"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring focus:ring-cyan-300"
+          />
+          <input
+            type="password"
+            placeholder="Contraseña"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring focus:ring-cyan-300"
+          />
+          <div className="flex justify-between items-center">
+            <div></div>
+            <Link to="/register" className="text-sm text-cyan-600 hover:underline">¿No tienes cuenta? Regístrate</Link>
+          </div>
+          <button
+            onClick={handleLogin}
+            className="w-full px-4 py-2 text-white bg-cyan-600 rounded-md hover:bg-cyan-700 transition"
+          >
+            Iniciar sesión
+          </button>
+        </div>
       </div>
-      <button className="button" onClick={handleLogin}>Iniciar Sesión</button>
-      <button className="link-button">Olvidaste tu contraseña?</button>
-      <p className="text">
-        No tienes cuenta? <Link to="/register" className="link">Regístrate</Link>
-      </p>
-    </AuthLayout>
+    </div>
   );
 };
 
