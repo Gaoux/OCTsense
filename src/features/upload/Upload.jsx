@@ -7,10 +7,23 @@ const Upload = () => {
   const [imageFile, setImageFile] = useState(null);
   const [predictionResult, setPredictionResult] = useState(null);
   const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(false); // Add loading state
+  const [loading, setLoading] = useState(false);
+  const [isDragging, setIsDragging] = useState(false);
 
   const handleFileChange = (e) => {
     setImageFile(e.target.files[0]);
+    setError(null);
+  };
+
+  const handleDragEnter = () => setIsDragging(true);
+  const handleDragLeave = () => setIsDragging(false);
+  const handleDrop = (e) => {
+    e.preventDefault();
+    setIsDragging(false);
+    if (e.dataTransfer.files.length > 0) {
+      setImageFile(e.dataTransfer.files[0]);
+      setError(null);
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -29,9 +42,7 @@ const Upload = () => {
 
     try {
       const response = await apiClient.post('/predict/', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
+        headers: { 'Content-Type': 'multipart/form-data' },
       });
 
       setPredictionResult(response.data);
@@ -46,35 +57,77 @@ const Upload = () => {
   return (
     <div className='layout-container'>
       <div className='p-6 w-full max-w-4xl flex flex-col gap-6'>
-        {/* Upload Section */}
-        <div className='flex gap-6 flex-col'>
-          <div className='bg-white p-6 rounded-xl shadow-lg flex-[0.4]'>
-            <p className='text-gray-700'>
-              Para subir la tomografía de un paciente basta con presionar el
-              botón:{' '}
-              <span className='text-red-500 font-bold'>
-                {' '}
-                "Cargar tomografía"{' '}
-              </span>
-              , dirigirse a la ubicación de la imagen en el explorador de
-              archivos, seleccionarla y pulsar{' '}
-              <span className='text-blue-500 font-bold'>aceptar</span>.
-            </p>
-            <div className='mt-4 bg-gray-800 text-white py-2 px-4 rounded-lg '>
-              Formatos admitidos: JPG, JPEG y PNG.
-            </div>
-          </div>
-          <div className='upload_input_container p-6 rounded-xl shadow-lg flex-[0.6] flex flex-col items-center justify-center cursor-pointer min-h-[300px]'>
-            <label
-              htmlFor='image'
-              className='flex flex-col items-center cursor-pointer'
-            >
-              <UploadCloud size={90} className='text-white' />
-              <span className='text-white mt-2 text-xl'>Cargar tomografía</span>
-            </label>
-            <input type='file' id='image' accept='image/*' className='hidden' />
+        {/* Upload Instructions */}
+        <div className='bg-white p-6 rounded-xl shadow-lg'>
+          <p className='text-gray-700'>
+            Para subir la tomografía de un paciente, haga clic en{' '}
+            <span className='text-red-500 font-bold'>Cargar tomografía</span>,
+            seleccione la imagen y pulse{' '}
+            <span className='text-blue-500 font-bold'>Aceptar</span>.
+          </p>
+          <div className='mt-4 bg-gray-800 text-white py-2 px-4 rounded-lg'>
+            Formatos admitidos: JPG, JPEG y PNG.
           </div>
         </div>
+
+        {/* Upload Section with Background */}
+        <div className='bg-gray-100 p-6 rounded-xl shadow-lg flex flex-col items-center gap-4'>
+          {/* Upload Button */}
+          <button
+            onClick={() => document.getElementById('image').click()}
+            className='bg-blue-500 border border-blue-500 text-white py-2 px-4 rounded-lg shadow-md cursor-pointer hover:bg-white hover:text-blue-500 transition-colors'
+          >
+            Cargar tomografía
+          </button>
+
+          {/* Drag & Drop Area */}
+          <div
+            className={`upload_input_container flex flex-col items-center justify-center p-6 rounded-xl shadow-lg cursor-pointer transition-all
+            ${
+              isDragging
+                ? 'border-blue-500 bg-blue-100'
+                : 'border-gray-300 bg-gray-50'
+            }`}
+            onDragEnter={handleDragEnter}
+            onDragLeave={handleDragLeave}
+            onDragOver={(e) => e.preventDefault()}
+            onDrop={handleDrop}
+            onClick={() => document.getElementById('image').click()}
+          >
+            <UploadCloud size={50} className='text-gray-500' />
+            <span className='mt-2 text-gray-700 font-bold'>
+              {imageFile
+                ? imageFile.name
+                : 'Arrastra y suelta aquí o haz clic para seleccionar'}
+            </span>
+            <input
+              type='file'
+              id='image'
+              accept='image/*'
+              className='hidden'
+              onChange={handleFileChange}
+            />
+          </div>
+
+          {/* Analyze Button */}
+          <button
+            onClick={handleSubmit}
+            className='bg-red-400 border border-red-400 text-white py-2 px-4 rounded-lg shadow-md cursor-pointer hover:bg-white hover:text-red-400 transition-colors'
+          >
+            Analizar Imagen
+          </button>
+
+          {/* Error Message */}
+          {error && <p className='text-red-400'>{error}</p>}
+        </div>
+
+        {/* Prediction Result */}
+        {predictionResult && (
+          <div className='bg-green-100 p-4 rounded-lg text-green-700'>
+            <h3 className='font-bold'>Resultado:</h3>
+            <p>{predictionResult}</p>
+          </div>
+        )}
 
         {/* Observations Section */}
         <div className='bg-blue-200 p-6 rounded-xl shadow-lg'>

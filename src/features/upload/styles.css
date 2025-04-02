@@ -1,7 +1,15 @@
 .upload_input_container {
-  background-color: rgba(255, 116, 119, 0.6); /* 50% opacity */
-  border: 2px solid #ff7477; /* Full-color solid border */
   width: 100%;
-  max-width: 970px;
-  min-height: 300px;
+  height: 150px;
+  border: 2px dashed #cfcfcf;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  transition: background-color 0.3s ease-in-out, border-color 0.3s ease-in-out;
+}
+
+.upload_input_container.border-blue-500 {
+  border: 2px dashed #007bff;
+  background-color: rgba(0, 123, 255, 0.1);
 }
