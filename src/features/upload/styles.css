@@ -1,0 +1,7 @@
+.upload_input_container {
+  background-color: rgba(255, 116, 119, 0.6); /* 50% opacity */
+  border: 2px solid #ff7477; /* Full-color solid border */
+  width: 100%;
+  max-width: 970px;
+  min-height: 300px;
+}
