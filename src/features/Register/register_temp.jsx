@@ -39,7 +39,7 @@ const Register = () => {
     <AuthLayout>
       <h2 className="title">OCTsense</h2>
       {error && <p className="error-text">{error}</p>}
-      <input name="username" className="input" placeholder="Usuario Deseado" onChange={handleChange} />
+      <input name="username" className="input" placeholder="Usuario deseado" onChange={handleChange} />
       <input name="email" className="input" placeholder="Correo" onChange={handleChange} />
       <input name="name" className="input" placeholder="Nombre" onChange={handleChange} />
       <div className="select-wrapper">
@@ -52,7 +52,7 @@ const Register = () => {
         <span className="select-icon">▼</span>
       </div>
       <input name="password" className="input" type="password" placeholder="Contraseña" onChange={handleChange} />
-      <input name="confirmPassword" className="input" type="password" placeholder="Repite Contraseña" onChange={handleChange} />
+      <input name="confirmPassword" className="input" type="password" placeholder="Repite contraseña" onChange={handleChange} />
       <button className="button" onClick={handleSubmit}>Únete</button>
       <p className="text">¿Ya tienes cuenta? <Link to="/" className="link">Login</Link></p>
     </AuthLayout>

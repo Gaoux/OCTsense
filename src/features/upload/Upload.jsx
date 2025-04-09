@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import apiClient from '../../api/apiClient';
 import { UploadCloud } from 'lucide-react';
 import './styles.css';
@@ -9,6 +10,7 @@ const Upload = () => {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
+  const navigate = useNavigate();
 
   const handleFileChange = (e) => {
     setImageFile(e.target.files[0]);
@@ -52,6 +54,12 @@ const Upload = () => {
     } finally {
       setLoading(false);
     }
+    navigate('/analysis', { 
+      state: { 
+        imageFile: imageFile, 
+        predictionResult: predictionResult
+      } 
+    });
   };
 
   return (

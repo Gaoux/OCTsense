@@ -32,7 +32,7 @@ const Login = () => {
       {error && <p className="error-text">{error}</p>}
       <input
         className="input"
-        placeholder="usuario"
+        placeholder="Nombre de usuario"
         value={username}
         onChange={(e) => setUsername(e.target.value)}
       />
