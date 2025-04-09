@@ -54,11 +54,11 @@ const Upload = () => {
     } finally {
       setLoading(false);
     }
-    navigate('/analysis', { 
-      state: { 
-        imageFile: imageFile, 
-        predictionResult: predictionResult
-      } 
+    navigate('/analysis', {
+      state: {
+        imageFile: imageFile,
+        predictionResult: predictionResult,
+      },
     });
   };
 
@@ -74,83 +74,92 @@ const Upload = () => {
         </p>
       </div>
 
-      <div className='p-6 w-full max-w-6xl flex flex-col gap-6'>
+      <div className='p-6 w-full max-w-6xl flex flex-col gap-0'>
         {/* Instrucciones */}
-        <div className='bg-white p-6 rounded-xl shadow-lg'>
+        {/* <div className=' p-6 rounded-xl '>
           <p className='text-gray-700'>
             Para subir la tomografía de un paciente, haga clic en{' '}
             <span className='text-red-500 font-bold'>Cargar tomografía</span>,
             seleccione la imagen y pulse{' '}
             <span className='text-blue-500 font-bold'>Aceptar</span>.
           </p>
-          <div className='mt-4 bg-gray-800 text-white py-2 px-4 rounded-lg'>
-            Formatos admitidos: JPG, JPEG y PNG.
-          </div>
-        </div>
-        {/* Sección de carga */}
-        <div className='bg-white p-6 rounded-xl shadow-lg flex flex-col md:flex-row gap-6 border-[1px] border-gray-200'>
-          {/* Columna izquierda */}
-          <div className='flex flex-1 flex-col justify-between gap-4'>
-            {/* Título arriba */}
-            <h3 className='text-gray-700 font-semibold text-2xl text-center'>
-              Suba la tomografía
-            </h3>
+        </div> */}
 
-            {/* Drag and drop centrado */}
-            <div className='flex-grow flex items-center justify-center'>
-              <div
-                className={`upload_input_container h-40 w-full flex flex-col items-center justify-center rounded-xl shadow cursor-pointer transition-all border-2
-        ${
-          isDragging
-            ? 'border-blue-500 bg-blue-100'
-            : 'border-dashed border-gray-300 bg-gray-50'
-        }`}
-                onDragEnter={handleDragEnter}
-                onDragLeave={handleDragLeave}
-                onDragOver={(e) => e.preventDefault()}
-                onDrop={handleDrop}
-                onClick={() => document.getElementById('image')?.click()}
-              >
-                <UploadCloud size={36} className='text-gray-500 mb-2' />
-                <span className='text-center text-gray-700 text-base font-medium'>
-                  {imageFile ? imageFile.name : <>Arrastra o haz clic aquí</>}
-                </span>
-                <input
-                  type='file'
-                  id='image'
-                  accept='image/*'
-                  className='hidden'
-                  onChange={handleFileChange}
-                />
-              </div>
+        {/* Sección de carga */}
+        <div className='bg-white p-6 rounded-t-lg shadow-lg flex flex-col md:flex-row gap-6 border-[1px] border-gray-200'>
+          {/* Columna izquierda */}
+          <div className='flex flex-1 flex-col justify-center gap-4 md:mb-0 mb-5'>
+            {/* Título y nombre del archivo centrados verticalmente */}
+            <div className='flex flex-col items-center gap-3 md:mb-0 mb-20'>
+              <h3 className='text-gray-700 font-semibold text-3xl text-center mt-4'>
+                Suba la tomografía
+              </h3>
+              {imageFile && (
+                <p className='text-gray-400 text-sm text-center break-words max-w-full px-4'>
+                  {imageFile.name}
+                </p>
+              )}
             </div>
 
-            {/* Botón abajo */}
+            {/* Botón subir imagen */}
+            <div className='mt-auto'>
+              <button
+                onClick={() => document.getElementById('image')?.click()}
+                className='w-full bg-white border border-gray-300 text-gray-800 py-2 px-4 rounded-lg shadow-sm cursor-pointer hover:border-gray-400 transition-all'
+              >
+                Cargar tomografía
+              </button>
+              <input
+                type='file'
+                id='image'
+                accept='image/*'
+                className='hidden'
+                onChange={handleFileChange}
+              />
+            </div>
+
+            {/* Botón analizar */}
             <button
               onClick={handleSubmit}
               className='w-full bg-blue-500 border border-blue-500 text-white py-2 px-4 rounded-lg shadow-md cursor-pointer hover:bg-blue-600 transition-colors'
             >
               Analizar Imagen
             </button>
+
             {/* Error */}
             {error && <p className='text-red-400 text-center'>{error}</p>}
           </div>
 
-          {/* Columna derecha: Vista previa */}
-          <div className='flex-[1.5] flex items-center justify-center bo'>
+          {/* Columna derecha: Drag & Drop + Vista previa */}
+          <div
+            className={`flex-[1.5] min-h-[10rem] md:h-96 flex items-center justify-center rounded-lg border transition-all 
+    ${
+      isDragging
+        ? 'border-blue-500 bg-blue-100'
+        : 'border-dashed border-gray-300 bg-white'
+    }`}
+            onDragEnter={handleDragEnter}
+            onDragLeave={handleDragLeave}
+            onDragOver={(e) => e.preventDefault()}
+            onDrop={handleDrop}
+          >
             {imageFile ? (
               <img
                 src={URL.createObjectURL(imageFile)}
                 alt='Vista previa'
-                className='max-h-96 w-full object-contain rounded-lg border border-gray-200 shadow'
+                className='max-h-full w-full object-contain rounded-lg'
               />
             ) : (
-              <div className='w-full h-96 flex items-center justify-center bg-white rounded-lg border border-dashed text-gray-400'>
-                Vista previa
-              </div>
+              <span className='text-gray-400 text-center px-4'>
+                Arrastra la imagen aquí
+              </span>
             )}
           </div>
         </div>
+        <div className=' bg-gray-800 text-white py-2 px-4 rounded-b-lg border-1 border-gray-800'>
+          Formatos admitidos: JPG, JPEG y PNG.
+        </div>
+
         {/* Resultado del análisis
         {predictionResult && (
           <div className='bg-green-100 p-4 rounded-lg text-green-700'>
