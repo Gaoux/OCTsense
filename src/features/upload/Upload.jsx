@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import apiClient from '../../api/apiClient';
-import { UploadCloud } from 'lucide-react';
+import { UploadCloud, Image as ImageIcon } from 'lucide-react';
 import './styles.css';
 
 const Upload = () => {
@@ -105,10 +105,15 @@ const Upload = () => {
             <div className='mt-auto'>
               <button
                 onClick={() => document.getElementById('image')?.click()}
-                className='w-full bg-white border border-gray-300 text-gray-800 py-2 px-4 rounded-lg shadow-sm cursor-pointer hover:border-gray-400 transition-all'
+                className='w-full relative bg-white border border-gray-300 text-gray-800 py-2 px-4 rounded-lg shadow-sm cursor-pointer hover:border-gray-400 transition-all'
               >
-                Cargar tomografía
+                <span className='block text-center w-full'>Cargar imagen</span>
+                <ImageIcon
+                  className='absolute right-4 top-1/2 -translate-y-1/2'
+                  size={20}
+                />
               </button>
+
               <input
                 type='file'
                 id='image'
@@ -123,7 +128,7 @@ const Upload = () => {
               onClick={handleSubmit}
               className='w-full bg-blue-500 border border-blue-500 text-white py-2 px-4 rounded-lg shadow-md cursor-pointer hover:bg-blue-600 transition-colors'
             >
-              Analizar Imagen
+              Analizar
             </button>
 
             {/* Error */}
@@ -150,7 +155,8 @@ const Upload = () => {
                 className='max-h-full w-full object-contain rounded-lg'
               />
             ) : (
-              <span className='text-gray-400 text-center px-4'>
+              <span className='text-gray-400 text-center px-4 flex flex-col items-center'>
+                <UploadCloud size={40} className='mb-2' />
                 Arrastra la imagen aquí
               </span>
             )}
