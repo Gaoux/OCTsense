@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import AuthLayout from '../../components/layouts/AuthLayout';
+import axios from 'axios';
 
 const Register = () => {
   const navigate = useNavigate();
@@ -11,7 +12,7 @@ const Register = () => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     const requiredFields = ['username', 'email', 'name', 'profession', 'password', 'confirmPassword'];
     const hasEmpty = requiredFields.some(field => !form[field]);
     if (hasEmpty) {
@@ -23,39 +24,89 @@ const Register = () => {
       return;
     }
 
-    const users = JSON.parse(localStorage.getItem('users')) || {};
-    if (users[form.username]) {
-      setError('El nombre de usuario ya está registrado');
-      return;
+    try {
+      await axios.post('http://localhost:8000/api/users/register/', {
+        username: form.username,
+        email: form.email,
+        password: form.password,
+        name: form.name,
+        profession: form.profession
+      });
+      navigate('/login');
+    } catch (err) {
+      setError('Error al registrar usuario');
     }
-
-    users[form.username] = { ...form };
-    localStorage.setItem('users', JSON.stringify(users));
-    alert('Usuario registrado exitosamente');
-    navigate('/');
   };
 
   return (
-    <AuthLayout>
-      <h2 className="title">OCTsense</h2>
-      {error && <p className="error-text">{error}</p>}
-      <input name="username" className="input" placeholder="Usuario Deseado" onChange={handleChange} />
-      <input name="email" className="input" placeholder="Correo" onChange={handleChange} />
-      <input name="name" className="input" placeholder="Nombre" onChange={handleChange} />
-      <div className="select-wrapper">
-        <select name="profession" className="input select" onChange={handleChange}>
-          <option value="">Selecciona tu profesión</option>
-          <option value="paciente">Paciente</option>
-          <option value="oftalmologo">Oftalmólogo</option>
-          <option value="otro">Otro</option>
-        </select>
-        <span className="select-icon">▼</span>
+    <div className="flex items-center justify-center min-h-screen bg-blue-150">
+      <div className="w-full max-w-md p-8 space-y-6 bg-white rounded-lg shadow-md">
+        <h2 className="text-4xl font-extrabold text-center text-cyan-700 mb-2 tracking-wide">
+          OCT<span className="text-emerald-500">sense</span>
+        </h2>
+        <p className="text-center text-gray-500 text-sm">Crea una cuenta para empezar</p>
+        {error && <p className="text-sm text-red-600">{error}</p>}
+        <div className="space-y-4">
+          <input
+            type="text"
+            name="username"
+            placeholder="Usuario"
+            onChange={handleChange}
+            className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring focus:ring-cyan-300"
+          />
+          <input
+            type="email"
+            name="email"
+            placeholder="Correo electrónico"
+            onChange={handleChange}
+            className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring focus:ring-cyan-300"
+          />
+          <input
+            type="text"
+            name="name"
+            placeholder="Nombre completo"
+            onChange={handleChange}
+            className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring focus:ring-cyan-300"
+          />
+          <select
+            name="profession"
+            onChange={handleChange}
+            className="w-full px-4 py-2 border rounded-md bg-white text-gray-700 focus:outline-none focus:ring focus:ring-cyan-300"
+          >
+            <option value="">Selecciona tu rol</option>
+            <option value="paciente">Paciente</option>
+            <option value="oftalmologo">Oftalmólogo</option>
+
+          </select>
+          <input
+            type="password"
+            name="password"
+            placeholder="Contraseña"
+            onChange={handleChange}
+            className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring focus:ring-cyan-300"
+          />
+          <input
+            type="password"
+            name="confirmPassword"
+            placeholder="Confirmar contraseña"
+            onChange={handleChange}
+            className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring focus:ring-cyan-300"
+          />
+          <button
+            onClick={handleSubmit}
+            className="w-full px-4 py-2 text-white bg-cyan-600 rounded-md hover:bg-cyan-700 transition"
+          >
+            Registrarse
+          </button>
+          <p className="text-center text-sm">
+            ¿Ya tienes cuenta?{' '}
+            <Link to="/login" className="text-cyan-600 hover:underline">
+              Inicia sesión
+            </Link>
+          </p>
+        </div>
       </div>
-      <input name="password" className="input" type="password" placeholder="Contraseña" onChange={handleChange} />
-      <input name="confirmPassword" className="input" type="password" placeholder="Repite Contraseña" onChange={handleChange} />
-      <button className="button" onClick={handleSubmit}>Únete</button>
-      <p className="text">¿Ya tienes cuenta? <Link to="/" className="link">Login</Link></p>
-    </AuthLayout>
+    </div>
   );
 };
 
