@@ -88,7 +88,7 @@ const Upload = () => {
         {/* Sección de carga */}
         <div className='bg-white p-6 rounded-t-lg shadow-lg flex flex-col md:flex-row gap-6 border-[1px] border-gray-200'>
           {/* Columna izquierda */}
-          <div className='flex flex-1 flex-col justify-center gap-4 md:mb-0 mb-5'>
+          <div className='flex basis-[33%] flex-col justify-center gap-4 md:mb-0 mb-5'>
             {/* Título y nombre del archivo centrados verticalmente */}
             <div className='flex flex-col items-center gap-3 md:mb-0 mb-20'>
               <h3 className='text-gray-700 font-semibold text-3xl text-center mt-4'>
@@ -126,9 +126,40 @@ const Upload = () => {
             {/* Botón analizar */}
             <button
               onClick={handleSubmit}
-              className='w-full bg-blue-500 border border-blue-500 text-white py-2 px-4 rounded-lg shadow-md cursor-pointer hover:bg-blue-600 transition-colors'
+              disabled={loading}
+              className={`w-full bg-blue-500 border border-blue-500 text-white py-2 px-4 rounded-lg shadow-md transition-colors ${
+                loading
+                  ? 'opacity-60 cursor-not-allowed'
+                  : 'hover:bg-blue-600 cursor-pointer'
+              }`}
             >
-              Analizar
+              {loading ? (
+                <div className='flex items-center justify-center gap-2'>
+                  <svg
+                    className='animate-spin h-5 w-5 text-white'
+                    xmlns='http://www.w3.org/2000/svg'
+                    fill='none'
+                    viewBox='0 0 24 24'
+                  >
+                    <circle
+                      className='opacity-25'
+                      cx='12'
+                      cy='12'
+                      r='10'
+                      stroke='currentColor'
+                      strokeWidth='4'
+                    ></circle>
+                    <path
+                      className='opacity-75'
+                      fill='currentColor'
+                      d='M4 12a8 8 0 018-8v4l3-3-3-3v4a8 8 0 00-8 8h4z'
+                    ></path>
+                  </svg>
+                  Analizando...
+                </div>
+              ) : (
+                'Analizar'
+              )}
             </button>
 
             {/* Error */}
@@ -137,7 +168,7 @@ const Upload = () => {
 
           {/* Columna derecha: Drag & Drop + Vista previa */}
           <div
-            className={`flex-[1.5] min-h-[10rem] md:h-96 flex items-center justify-center rounded-lg border transition-all 
+            className={`flex-[1.5] min-h-[10rem] md:h-110 flex items-center justify-center rounded-lg border transition-all 
     ${
       isDragging
         ? 'border-blue-500 bg-blue-100'
