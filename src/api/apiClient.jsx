@@ -10,18 +10,6 @@ const apiClient = axios.create({
   withCredentials: true,
 });
 
-// Attach JWT token to requests
-apiClient.interceptors.request.use(
-  (config) => {
-    const token = localStorage.getItem('jwt_token');
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
-    }
-    return config;
-  },
-  (error) => Promise.reject(error)
-);
-
 // Handle token expiration (refresh token)
 apiClient.interceptors.response.use(
   (response) => response,
@@ -35,7 +23,7 @@ apiClient.interceptors.response.use(
         await axios.post(
           `${API_BASE_URL}/api/token/refresh/`,
           {},
-          { withCredentials: true } // cookie-based refresh
+          { withCredentials: true }
         );
 
         return apiClient(originalRequest); // Retry original request
