@@ -15,6 +15,7 @@ interface AuthContextProps {
   login: (username: string, password: string) => Promise<void>;
   register: (form: any) => Promise<void>;
   logout: () => void;
+  isAuthenticated: boolean;
 }
 
 const AuthContext = createContext<AuthContextProps>({
@@ -22,6 +23,7 @@ const AuthContext = createContext<AuthContextProps>({
   login: async () => {},
   register: async () => {},
   logout: () => {},
+  isAuthenticated: false,
 });
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
@@ -59,7 +61,9 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, register, logout }}>
+    <AuthContext.Provider
+      value={{ user, login, register, logout, isAuthenticated: !!user }}
+    >
       {children}
     </AuthContext.Provider>
   );
