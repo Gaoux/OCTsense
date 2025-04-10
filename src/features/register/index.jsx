@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { registerUser } from '../../api/userService';
+import { useAuth } from '../../context/AuthContext';
 
 const Register = () => {
   const navigate = useNavigate();
+  const { register } = useAuth();
   const [form, setForm] = useState({});
   const [error, setError] = useState('');
 
@@ -16,7 +17,7 @@ const Register = () => {
       'username',
       'email',
       'name',
-      'profession',
+      'role',
       'password',
       'confirmPassword',
     ];
@@ -31,7 +32,7 @@ const Register = () => {
     }
 
     try {
-      await registerUser(form);
+      await register(form);
       navigate('/login');
     } catch (err) {
       console.error(err);
@@ -72,7 +73,7 @@ const Register = () => {
             className='w-full px-4 py-2 border rounded-md focus:outline-none focus:ring focus:ring-cyan-300'
           />
           <select
-            name='profession'
+            name='role'
             onChange={handleChange}
             className='w-full px-4 py-2 border rounded-md bg-white text-gray-700 focus:outline-none focus:ring focus:ring-cyan-300'
           >

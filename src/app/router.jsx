@@ -1,24 +1,23 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
-import Login from '../features/Login/login_temp.jsx';
-import Register from '../features/Register/register_temp.jsx';
-import NotFound from '../features/not-found/NotFound.jsx';
-import Upload from '../features/upload/Upload.jsx';
-import Home from '../features/home/Home.jsx';
-import { AuthContext } from './app.jsx';
+import Login from '../features/login';
+import Register from '../features/register';
+import NotFound from '../features/not-found';
+import Upload from '../features/upload';
+import Home from '../features/home';
+import { useAuth } from '../context/AuthContext.jsx';
 
 const PrivateRoute = ({ element }) => {
-  const auth = useContext(AuthContext);
-  return auth?.user ? element : <Navigate to='/' />;
+  const { isAuthenticated } = useAuth();
+  return isAuthenticated ? element : <Navigate to='/login' />;
 };
 
 const AppRoutes = () => (
   <Routes>
-    <Route path='/' element={<Login />} />
+    <Route path='/' element={<Home />} />
+    <Route path='/login' element={<Login />} />
     <Route path='/register' element={<Register />} />
-    <Route path='/home' element={<PrivateRoute element={<Home />} />} />
-    {/* <Route path='/upload' element={<PrivateRoute element={<Upload />} />} /> */}
-    <Route path='/upload' element={<Upload />} />
+    <Route path='/upload' element={<PrivateRoute element={<Upload />} />} />
     <Route path='*' element={<NotFound />} />
   </Routes>
 );

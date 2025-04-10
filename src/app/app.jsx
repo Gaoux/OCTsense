@@ -1,36 +1,14 @@
-import React, { useState, useEffect, createContext } from 'react';
+import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import AppRoutes from './router';
-
-export const AuthContext = createContext(null);
+import { AuthProvider } from '../context/AuthContext';
 
 const App = () => {
-  const [user, setUser] = useState(() => {
-    try {
-      const stored = localStorage.getItem('user');
-      return stored ? JSON.parse(stored) : null;
-    } catch {
-      return null;
-    }
-  });
-
-  useEffect(() => {
-    try {
-      if (user) {
-        localStorage.setItem('user', JSON.stringify(user));
-      } else {
-        localStorage.removeItem('user');
-      }
-    } catch {
-      // error en localStorage
-    }
-  }, [user]);
-
   return (
     <BrowserRouter>
-      <AuthContext.Provider value={{ user, setUser }}>
+      <AuthProvider>
         <AppRoutes />
-      </AuthContext.Provider>
+      </AuthProvider>
     </BrowserRouter>
   );
 };

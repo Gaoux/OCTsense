@@ -7,6 +7,7 @@ const apiClient = axios.create({
   headers: {
     'Content-Type': 'application/json',
   },
+  withCredentials: true,
 });
 
 // Attach JWT token to requests
@@ -23,41 +24,24 @@ apiClient.interceptors.request.use(
 
 // Handle token expiration (refresh token)
 apiClient.interceptors.response.use(
-  (response) => response, // Pass through successful responses
+  (response) => response,
   async (error) => {
     const originalRequest = error.config;
 
-    // If we get a 401 (Unauthorized) due to token expiration, try to refresh the token
-    if (
-      error.response &&
-      error.response.status === 401 &&
-      !originalRequest._retry
-    ) {
+    if (error.response?.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
 
       try {
-        // Send a request to the backend to refresh the token
-        const refreshToken = localStorage.getItem('refresh_token');
-        const response = await axios.post(
+        await axios.post(
           `${API_BASE_URL}/api/token/refresh/`,
-          {
-            refresh: refreshToken,
-          }
+          {},
+          { withCredentials: true } // cookie-based refresh
         );
 
-        const newAccessToken = response.data.access;
-        localStorage.setItem('jwt_token', newAccessToken); // Store the new token
-
-        // Retry the original request with the new token
-        originalRequest.headers['Authorization'] = `Bearer ${newAccessToken}`;
-        return apiClient(originalRequest); // Retry the original request
+        return apiClient(originalRequest); // Retry original request
       } catch (err) {
-        // If refreshing the token fails, log the user out
         console.error('Token refresh failed:', err);
-        // Optionally, clear the stored tokens and redirect to login
-        localStorage.removeItem('jwt_token');
-        localStorage.removeItem('refresh_token');
-        // Redirect to login page or show a login modal
+        // Optionally redirect to login
       }
     }
 

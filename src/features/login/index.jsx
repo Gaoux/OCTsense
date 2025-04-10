@@ -1,19 +1,17 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { AuthContext } from '../../app/app';
-import { loginUser } from '../../api/userService';
+import { useAuth } from '../../context/AuthContext';
 
 const Login = () => {
   const navigate = useNavigate();
-  const { setUser } = useContext(AuthContext);
+  const { login } = useAuth();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
 
   const handleLogin = async () => {
     try {
-      const { user } = await loginUser(username, password);
-      setUser(user);
+      await login(username, password);
       navigate('/home');
     } catch (err) {
       console.error(err);
