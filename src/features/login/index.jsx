@@ -11,8 +11,12 @@ const Login = () => {
 
   const handleLogin = async () => {
     try {
-      await login(username, password);
-      navigate('/home');
+      const user = await login(username, password);
+      if (user.is_admin) {
+        navigate('/admin-dashboard'); // futuro
+      } else {
+        navigate('/home'); // landing page para paciente y oftalmólogo
+      }
     } catch (err) {
       console.error(err);
       setError('Credenciales inválidas');

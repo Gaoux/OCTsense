@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import apiClient from '../../api/apiClient';
 import { UploadCloud, Image as ImageIcon } from 'lucide-react';
 import './styles.css';
+import { useAuth } from '../../context/AuthContext'; // ✅ NUEVO
 
 const Upload = () => {
   const [imageFile, setImageFile] = useState(null);
@@ -11,6 +12,7 @@ const Upload = () => {
   const [loading, setLoading] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
   const navigate = useNavigate();
+  const { user } = useAuth(); // ✅ NUEVO
 
   const handleFileChange = (e) => {
     setImageFile(e.target.files[0]);
@@ -48,21 +50,29 @@ const Upload = () => {
       });
 
       setPredictionResult(response.data);
+
+      // ✅ Redirige según el rol sin modificar estilos ni estructura visual
+      const destino =
+        user?.role === 'oftalmologo'
+          ? '/analysis-oftalmologo'
+          : '/analysis-paciente';
+
+      navigate(destino, {
+        state: {
+          imageFile: imageFile,
+          predictionResult: response.data,
+        },
+      });
     } catch (err) {
       console.error('Upload error:', err);
       setError(err.response?.data?.error || 'Upload failed. Try again.');
     } finally {
       setLoading(false);
     }
-    navigate('/analysis', {
-      state: {
-        imageFile: imageFile,
-        predictionResult: predictionResult,
-      },
-    });
   };
 
   return (
+    // ✅ TODO el contenido a partir de aquí permanece sin cambios
     <div className='layout-container flex-col'>
       {/* Título principal y subtítulo */}
       <div className='w-full text-center mt-4 mb-10'>

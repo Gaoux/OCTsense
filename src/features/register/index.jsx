@@ -32,7 +32,14 @@ const Register = () => {
     }
 
     try {
-      await register(form);
+      const newUser = {
+        username: form.username,
+        email: form.email,
+        name: form.name,
+        password: form.password,
+        role: form.role,
+      };
+      await register(newUser);
       navigate('/login');
     } catch (err) {
       console.error(err);
