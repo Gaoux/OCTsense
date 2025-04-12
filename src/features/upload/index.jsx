@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import apiClient from '../../api/apiClient';
 import { UploadCloud, Image as ImageIcon } from 'lucide-react';
 import './styles.css';
-import { useAuth } from '../../context/AuthContext'; // ✅ NUEVO
+import { useAuth } from '../../context/AuthContext'; 
 
 const Upload = () => {
   const [imageFile, setImageFile] = useState(null);
@@ -12,7 +12,7 @@ const Upload = () => {
   const [loading, setLoading] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
   const navigate = useNavigate();
-  const { user } = useAuth(); // ✅ NUEVO
+  const { user } = useAuth(); 
 
   const handleFileChange = (e) => {
     setImageFile(e.target.files[0]);
@@ -51,7 +51,6 @@ const Upload = () => {
 
       setPredictionResult(response.data);
 
-      // ✅ Redirige según el rol sin modificar estilos ni estructura visual
       const destino =
         user?.role === 'oftalmologo'
           ? '/analysis-oftalmologo'
@@ -72,7 +71,6 @@ const Upload = () => {
   };
 
   return (
-    // ✅ TODO el contenido a partir de aquí permanece sin cambios
     <div className='layout-container flex-col'>
       {/* Título principal y subtítulo */}
       <div className='w-full text-center mt-4 mb-10'>
