@@ -14,7 +14,7 @@ const PrivateRoute = ({ element }) => {
 
 const AppRoutes = () => (
   <Routes>
-    <Route path='/' element={<Home />} />
+    <Route path='/Home' element={<Home />} />
     <Route path='/login' element={<Login />} />
     <Route path='/register' element={<Register />} />
     <Route path='/upload' element={<PrivateRoute element={<Upload />} />} />
