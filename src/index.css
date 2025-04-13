@@ -9,6 +9,9 @@
   --color-secondary: #335cf4;
   --color-light-secondary: #6b87f0;
   --color-dark-secondary: #213b9c;
+  --color-very-dark-secondary: #0a153c;
+  --color-white: #ffffff;
+  --color-light-grey: #b8b8b8;
   --color-accent: #ff7477;
   --color-background-secondary: #e6ffff;
 }

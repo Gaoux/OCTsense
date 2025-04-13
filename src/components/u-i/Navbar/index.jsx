@@ -24,6 +24,7 @@ import {
 import { useAuth } from '../../../context/AuthContext';
 import { useTranslation } from 'react-i18next';
 import i18n from '../../../i18n';
+import './styles.css';
 
 export function NavbarComponent() {
   const navigate = useNavigate();
@@ -43,30 +44,33 @@ export function NavbarComponent() {
   };
 
   return (
-    <Navbar fluid className='py-2 '>
+    <Navbar
+      fluid
+      className='py-2 bg-very-dark-secondary dark:bg-very-dark-secondary'
+    >
       <Link to='/' className='flex items-center'>
         <img
           src='/logo-no-background.svg'
-          className='mr-3 h-6 sm:h-8 lg :h-9 w-auto'
+          className='mr-3 h-6 sm:h-8 lg:h-9 w-auto'
           alt='Logo'
         />
-        <span className='self-center whitespace-nowrap text-xl md:text-2xl font-semibold dark:text-white'>
+        <span className='self-center whitespace-nowrap text-white md:text-2xl font-semibold'>
           OCTSense
         </span>
       </Link>
 
-      <div className='flex md:order-2 py-2 gap-1 lg:gap-3 items-center '>
+      <div className='flex md:order-2 py-2 gap-1 lg:gap-3 items-center'>
         {/* Language Selector */}
         <Dropdown
           arrowIcon={false}
           inline
           label={
             <div
-              className='flex items-center gap-1 text-white cursor-pointer  hover:opacity-90'
+              className='flex items-center gap-1 text-white cursor-pointer hover:opacity-90'
               onClick={() => setLanguageOpen((prev) => !prev)}
             >
               <Globe className='w-5 h-5' />
-              <ChevronDown className={`w-4 h-4 `} />
+              <ChevronDown className='w-4 h-4' />
             </div>
           }
           onBlur={() => setLanguageOpen(false)}
@@ -88,10 +92,10 @@ export function NavbarComponent() {
             }
           >
             <DropdownHeader>
-              <span className='block text-sm'>
+              <span className='block text-sm text-dark-primary'>
                 {user?.name || t('navbar.user')}
               </span>
-              <span className='block truncate text-sm font-medium'>
+              <span className='block truncate text-sm font-medium text-dark-primary'>
                 {user?.email || t('navbar.email')}
               </span>
             </DropdownHeader>
@@ -108,59 +112,73 @@ export function NavbarComponent() {
             as={Link}
             to='/login'
             style={{ backgroundColor: 'var(--color-secondary)' }}
-            className='text-base lg:text-lg flex gap-1 lg:gap-2 text-center sm:p-[20px] p-[15px]'
+            className='text-base lg:text-lg flex gap-1 lg:gap-2 text-center sm:p-[20px] p-[15px] text-white'
           >
             <div className='flex text-center items-center gap-2 overflow-hidden'>
-              <LogIn className='flex sm:hidden sm:w-4 sm:h-4 lg:w-5 lg:h-5 max-w-full max-h-full  sm:mx-0' />
-              <span className='sm:flex hidden'> {t('navbar.login')}</span>
+              <LogIn className='flex sm:hidden sm:w-4 sm:h-4 lg:w-5 lg:h-5 max-w-full max-h-full sm:mx-0' />
+              <span className='sm:flex hidden'>{t('navbar.login')}</span>
             </div>
           </Button>
         )}
         <NavbarToggle />
       </div>
 
-      {/* <NavbarCollapse className='md:absolute md:left-1/2 md:transform md:-translate-x-1/2 md:w-max'> */}
-      {/* <NavbarCollapse className='ml-auto'> */}
-      <NavbarCollapse className='flex-grow items-center lg:max-w-[50%] md:max-w-[30%] '>
-        <div className='md:flex  md:gap-3 lg:gap-8 items-center py-4 text-base lg:text-lg md:flex-grow md:justify-between'>
-          <NavbarLink as={Link} to='/' active={isActive('/')}>
-            <div className='flex items-center gap-2'>
-              <Home className='w-4 h-4 md:w-6 md:h-6 lg:w-5 lg:h-5' />
-              <span className='hidden lg:inline'>{t('navbar.home')}</span>
-            </div>
+      <NavbarCollapse className='flex-grow items-center lg:max-w-[50%] md:max-w-[30%]'>
+        <div className='md:flex md:gap-3 lg:gap-8 items-center py-4 text-base lg:text-lg md:flex-grow md:justify-between'>
+          <NavbarLink
+            as={Link}
+            to='/'
+            active={isActive('/')}
+            className={`flex items-center gap-2 relative ${
+              isActive('/') ? 'active' : ''
+            }`}
+          >
+            <Home className='w-4 h-4 md:w-6 md:h-6 lg:w-5 lg:h-5 text-white' />
+            <span className='md:hidden lg:inline text-white'>
+              {t('navbar.home')}
+            </span>
           </NavbarLink>
 
           <NavbarLink
             as={Link}
             to={isAuthenticated ? '/upload' : '/login'}
             active={isActive('/upload')}
+            className={`flex items-center gap-2 relative ${
+              isActive('/upload') ? 'active' : ''
+            }`}
           >
-            <div className='flex items-center gap-2'>
-              <Upload className='w-4 h-4 md:w-6 md:h-6 lg:w-5 lg:h-5' />
-              <span className='hidden lg:inline'>{t('navbar.upload')}</span>
-            </div>
+            <Upload className='w-4 h-4 md:w-6 md:h-6 lg:w-5 lg:h-5 text-white' />
+            <span className='md:hidden lg:inline text-white'>
+              {t('navbar.upload')}
+            </span>
           </NavbarLink>
 
           <NavbarLink
             as={Link}
             to={isAuthenticated ? '/analysis' : '/login'}
             active={isActive('/analysis')}
+            className={`flex items-center gap-2 relative ${
+              isActive('/analysis') ? 'active' : ''
+            }`}
           >
-            <div className='flex items-center gap-2'>
-              <BarChart3 className='w-4 h-4 md:w-6 md:h-6 lg:w-5 lg:h-5' />
-              <span className='hidden lg:inline'>{t('navbar.analysis')}</span>
-            </div>
+            <BarChart3 className='w-4 h-4 md:w-6 md:h-6 lg:w-5 lg:h-5 text-white' />
+            <span className='md:hidden lg:inline text-white'>
+              {t('navbar.analysis')}
+            </span>
           </NavbarLink>
 
           <NavbarLink
             as={Link}
             to={isAuthenticated ? '/report' : '/login'}
             active={isActive('/report')}
+            className={`flex items-center gap-2 relative ${
+              isActive('/report') ? 'active' : ''
+            }`}
           >
-            <div className='flex items-center gap-2'>
-              <FileText className='w-4 h-4 md:w-6 md:h-6 lg:w-5 lg:h-5' />
-              <span className='hidden lg:inline'>{t('navbar.report')}</span>
-            </div>
+            <FileText className='w-4 h-4 md:w-6 md:h-6 lg:w-5 lg:h-5 text-white' />
+            <span className='md:hidden lg:inline text-white'>
+              {t('navbar.report')}
+            </span>
           </NavbarLink>
         </div>
       </NavbarCollapse>

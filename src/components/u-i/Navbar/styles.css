@@ -1,0 +1,8 @@
+.active::after {
+  content: '';
+  position: absolute;
+  bottom: -24px;
+  width: 100%;
+  height: 4px;
+  background-color: var(--color-primary);
+}
