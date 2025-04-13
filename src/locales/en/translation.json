@@ -16,9 +16,15 @@
     "subtitle": "Log in with your account",
     "username": "Username",
     "password": "Password",
-    "noAccount": "Don't have an account? Register",
+    "forgotPassword": "Forgot your password?",
+    "resetPasswordLink": "Reset it here",
+    "dontHaveAccount": "Don't have an account?",
+    "registerLink": "Register",
     "loginButton": "Log In",
-    "error": "Invalid credentials"
+    "loading": "Loading",
+    "error": "Invalid username or password.",
+    "emptyFields": "Please fill in all fields.",
+    "invalidEmail": "Please enter a valid email address."
   },
   "register": {
     "subtitle": "Create an account to get started",

@@ -4,8 +4,11 @@
 
 @theme {
   --color-primary: #48bdff;
+  --color-dark-primary: #3590c4;
   --color-light-primary: #afdef9;
   --color-secondary: #335cf4;
+  --color-light-secondary: #6b87f0;
+  --color-dark-secondary: #213b9c;
   --color-accent: #ff7477;
   --color-background-secondary: #e6ffff;
 }

@@ -16,6 +16,7 @@ interface AuthContextProps {
   register: (form: any) => Promise<void>;
   logout: () => void;
   isAuthenticated: boolean;
+  validateEmail: (email: string) => boolean;
 }
 
 const AuthContext = createContext<AuthContextProps>({
@@ -24,6 +25,7 @@ const AuthContext = createContext<AuthContextProps>({
   register: async () => {},
   logout: () => {},
   isAuthenticated: false,
+  validateEmail: (email: string) => false,
 });
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
@@ -60,9 +62,21 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     Cookies.remove('user');
   };
 
+  const validateEmail = (email: string): boolean => {
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    return emailRegex.test(email);
+  };
+
   return (
     <AuthContext.Provider
-      value={{ user, login, register, logout, isAuthenticated: !!user }}
+      value={{
+        user,
+        login,
+        register,
+        logout,
+        isAuthenticated: !!user,
+        validateEmail,
+      }}
     >
       {children}
     </AuthContext.Provider>

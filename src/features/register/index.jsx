@@ -6,18 +6,13 @@ import { useTranslation } from 'react-i18next';
 const Register = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const { register } = useAuth();
+  const { register, validateEmail } = useAuth();
   const [form, setForm] = useState({});
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
-  };
-
-  const validateEmail = (email) => {
-    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-    return emailRegex.test(email);
   };
 
   const handleSubmit = async () => {
@@ -124,8 +119,8 @@ const Register = () => {
           <button
             onClick={handleSubmit}
             disabled={loading}
-            className={`w-full px-4 py-2 text-white bg-cyan-600 rounded-md hover:bg-cyan-700 transition ${
-              loading ? 'opacity-60 cursor-not-allowed' : ''
+            className={`w-full px-4 py-2 text-white bg-cyan-600 rounded-md transition ${
+              loading ? 'opacity-60 cursor-not-allowed' : 'hover:bg-cyan-700 '
             }`}
           >
             {loading ? (
@@ -160,15 +155,6 @@ const Register = () => {
             {t('register.alreadyHaveAccount')}{' '}
             <Link to='/login' className='text-cyan-600 hover:underline'>
               {t('register.loginLink')}
-            </Link>
-          </p>
-          <p className='text-center text-sm'>
-            {t('register.forgotPassword')}{' '}
-            <Link
-              to='/reset-password'
-              className='text-cyan-600 hover:underline'
-            >
-              {t('register.resetPasswordLink')}
             </Link>
           </p>
         </div>
