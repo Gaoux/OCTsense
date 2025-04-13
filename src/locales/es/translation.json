@@ -1,0 +1,68 @@
+{
+  "home": {},
+  "navbar": {
+    "home": "Inicio",
+    "upload": "Carga",
+    "analysis": "Análisis",
+    "report": "Informe",
+    "login": "Iniciar sesión",
+    "logout": "Cerrar sesión",
+    "settings": "Configuración",
+    "user": "Usuario",
+    "email": "correo@ejemplo.com"
+  },
+  "login": {
+    "title": "OCTsense",
+    "subtitle": "Inicia sesión con tu cuenta",
+    "username": "Usuario",
+    "password": "Contraseña",
+    "noAccount": "¿No tienes cuenta? Regístrate",
+    "loginButton": "Iniciar sesión",
+    "error": "Credenciales inválidas"
+  },
+  "register": {
+    "subtitle": "Crea una cuenta para empezar",
+    "placeholders": {
+      "username": "Usuario",
+      "email": "Correo electrónico",
+      "fullName": "Nombre completo",
+      "selectRole": "Selecciona tu rol",
+      "password": "Contraseña",
+      "confirmPassword": "Confirmar contraseña"
+    },
+    "roles": {
+      "normal": "Normal",
+      "professional": "Professional"
+    },
+    "button": "Registrarse",
+    "alreadyHaveAccount": "¿Ya tienes cuenta?",
+    "loginLink": "Inicia sesión",
+    "loading": "Cargando",
+    "errors": {
+      "emptyFields": "Por favor completa todos los campos",
+      "passwordMismatch": "Las contraseñas no coinciden",
+      "registrationFailed": "Error al registrar usuario",
+      "invalidEmail": "Por favor, introduce un correo electrónico válido.",
+      "passwordRequirements": "La contraseña debe tener al menos 8 caracteres, una letra mayúscula y un número."
+    }
+  },
+  "upload": {
+    "title": "Carga de imagen",
+    "subtitle": "Sube una tomografía",
+    "uploadPrompt": "Arrastra la imagen aquí",
+    "buttonUpload": "Cargar imagen",
+    "buttonAnalyze": "Analizar",
+    "error": "Por favor selecciona un archivo de imagen.",
+    "formats": "Formatos admitidos: JPG, JPEG y PNG."
+  },
+
+  "analysis": {
+    "results": "Resultados del Análisis",
+    "original_image": "Tomografía Original",
+    "analysis_details": "Detalles del Análisis",
+    "comments": "Comentarios",
+    "save_comments": "Guardar Comentarios",
+    "no_data_found": "No se encontraron datos de análisis",
+    "upload_first": "Por favor, sube una imagen y realiza el análisis primero."
+  }
+}

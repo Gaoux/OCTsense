@@ -1,0 +1,68 @@
+{
+  "home": {},
+  "navbar": {
+    "home": "Home",
+    "upload": "Upload",
+    "analysis": "Analysis",
+    "report": "Report",
+    "login": "Login",
+    "logout": "Sign out",
+    "settings": "Settings",
+    "user": "User",
+    "email": "email@example.com"
+  },
+  "login": {
+    "title": "OCTsense",
+    "subtitle": "Log in with your account",
+    "username": "Username",
+    "password": "Password",
+    "noAccount": "Don't have an account? Register",
+    "loginButton": "Log In",
+    "error": "Invalid credentials"
+  },
+  "register": {
+    "subtitle": "Create an account to get started",
+    "placeholders": {
+      "username": "Username",
+      "email": "Email",
+      "fullName": "Full Name",
+      "selectRole": "Select your role",
+      "password": "Password",
+      "confirmPassword": "Confirm Password"
+    },
+    "roles": {
+      "normal": "Normal",
+      "professional": "Professional"
+    },
+    "button": "Register",
+    "loading": "Loading",
+    "alreadyHaveAccount": "Already have an account?",
+    "loginLink": "Log in",
+    "errors": {
+      "emptyFields": "Please fill in all fields",
+      "passwordMismatch": "Passwords do not match",
+      "registrationFailed": "Failed to register user",
+      "invalidEmail": "Please enter a valid email address.",
+      "passwordRequirements": "Password must be at least 8 characters long, contain one uppercase letter and one number."
+    }
+  },
+  "upload": {
+    "title": "Upload Image",
+    "subtitle": "Upload a tomography",
+    "uploadPrompt": "Drag the image here",
+    "buttonUpload": "Upload Image",
+    "buttonAnalyze": "Analyze",
+    "error": "Please select an image file.",
+    "formats": "Accepted formats: JPG, JPEG, and PNG."
+  },
+
+  "analysis": {
+    "results": "Analysis Results",
+    "original_image": "Original Tomography",
+    "analysis_details": "Analysis Details",
+    "comments": "Comments",
+    "save_comments": "Save Comments",
+    "no_data_found": "No analysis data found",
+    "upload_first": "Please upload an image and perform the analysis first."
+  }
+}
