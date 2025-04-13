@@ -65,19 +65,22 @@ const Login = () => {
           />
 
           <div className='flex justify-end items-center gap-2 text-sm'>
-            {t('login.forgotPassword')}{' '}
-            <Link to='/reset-password' className='text-primary hover:underline'>
-              {t('login.resetPasswordLink')}
+            {/* {t('login.forgotPassword')}{' '} */}
+            <Link
+              to='/reset-password'
+              className='text-primary underline hover:text-dark-primary'
+            >
+              {t('login.forgotPassword')}
             </Link>
           </div>
 
           <button
             onClick={handleLogin}
-            className={`w-full px-4 py-2 text-white bg-primary rounded-md
+            className={`w-full  px-4 py-2 text-white bg-secondary rounded-md
                 ${
                   loading
                     ? 'opacity-60 cursor-not-allowed'
-                    : 'hover:bg-dark-primary transition'
+                    : 'hover:bg-dark-secondary transition'
                 }`}
             disabled={loading}
           >
@@ -112,15 +115,15 @@ const Login = () => {
 
           <hr className='my-4 border-t border-gray-300' />
 
-          <div className='text-center items-center gap-2 mt-4'>
-            {t('login.dontHaveAccount')}
-          </div>
-
-          <Link to='/register' className='block w-full'>
-            <button className='w-full px-4 py-2 text-white bg-secondary rounded-md hover:bg-dark-secondary transition'>
+          <p className='text-center text-sm'>
+            {t('register.alreadyHaveAccount')}{' '}
+            <Link
+              to='/register'
+              className='text-primary underline hover:text-dark-primary'
+            >
               {t('login.registerLink')}
-            </button>
-          </Link>
+            </Link>
+          </p>
         </div>
       </div>
     </div>

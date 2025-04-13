@@ -62,8 +62,9 @@ const Register = () => {
   return (
     <div className='flex items-center justify-center min-h-screen bg-blue-150'>
       <div className='w-full max-w-md p-8 space-y-6 bg-white rounded-lg shadow-md'>
-        <h2 className='text-4xl font-extrabold text-center text-cyan-700 mb-2 tracking-wide'>
-          OCT<span className='text-emerald-500'>sense</span>
+        <h2 className='text-4xl font-extrabold text-center text-secondary mb-2 tracking-wide'>
+          {t('login.title').slice(0, 3)}
+          <span className='text-primary'>{t('login.title').slice(3)}</span>
         </h2>
         <p className='text-center text-gray-500 text-sm'>
           {t('register.subtitle')}
@@ -119,8 +120,10 @@ const Register = () => {
           <button
             onClick={handleSubmit}
             disabled={loading}
-            className={`w-full px-4 py-2 text-white bg-cyan-600 rounded-md transition ${
-              loading ? 'opacity-60 cursor-not-allowed' : 'hover:bg-cyan-700 '
+            className={`w-full mt-4 px-4 py-2 text-white bg-secondary rounded-md transition ${
+              loading
+                ? 'opacity-60 cursor-not-allowed'
+                : 'hover:bg-dark-secondary  '
             }`}
           >
             {loading ? (
@@ -151,9 +154,15 @@ const Register = () => {
               t('register.button')
             )}
           </button>
+
+          <hr className='my-4 border-t border-gray-300' />
+
           <p className='text-center text-sm'>
             {t('register.alreadyHaveAccount')}{' '}
-            <Link to='/login' className='text-cyan-600 hover:underline'>
+            <Link
+              to='/login'
+              className='text-primary underline hover:text-dark-primary'
+            >
               {t('register.loginLink')}
             </Link>
           </p>

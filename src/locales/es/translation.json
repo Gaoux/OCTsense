@@ -17,11 +17,10 @@
     "username": "Usuario",
     "password": "Contraseña",
     "forgotPassword": "¿Olvidaste tu contraseña?",
-    "resetPasswordLink": "Restablécela aquí",
     "dontHaveAccount": "¿No tienes cuenta?",
     "registerLink": "Regístrate",
     "loginButton": "Iniciar sesión",
-    "loading": "Cargando",
+        "loading": "Cargando",
     "error": "Usuario o contraseña inválidos.",
     "emptyFields": "Por favor, complete todos los campos.",
     "invalidEmail": "Por favor, ingrese una dirección de correo electrónico válida."
