@@ -26,8 +26,12 @@ const Login = () => {
     setLoading(true);
 
     try {
-      await login(username, password);
-      navigate('/home');
+      const user = await login(username, password);
+      if (user.is_admin) {
+        navigate('/admin-dashboard'); // futuro
+      } else {
+        navigate('/'); // landing page para paciente y oftalmólogo
+      }
     } catch (err) {
       console.error(err);
       setError(t('login.error'));

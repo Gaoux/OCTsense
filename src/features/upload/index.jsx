@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next'; 
 import apiClient from '../../api/apiClient';
 import { UploadCloud, Image as ImageIcon } from 'lucide-react';
+import './styles.css';
+import { useAuth } from '../../context/AuthContext'; 
 
 const Upload = () => {
   const [imageFile, setImageFile] = useState(null);
@@ -12,6 +14,7 @@ const Upload = () => {
   const [isDragging, setIsDragging] = useState(false);
   const navigate = useNavigate();
   const { t } = useTranslation(); 
+  const { user } = useAuth(); 
 
   const handleFileChange = (e) => {
     setImageFile(e.target.files[0]);
@@ -49,18 +52,24 @@ const Upload = () => {
       });
 
       setPredictionResult(response.data);
+
+      const destino =
+        user?.role === 'oftalmologo'
+          ? '/analysis-oftalmologo'
+          : '/analysis-paciente';
+
+      navigate(destino, {
+        state: {
+          imageFile: imageFile,
+          predictionResult: response.data,
+        },
+      });
     } catch (err) {
       console.error('Upload error:', err);
       setError(err.response?.data?.error || t('error'));
     } finally {
       setLoading(false);
     }
-    navigate('/analysis', {
-      state: {
-        imageFile: imageFile,
-        predictionResult: predictionResult,
-      },
-    });
   };
 
   return (

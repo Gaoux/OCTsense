@@ -12,7 +12,7 @@ interface User {
 
 interface AuthContextProps {
   user: User | null;
-  login: (username: string, password: string) => Promise<void>;
+  login: (username: string, password: string) => Promise<User>;
   register: (form: any) => Promise<void>;
   logout: () => void;
   isAuthenticated: boolean;
@@ -21,9 +21,16 @@ interface AuthContextProps {
 
 const AuthContext = createContext<AuthContextProps>({
   user: null,
-  login: async () => {},
-  register: async () => {},
-  logout: () => {},
+  login: async () => {
+    // Esto solo se ejecuta si se usa fuera del AuthProvider
+    throw new Error('login function not implemented');
+  },
+  register: async () => {
+    throw new Error('register function not implemented');
+  },
+  logout: () => {
+    throw new Error('logout function not implemented');
+  },
   isAuthenticated: false,
   validateEmail: (email: string) => false,
 });
@@ -42,21 +49,19 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     }
   }, []);
 
-  const login = async (username: string, password: string) => {
+  const login = async (username: string, password: string): Promise<User> => {
     const { user, token } = await loginUser(username, password);
-
     setUser(user);
-
-    // Set cookies with token and user (secure and HTTP-only can be set server-side)
-    Cookies.set('token', token, { expires: 7 }); // For security, this should be HttpOnly and set by server
+    Cookies.set('token', token, { expires: 7 });
     Cookies.set('user', JSON.stringify(user), { expires: 7 });
+    return user;
   };
 
-  const register = async (form: any) => {
+  const register = async (form: any): Promise<void> => {
     await registerUser(form);
   };
 
-  const logout = () => {
+  const logout = (): void => {
     setUser(null);
     Cookies.remove('token');
     Cookies.remove('user');
