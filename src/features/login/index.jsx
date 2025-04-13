@@ -15,7 +15,7 @@ const Login = () => {
       if (user.is_admin) {
         navigate('/admin-dashboard'); // futuro
       } else {
-        navigate('/Home'); // landing page para paciente y oftalmólogo
+        navigate('/'); // landing page para paciente y oftalmólogo
       }
     } catch (err) {
       console.error(err);
