@@ -25,7 +25,7 @@ export function NavbarComponent() {
     navigate('/login');
   };
 
-  const isActive = (path: string) => location.pathname === path;
+  const isActive = (path) => location.pathname === path;
 
   return (
     <Navbar fluid className='py-2 '>
