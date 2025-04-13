@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next'; 
 import apiClient from '../../api/apiClient';
 import { UploadCloud, Image as ImageIcon } from 'lucide-react';
-import './styles.css';
 
 const Upload = () => {
   const [imageFile, setImageFile] = useState(null);
@@ -11,6 +11,7 @@ const Upload = () => {
   const [loading, setLoading] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
   const navigate = useNavigate();
+  const { t } = useTranslation(); 
 
   const handleFileChange = (e) => {
     setImageFile(e.target.files[0]);
@@ -31,7 +32,7 @@ const Upload = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!imageFile) {
-      setError('Please select an image file.');
+      setError(t('error'));
       return;
     }
 
@@ -50,7 +51,7 @@ const Upload = () => {
       setPredictionResult(response.data);
     } catch (err) {
       console.error('Upload error:', err);
-      setError(err.response?.data?.error || 'Upload failed. Try again.');
+      setError(err.response?.data?.error || t('error'));
     } finally {
       setLoading(false);
     }
@@ -64,35 +65,19 @@ const Upload = () => {
 
   return (
     <div className='layout-container flex-col'>
-      {/* Título principal y subtítulo */}
       <div className='w-full text-center mt-4 mb-10'>
-        <h1 className='text-[50px] font-bold text-black mb-4'>
-          Carga de imagen
-        </h1>
+        <h1 className='text-[50px] font-bold text-black mb-4'>{t('title')}</h1>
         <p className='text-[20px] text-black opacity-50 max-w-3xl mx-auto'>
-          Suba una tomografía.
+          {t('subtitle')}
         </p>
       </div>
 
       <div className='p-6 w-full max-w-6xl flex flex-col gap-0'>
-        {/* Instrucciones */}
-        {/* <div className=' p-6 rounded-xl '>
-          <p className='text-gray-700'>
-            Para subir la tomografía de un paciente, haga clic en{' '}
-            <span className='text-red-500 font-bold'>Cargar tomografía</span>,
-            seleccione la imagen y pulse{' '}
-            <span className='text-blue-500 font-bold'>Aceptar</span>.
-          </p>
-        </div> */}
-
-        {/* Sección de carga */}
         <div className='bg-white p-6 rounded-t-lg shadow-lg flex flex-col md:flex-row gap-6 border-[1px] border-gray-200'>
-          {/* Columna izquierda */}
           <div className='flex basis-[33%] flex-col justify-center gap-4 md:mb-0 mb-5'>
-            {/* Título y nombre del archivo centrados verticalmente */}
             <div className='flex flex-col items-center gap-3 md:mb-0 mb-20'>
               <h3 className='text-gray-700 font-semibold text-3xl text-center mt-4'>
-                Suba la tomografía
+                {t('uploadPrompt')}
               </h3>
               {imageFile && (
                 <p className='text-gray-400 text-sm text-center break-words max-w-full px-4'>
@@ -101,13 +86,14 @@ const Upload = () => {
               )}
             </div>
 
-            {/* Botón subir imagen */}
             <div className='mt-auto'>
               <button
                 onClick={() => document.getElementById('image')?.click()}
                 className='w-full relative bg-white border border-gray-300 text-gray-800 py-2 px-4 rounded-lg shadow-sm cursor-pointer hover:border-gray-400 transition-all'
               >
-                <span className='block text-center w-full'>Cargar imagen</span>
+                <span className='block text-center w-full'>
+                  {t('buttonUpload')}
+                </span>
                 <ImageIcon
                   className='absolute right-4 top-1/2 -translate-y-1/2'
                   size={20}
@@ -123,7 +109,6 @@ const Upload = () => {
               />
             </div>
 
-            {/* Botón analizar */}
             <button
               onClick={handleSubmit}
               disabled={loading}
@@ -155,18 +140,16 @@ const Upload = () => {
                       d='M4 12a8 8 0 018-8v4l3-3-3-3v4a8 8 0 00-8 8h4z'
                     ></path>
                   </svg>
-                  Analizando...
+                  {t('buttonAnalyze')}
                 </div>
               ) : (
-                'Analizar'
+                t('buttonAnalyze')
               )}
             </button>
 
-            {/* Error */}
             {error && <p className='text-red-400 text-center'>{error}</p>}
           </div>
 
-          {/* Columna derecha: Drag & Drop + Vista previa */}
           <div
             className={`flex-[1.5] min-h-[10rem] md:h-110 flex items-center justify-center rounded-lg border transition-all 
     ${
@@ -182,39 +165,21 @@ const Upload = () => {
             {imageFile ? (
               <img
                 src={URL.createObjectURL(imageFile)}
-                alt='Vista previa'
+                alt='Preview'
                 className='max-h-full w-full object-contain rounded-lg'
               />
             ) : (
               <span className='text-gray-400 text-center px-4 flex flex-col items-center'>
                 <UploadCloud size={40} className='mb-2' />
-                Arrastra la imagen aquí
+                {t('uploadPrompt')}
               </span>
             )}
           </div>
         </div>
-        <div className=' bg-gray-800 text-white py-2 px-4 rounded-b-lg border-1 border-gray-800'>
-          Formatos admitidos: JPG, JPEG y PNG.
+
+        <div className='bg-gray-800 text-white py-2 px-4 rounded-b-lg border-1 border-gray-800'>
+          {t('formats')}
         </div>
-
-        {/* Resultado del análisis
-        {predictionResult && (
-          <div className='bg-green-100 p-4 rounded-lg text-green-700'>
-            <h3 className='font-bold'>Resultado:</h3>
-            <p>{predictionResult}</p>
-          </div>
-        )}
-
-        {/* Historial 
-        <div className='bg-white p-6 rounded-xl shadow-lg'>
-          <h3 className='text-gray-700 font-bold mb-2'>Análisis recientes</h3>
-          <ul className='list-disc list-inside text-sm text-gray-600 space-y-1'>
-            <li>Paciente #001 - 08/04/2025 - Resultado: Sin anomalías</li>
-            <li>Paciente #002 - 07/04/2025 - Resultado: Sospecha de edema</li>
-            <li>Paciente #003 - 06/04/2025 - Resultado: Patología detectada</li>
-          </ul>
-        </div>{' '}
-        */}
       </div>
     </div>
   );
