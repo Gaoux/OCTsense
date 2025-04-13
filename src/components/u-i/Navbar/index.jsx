@@ -61,14 +61,12 @@ export function NavbarComponent() {
 
       <div className='flex md:order-2 py-2 gap-1 lg:gap-3 items-center'>
         {/* Language Selector */}
+
         <Dropdown
           arrowIcon={false}
           inline
           label={
-            <div
-              className='flex items-center gap-1 text-white cursor-pointer hover:opacity-90'
-              onClick={() => setLanguageOpen((prev) => !prev)}
-            >
+            <div className='flex items-center gap-1 text-white cursor-pointer hover:opacity-90'>
               <Globe className='w-5 h-5' />
               <ChevronDown className='w-4 h-4' />
             </div>

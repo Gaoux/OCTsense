@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useTranslation } from 'react-i18next'; 
+import { useTranslation } from 'react-i18next';
 import apiClient from '../../api/apiClient';
 import { UploadCloud, Image as ImageIcon } from 'lucide-react';
-import './styles.css';
-import { useAuth } from '../../context/AuthContext'; 
+import { useAuth } from '../../context/AuthContext';
 
 const Upload = () => {
   const [imageFile, setImageFile] = useState(null);
@@ -13,8 +12,8 @@ const Upload = () => {
   const [loading, setLoading] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
   const navigate = useNavigate();
-  const { t } = useTranslation(); 
-  const { user } = useAuth(); 
+  const { t } = useTranslation();
+  const { user } = useAuth();
 
   const handleFileChange = (e) => {
     setImageFile(e.target.files[0]);
