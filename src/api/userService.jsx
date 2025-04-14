@@ -7,20 +7,19 @@ export const loginUser = async (username, password) => {
     { withCredentials: true }
   );
 
-  const { user } = response.data;
+  const { user, access } = response.data;
 
-  return { user };
+  return { user, token: access };
 };
 
 export const registerUser = async (form) => {
   const response = await apiClient.post(
     '/api/users/register/',
     {
-      username: form.username,
       email: form.email,
       password: form.password,
       name: form.name,
-      role: form.role,
+      profession: form.role,
     },
     { withCredentials: true }
   );

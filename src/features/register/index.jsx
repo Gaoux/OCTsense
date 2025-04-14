@@ -17,7 +17,6 @@ const Register = () => {
 
   const handleSubmit = async () => {
     const requiredFields = [
-      'username',
       'email',
       'name',
       'role',
@@ -51,13 +50,11 @@ const Register = () => {
       setLoading(true);
       await register(form);
       const newUser = {
-        username: form.username,
         email: form.email,
         name: form.name,
         password: form.password,
         role: form.role,
       };
-      await register(newUser);
       navigate('/login');
     } catch (err) {
       console.error(err);
@@ -87,27 +84,28 @@ const Register = () => {
             className='w-full px-4 py-2 border rounded-md focus:outline-none focus:ring focus:ring-cyan-300'
           />
           <input
-            type='email'
-            name='email'
-            placeholder={t('register.placeholders.email')}
-            onChange={handleChange}
-            className='w-full px-4 py-2 border rounded-md focus:outline-none focus:ring focus:ring-cyan-300'
-          />
-          <input
             type='text'
             name='name'
             placeholder={t('register.placeholders.fullName')}
             onChange={handleChange}
             className='w-full px-4 py-2 border rounded-md focus:outline-none focus:ring focus:ring-cyan-300'
           />
+          <input
+            type='email'
+            name='email'
+            placeholder={t('register.placeholders.email')}
+            onChange={handleChange}
+            className='w-full px-4 py-2 border rounded-md focus:outline-none focus:ring focus:ring-cyan-300'
+          />
+
           <select
             name='role'
             onChange={handleChange}
             className='w-full px-4 py-2 border rounded-md bg-white text-gray-700 focus:outline-none focus:ring focus:ring-cyan-300'
           >
             <option value=''>{t('register.placeholders.selectRole')}</option>
-            <option value='normal'>{t('register.roles.normal')}</option>
-            <option value='professional'>
+            <option value='Normal'>{t('register.roles.normal')}</option>
+            <option value='Professional'>
               {t('register.roles.professional')}
             </option>
           </select>
