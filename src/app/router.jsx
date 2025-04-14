@@ -12,11 +12,16 @@ const PrivateRoute = ({ element }) => {
   return isAuthenticated ? element : <Navigate to='/login' />;
 };
 
+const PublicRoute = ({ element }) => {
+  const { isAuthenticated } = useAuth();
+  return isAuthenticated ? <Navigate to='/' /> : element;
+};
+
 const AppRoutes = () => (
   <Routes>
     <Route path='/' element={<Home />} />
-    <Route path='/login' element={<Login />} />
-    <Route path='/register' element={<Register />} />
+    <Route path='/login' element={<PublicRoute element={<Login />} />} />
+    <Route path='/register' element={<PublicRoute element={<Register />} />} />
     <Route path='/upload' element={<PrivateRoute element={<Upload />} />} />
     <Route path='*' element={<NotFound />} />
   </Routes>
