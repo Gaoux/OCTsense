@@ -43,11 +43,12 @@
     "alreadyHaveAccount": "Already have an account?",
     "loginLink": "Log in",
     "errors": {
-      "emptyFields": "Please fill in all fields",
-      "passwordMismatch": "Passwords do not match",
-      "registrationFailed": "Failed to register user",
+      "emptyFields": "Please fill out all required fields.",
+      "passwordMismatch": "Passwords do not match.",
       "invalidEmail": "Please enter a valid email address.",
-      "passwordRequirements": "Password must be at least 8 characters long, contain one uppercase letter and one number."
+      "passwordRequirements": "Password must be at least 8 characters long, with one uppercase letter, one lowercase letter, and one number.",
+      "registrationFailed": "Registration failed. Please try again.",
+      "roleRequired": "Please select a role."
     }
   },
   "upload": {

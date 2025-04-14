@@ -29,6 +29,11 @@ const Register = () => {
       return;
     }
 
+    if (!form.role) {
+      setError(t('register.errors.roleRequired'));
+      return;
+    }
+
     if (form.password !== form.confirmPassword) {
       setError(t('register.errors.passwordMismatch'));
       return;
@@ -40,7 +45,7 @@ const Register = () => {
     }
 
     // Password validation: at least 8 characters, one uppercase, and one number
-    const passwordRegex = /^(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,}$/;
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,}$/;
     if (!passwordRegex.test(form.password)) {
       setError(t('register.errors.passwordRequirements'));
       return;
@@ -104,8 +109,8 @@ const Register = () => {
             className='w-full px-4 py-2 border rounded-md bg-white text-gray-700 focus:outline-none focus:ring focus:ring-cyan-300'
           >
             <option value=''>{t('register.placeholders.selectRole')}</option>
-            <option value='Normal'>{t('register.roles.normal')}</option>
-            <option value='Professional'>
+            <option value='mormal'>{t('register.roles.normal')}</option>
+            <option value='professional'>
               {t('register.roles.professional')}
             </option>
           </select>

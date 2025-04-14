@@ -43,11 +43,12 @@
     "loginLink": "Inicia sesión",
     "loading": "Cargando",
     "errors": {
-      "emptyFields": "Por favor, complete todos los campos",
-      "passwordMismatch": "Las contraseñas no coinciden",
-      "registrationFailed": "Error al registrar usuario",
-      "invalidEmail": "Por favor, introduce un correo electrónico válido.",
-      "passwordRequirements": "La contraseña debe tener al menos 8 caracteres, una letra mayúscula y un número."
+      "emptyFields": "Please fill out all required fields.",
+      "passwordMismatch": "Passwords do not match.",
+      "invalidEmail": "Please enter a valid email address.",
+      "passwordRequirements": "Password must be at least 8 characters long, with one uppercase letter, one lowercase letter, and one number.",
+      "registrationFailed": "Registration failed. Please try again.",
+      "roleRequired": "Please select a role."
     }
   },
   "upload": {
