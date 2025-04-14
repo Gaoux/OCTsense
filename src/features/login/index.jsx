@@ -7,18 +7,18 @@ const Login = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { login, validateEmail } = useAuth();
-  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
   const handleLogin = async () => {
-    if (!username.trim() || !password.trim()) {
+    if (!email.trim() || !password.trim()) {
       setError(t('login.emptyFields'));
       return;
     }
 
-    if (!validateEmail(username)) {
+    if (!validateEmail(email)) {
       setError(t('login.invalidEmail'));
       return;
     }
@@ -26,7 +26,7 @@ const Login = () => {
     setLoading(true);
 
     try {
-      const user = await login(username, password);
+      const user = await login(email, password);
       if (user.is_admin) {
         navigate('/admin-dashboard'); // futuro
       } else {
@@ -55,9 +55,9 @@ const Login = () => {
         <div className='space-y-4'>
           <input
             type='text'
-            placeholder={t('login.username')}
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            placeholder={t('login.email')}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
             className='w-full px-4 py-2 border rounded-md focus:outline-none focus:ring focus:ring-cyan-100'
           />
           <input

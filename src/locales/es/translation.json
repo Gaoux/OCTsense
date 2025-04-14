@@ -14,13 +14,13 @@
   "login": {
     "title": "OCTsense",
     "subtitle": "Inicia sesión con tu cuenta",
-    "username": "Usuario",
+    "email": "Correo electrónico",
     "password": "Contraseña",
     "forgotPassword": "¿Olvidaste tu contraseña?",
     "dontHaveAccount": "¿No tienes cuenta?",
     "registerLink": "Regístrate",
     "loginButton": "Iniciar sesión",
-        "loading": "Cargando",
+    "loading": "Cargando",
     "error": "Usuario o contraseña inválidos.",
     "emptyFields": "Por favor, complete todos los campos.",
     "invalidEmail": "Por favor, ingrese una dirección de correo electrónico válida."
@@ -28,7 +28,6 @@
   "register": {
     "subtitle": "Crea una cuenta para empezar",
     "placeholders": {
-      "username": "Usuario",
       "email": "Correo electrónico",
       "fullName": "Nombre completo",
       "selectRole": "Selecciona tu rol",

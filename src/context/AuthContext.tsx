@@ -4,7 +4,6 @@ import { loginUser, registerUser } from '../api/userService';
 
 interface User {
   id: string;
-  username: string;
   email: string;
   name: string;
   role: string;
@@ -12,7 +11,7 @@ interface User {
 
 interface AuthContextProps {
   user: User | null;
-  login: (username: string, password: string) => Promise<User>;
+  login: (email: string, password: string) => Promise<User>;
   register: (form: any) => Promise<void>;
   logout: () => void;
   isAuthenticated: boolean;
@@ -49,8 +48,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     }
   }, []);
 
-  const login = async (username: string, password: string): Promise<User> => {
-    const { user, token } = await loginUser(username, password);
+  const login = async (email: string, password: string): Promise<User> => {
+    const { user, token } = await loginUser(email, password);
     setUser(user);
     Cookies.set('token', token, { expires: 7 });
     Cookies.set('user', JSON.stringify(user), { expires: 7 });
@@ -67,8 +66,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     Cookies.remove('user');
   };
 
+  const emailRegex = /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/;
   const validateEmail = (email: string): boolean => {
-    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     return emailRegex.test(email);
   };
 

@@ -14,7 +14,7 @@
   "login": {
     "title": "OCTsense",
     "subtitle": "Log in with your account",
-    "username": "Username",
+    "email": "Email",
     "password": "Password",
     "forgotPassword": "Forgot password",
     "dontHaveAccount": "Don't have an account?",
@@ -28,7 +28,6 @@
   "register": {
     "subtitle": "Create an account to get started",
     "placeholders": {
-      "username": "Username",
       "email": "Email",
       "fullName": "Full Name",
       "selectRole": "Select your role",
