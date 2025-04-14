@@ -90,15 +90,15 @@ export function NavbarComponent() {
             }
           >
             <DropdownHeader>
-              <span className='block text-sm text-dark-primary'>
+              <span className='block text-sm font-bold text-wihte'>
                 {user?.name || t('navbar.user')}
               </span>
-              <span className='block truncate text-sm font-medium text-dark-primary'>
+              <span className='block truncate text-sm font-medium text-white opacity-60'>
                 {user?.email || t('navbar.email')}
               </span>
             </DropdownHeader>
-            <Link to='/upload'>
-              <DropdownItem>{t('navbar.upload')}</DropdownItem>
+            <Link to='/settings'>
+              <DropdownItem>{t('navbar.settings')}</DropdownItem>
             </Link>
             <DropdownDivider />
             <DropdownItem onClick={handleLogout}>
