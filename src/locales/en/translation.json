@@ -1,5 +1,25 @@
 {
-  "home": {},
+  "home": {
+    "title": "Optimize your OCT images with",
+    "description": "An advanced OCT image detection system based on artificial intelligence. Our goal is to facilitate early detection of eye diseases, providing tools for more accurate and efficient diagnosis.",
+    "benefits": {
+      "title": "Why use OCTsense?",
+      "diagnosis": "Faster diagnosis with artificial intelligence",
+      "reduction": "Reduced diagnostic errors thanks to AI-assisted analysis",
+      "compatibility": "Compatibility with multiple image formats",
+      "security": "Secure access"
+    },
+    "try_it": "Try it",
+    "interactive_guide": "Interactive guide",
+    "guide": {
+      "upload": "Upload",
+      "upload_description": "Manage images quickly and securely.",
+      "analysis": "Analysis",
+      "analysis_description": "AI-assisted for reliable pre-diagnosis.",
+      "report": "Report",
+      "report_description": "Detailed results of the analysis."
+    }
+  },
   "navbar": {
     "home": "Home",
     "upload": "Upload",

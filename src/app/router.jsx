@@ -4,6 +4,7 @@ import Login from '../features/login';
 import Register from '../features/register';
 import NotFound from '../features/not-found';
 import Upload from '../features/upload';
+import Analysis from '../features/analysis';
 import Home from '../features/home';
 import { useAuth } from '../context/AuthContext.jsx';
 
@@ -23,6 +24,7 @@ const AppRoutes = () => (
     <Route path='/login' element={<PublicRoute element={<Login />} />} />
     <Route path='/register' element={<PublicRoute element={<Register />} />} />
     <Route path='/upload' element={<PrivateRoute element={<Upload />} />} />
+    <Route path='/analysis' element={<PrivateRoute element={<Analysis />} />} />
     <Route path='*' element={<NotFound />} />
   </Routes>
 );
