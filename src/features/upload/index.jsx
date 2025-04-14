@@ -34,7 +34,7 @@ const Upload = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!imageFile) {
-      setError(t('error'));
+      setError(t('upload.no_image_error'));
       return;
     }
 
@@ -46,7 +46,7 @@ const Upload = () => {
     formData.append('image', imageFile);
 
     try {
-      const response = await apiClient.post('/predict/', formData, {
+      const response = await apiClient.post('upload./predict/', formData, {
         headers: { 'Content-Type': 'multipart/form-data' },
       });
 
@@ -65,7 +65,7 @@ const Upload = () => {
       });
     } catch (err) {
       console.error('Upload error:', err);
-      setError(err.response?.data?.error || t('error'));
+      setError(err.response?.data?.error || t('upload.error'));
     } finally {
       setLoading(false);
     }
@@ -74,9 +74,11 @@ const Upload = () => {
   return (
     <div className='layout-container flex-col'>
       <div className='w-full text-center mt-4 mb-10'>
-        <h1 className='text-[50px] font-bold text-black mb-4'>{t('title')}</h1>
+        <h1 className='text-[50px] font-bold text-black mb-4'>
+          {t('upload.title')}
+        </h1>
         <p className='text-[20px] text-black opacity-50 max-w-3xl mx-auto'>
-          {t('subtitle')}
+          {t('upload.subtitle')}
         </p>
       </div>
 
@@ -85,7 +87,7 @@ const Upload = () => {
           <div className='flex basis-[33%] flex-col justify-center gap-4 md:mb-0 mb-5'>
             <div className='flex flex-col items-center gap-3 md:mb-0 mb-20'>
               <h3 className='text-gray-700 font-semibold text-3xl text-center mt-4'>
-                {t('uploadPrompt')}
+                {t('upload.subtitle2')}
               </h3>
               {imageFile && (
                 <p className='text-gray-400 text-sm text-center break-words max-w-full px-4'>
@@ -95,12 +97,15 @@ const Upload = () => {
             </div>
 
             <div className='mt-auto'>
+              {error && (
+                <p className='text-red-400 text-center mb-2'>{error}</p>
+              )}
               <button
                 onClick={() => document.getElementById('image')?.click()}
                 className='w-full relative bg-white border border-gray-300 text-gray-800 py-2 px-4 rounded-lg shadow-sm cursor-pointer hover:border-gray-400 transition-all'
               >
                 <span className='block text-center w-full'>
-                  {t('buttonUpload')}
+                  {t('upload.buttonUpload')}
                 </span>
                 <ImageIcon
                   className='absolute right-4 top-1/2 -translate-y-1/2'
@@ -148,14 +153,12 @@ const Upload = () => {
                       d='M4 12a8 8 0 018-8v4l3-3-3-3v4a8 8 0 00-8 8h4z'
                     ></path>
                   </svg>
-                  {t('buttonAnalyze')}
+                  {t('upload.buttonAnalyze')}
                 </div>
               ) : (
-                t('buttonAnalyze')
+                t('upload.buttonAnalyze')
               )}
             </button>
-
-            {error && <p className='text-red-400 text-center'>{error}</p>}
           </div>
 
           <div
@@ -179,14 +182,14 @@ const Upload = () => {
             ) : (
               <span className='text-gray-400 text-center px-4 flex flex-col items-center'>
                 <UploadCloud size={40} className='mb-2' />
-                {t('uploadPrompt')}
+                {t('upload.uploadPrompt')}
               </span>
             )}
           </div>
         </div>
 
         <div className='bg-gray-800 text-white py-2 px-4 rounded-b-lg border-1 border-gray-800'>
-          {t('formats')}
+          {t('upload.formats')}
         </div>
       </div>
     </div>

@@ -53,10 +53,12 @@
   "upload": {
     "title": "Upload Image",
     "subtitle": "Upload a tomography",
+    "subtitle2": "Upload here",
     "uploadPrompt": "Drag the image here",
     "buttonUpload": "Upload Image",
     "buttonAnalyze": "Analyze",
-    "error": "Please select an image file.",
+    "no_image_error": "Please select an image file.",
+    "error": "Error uploading image.",
     "formats": "Accepted formats: JPG, JPEG, and PNG."
   },
 

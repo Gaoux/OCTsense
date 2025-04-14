@@ -53,10 +53,12 @@
   "upload": {
     "title": "Carga de imagen",
     "subtitle": "Sube una tomografía",
+    "subtitle2": "Sube aquí",
     "uploadPrompt": "Arrastra la imagen aquí",
     "buttonUpload": "Cargar imagen",
     "buttonAnalyze": "Analizar",
-    "error": "Por favor selecciona un archivo de imagen.",
+    "no_image_error": "Por favor selecciona un archivo de imagen.",
+    "error": "Error subiendo Imagen.",
     "formats": "Formatos admitidos: JPG, JPEG y PNG."
   },
 
