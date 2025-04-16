@@ -1,7 +1,6 @@
 import { useLocation } from 'react-router-dom';
 import { CheckCircle, XCircle } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import './styles.css';
 
 const Analysis = () => {
   const { t } = useTranslation();

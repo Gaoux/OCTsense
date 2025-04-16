@@ -91,5 +91,30 @@
     "save_comments": "Guardar Comentarios",
     "no_data_found": "No se encontraron datos de análisis",
     "upload_first": "Por favor, sube una imagen y realiza el análisis primero."
+  },
+
+  "settings": {
+    "title": "Configuración de Usuario",
+    "subtitle": "Administra tu información de cuenta y seguridad",
+    "personal_info": "Información Personal",
+    "change_password": "Cambiar Contraseña",
+    "name": "Nombre Completo",
+    "email": "Correo Electrónico",
+    "current_password": "Contraseña Actual",
+    "new_password": "Nueva Contraseña",
+    "confirm_password": "Confirmar Nueva Contraseña",
+    "password_instructions": "Deja en blanco si no deseas cambiar tu contraseña",
+    "save_changes": "Guardar Cambios",
+    "logout": "Cerrar Sesión",
+    "success": {
+      "update_success": "¡Tus configuraciones se han actualizado correctamente!"
+    },
+    "errors": {
+      "name_required": "El nombre es requerido",
+      "email_required": "El correo electrónico es requerido",
+      "email_invalid": "Por favor ingresa un correo electrónico válido",
+      "passwords_mismatch": "Las contraseñas no coinciden",
+      "current_password_required": "La contraseña actual es requerida"
+    }
   }
 }

@@ -91,5 +91,30 @@
     "save_comments": "Save Comments",
     "no_data_found": "No analysis data found",
     "upload_first": "Please upload an image and perform the analysis first."
+  },
+
+  "settings": {
+    "title": "User Settings",
+    "subtitle": "Manage your account information and security",
+    "personal_info": "Personal Information",
+    "change_password": "Change Password",
+    "name": "Full Name",
+    "email": "Email Address",
+    "current_password": "Current Password",
+    "new_password": "New Password",
+    "confirm_password": "Confirm New Password",
+    "password_instructions": "Leave blank if you don't want to change your password",
+    "save_changes": "Save Changes",
+    "logout": "Log Out",
+    "success": {
+      "update_success": "Your settings have been updated successfully!"
+    },
+    "errors": {
+      "name_required": "Name is required",
+      "email_required": "Email is required",
+      "email_invalid": "Please enter a valid email address",
+      "passwords_mismatch": "Passwords don't match",
+      "current_password_required": "Current password is required"
+    }
   }
 }

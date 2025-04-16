@@ -46,7 +46,7 @@ const Upload = () => {
     formData.append('image', imageFile);
 
     try {
-      const response = await apiClient.post('upload./predict/', formData, {
+      const response = await apiClient.post('/api/oct_analysis/predict/', formData, {
         headers: { 'Content-Type': 'multipart/form-data' },
       });
 
