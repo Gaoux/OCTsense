@@ -1,4 +1,5 @@
 import axios from 'axios';
+import Cookies from 'js-cookie';
 
 const API_BASE_URL = import.meta.env.VITE_API_URL;
 
@@ -7,10 +8,10 @@ const apiClient = axios.create({
   headers: {
     'Content-Type': 'application/json',
   },
-  withCredentials: true,
+  withCredentials: true, // Required for sending cookies in requests
 });
 
-// Handle token expiration (refresh token)
+// Interceptor to handle token expiration
 apiClient.interceptors.response.use(
   (response) => response,
   async (error) => {
@@ -20,16 +21,41 @@ apiClient.interceptors.response.use(
       originalRequest._retry = true;
 
       try {
-        await axios.post(
+        // Get refresh token from cookies
+        const refreshToken = Cookies.get('refreshToken');
+        if (!refreshToken) {
+          throw new Error('No refresh token available');
+        }
+
+        // Request a new access token using the refresh token
+        const res = await axios.post(
           `${API_BASE_URL}/api/token/refresh/`,
-          {},
-          { withCredentials: true }
+          { refresh: refreshToken },
+          {
+            headers: { 'Content-Type': 'application/json' },
+            withCredentials: true,
+          }
         );
 
-        return apiClient(originalRequest); // Retry original request
+        const newAccessToken = res.data.access;
+
+        // Save the new access token in cookies
+        Cookies.set('token', newAccessToken, { expires: 7 });
+
+        // Update the original request's Authorization header with the new access token
+        originalRequest.headers['Authorization'] = `Bearer ${newAccessToken}`;
+
+        return apiClient(originalRequest); // Retry the original request
       } catch (err) {
         console.error('Token refresh failed:', err);
-        // Optionally redirect to login
+
+        // Set a flag in localStorage to indicate session expiration
+        window.localStorage.setItem('sessionExpired', 'true');
+
+        alert('Your session has expired. Please log in again.');
+
+        // Optionally redirect to login page
+        // window.location.href = '/login';
       }
     }
 
