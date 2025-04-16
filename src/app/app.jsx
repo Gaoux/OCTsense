@@ -6,7 +6,7 @@ import { NavbarComponent } from '../components/u-i/Navbar';
 
 const AppWrapper = () => {
   const location = useLocation();
-  const hideNavbarOnRoutes = ['/login', '/register'];
+  const hideNavbarOnRoutes = ['/login', '/register','/registrar', '/usuarios', '/admin-dashboard'];
   const shouldHideNavbar = hideNavbarOnRoutes.includes(location.pathname);
 
   return (

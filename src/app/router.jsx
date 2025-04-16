@@ -6,7 +6,10 @@ import NotFound from '../features/not-found';
 import Upload from '../features/upload';
 import Analysis from '../features/analysis';
 import Home from '../features/home';
+import Dashboard from '../features/admin/Dashboard';
 import { useAuth } from '../context/AuthContext.jsx';
+import UserRegister from '../features/admin/UserRegister';
+import UsersList from '../features/admin/UsersList.jsx';
 
 const PrivateRoute = ({ element }) => {
   const { isAuthenticated } = useAuth();
@@ -25,6 +28,9 @@ const AppRoutes = () => (
     <Route path='/register' element={<PublicRoute element={<Register />} />} />
     <Route path='/upload' element={<PrivateRoute element={<Upload />} />} />
     <Route path='/analysis' element={<PrivateRoute element={<Analysis />} />} />
+    <Route path='/admin-dashboard' element={<UserRegister/>} />
+    <Route path="/registrar" element={<UserRegister />} />
+    <Route path="/usuarios" element={<UsersList />} />
     <Route path='*' element={<NotFound />} />
   </Routes>
 );

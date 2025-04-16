@@ -17,29 +17,28 @@ const Login = () => {
       setError(t('login.emptyFields'));
       return;
     }
-
+  
     if (!validateEmail(email)) {
       setError(t('login.invalidEmail'));
       return;
     }
-
+  
     setLoading(true);
-
+  
     try {
-      const user = await login(email, password);
+      const user = await login(email, password); // Llama a la función de login
       if (user.is_admin) {
-        navigate('/admin-dashboard'); // futuro
+        navigate('/admin-dashboard'); // Redirige al Dashboard si es administrador
       } else {
-        navigate('/'); // landing page para paciente y oftalmólogo
+        navigate('/'); // Redirige a la página principal si no es administrador
       }
     } catch (err) {
       console.error(err);
-      setError(t('login.error'));
+      setError(t('login.error')); // Muestra un mensaje de error
     } finally {
       setLoading(false);
     }
   };
-
   return (
     <div className='flex items-center justify-center min-h-screen bg-blue-150'>
       <div className='w-full max-w-md p-8 space-y-6 bg-white rounded-lg shadow-md'>
