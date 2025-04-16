@@ -23,8 +23,7 @@ interface AuthContextProps {
 const AuthContext = createContext<AuthContextProps>({
   user: null,
   login: async () => {
-    // Esto solo se ejecuta si se usa fuera del AuthProvider
-    throw new Error("login function not implemented");
+    throw new Error('login function not implemented');
   },
   register: async () => {
     throw new Error("register function not implemented");
@@ -51,13 +50,24 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         Cookies.remove("user");
       }
     }
+
+    // Check if the session has expired
+    const sessionExpired = window.localStorage.getItem('sessionExpired');
+    if (sessionExpired) {
+      logout(); // Call logout if session expired
+      window.localStorage.removeItem('sessionExpired'); // Clear the session expired flag
+    }
   }, []);
 
   const login = async (email: string, password: string): Promise<User> => {
-    const { user, token } = await loginUser(email, password);
+    const { user, accessToken, refreshToken } = await loginUser(
+      email,
+      password
+    );
     setUser(user);
-    Cookies.set("token", token, { expires: 7 });
-    Cookies.set("user", JSON.stringify(user), { expires: 7 });
+    Cookies.set('token', accessToken, { expires: 7 });
+    Cookies.set('refreshToken', refreshToken, { expires: 7 });
+    Cookies.set('user', JSON.stringify(user), { expires: 7 });
     return user;
   };
 
@@ -67,11 +77,12 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   const logout = (): void => {
     setUser(null);
-    Cookies.remove("token");
-    Cookies.remove("user");
+    Cookies.remove('token');
+    Cookies.remove('refreshToken');
+    Cookies.remove('user');
   };
 
-  const emailRegex = /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/;
+  const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
   const validateEmail = (email: string): boolean => {
     return emailRegex.test(email);
   };

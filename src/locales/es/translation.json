@@ -90,7 +90,12 @@
     "comments": "Comentarios",
     "save_comments": "Guardar Comentarios",
     "no_data_found": "No se encontraron datos de análisis",
-    "upload_first": "Por favor, sube una imagen y realiza el análisis primero."
+    "upload_first": "Por favor, sube una imagen y realiza el análisis primero.",
+    "most_likely": "Más probable",
+    "category1": "CNV",
+    "category2": "DME",
+    "category3": "DRUSEN",
+    "category4": "NORMAL"
   },
 
   "settings": {

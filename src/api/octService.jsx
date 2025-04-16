@@ -1,13 +1,16 @@
 import apiClient from './apiClient';
+import Cookies from 'js-cookie';
 
 export const predictOCT = async (imageFile) => {
   try {
+    const token = Cookies.get('token');
     const formData = new FormData();
     formData.append('image', imageFile);
 
-    const response = await apiClient.post('/predict/', formData, {
+    const response = await apiClient.post('/api/oct/predict/', formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
+        Authorization: `Bearer ${token}`,
       },
     });
 

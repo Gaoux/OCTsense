@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import apiClient from '../../api/apiClient';
+import { predictOCT } from '../../api/octService';
 import { UploadCloud, Image as ImageIcon } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 
@@ -42,25 +42,17 @@ const Upload = () => {
     setPredictionResult(null);
     setLoading(true);
 
-    const formData = new FormData();
-    formData.append('image', imageFile);
-
     try {
-      const response = await apiClient.post('/api/oct_analysis/predict/', formData, {
-        headers: { 'Content-Type': 'multipart/form-data' },
-      });
-
-      setPredictionResult(response.data);
+      const result = await predictOCT(imageFile);
+      setPredictionResult(result);
 
       const destino =
-        user?.role === 'oftalmologo'
-          ? '/analysis-oftalmologo'
-          : '/analysis-paciente';
+        user?.role === 'professional' ? '/analysis-oftalmologo' : '/analysis';
 
       navigate(destino, {
         state: {
-          imageFile: imageFile,
-          predictionResult: response.data,
+          imageFile,
+          predictionResult: result,
         },
       });
     } catch (err) {

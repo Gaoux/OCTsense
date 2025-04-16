@@ -8,9 +8,9 @@ export const loginUser = async (email, password) => {
     { withCredentials: true }
   );
 
-  const { user, access } = response.data;
+  const { user, access, refresh } = response.data;
 
-  return { user, token: access };
+  return { user, accessToken: access, refreshToken: refresh };
 };
 
 export const registerUser = async (form) => {
