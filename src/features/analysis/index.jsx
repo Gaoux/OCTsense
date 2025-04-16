@@ -12,19 +12,19 @@ const Analysis = () => {
   const categories = [
     {
       name: t('analysis.category1'),
-      value: predictionResult?.category1 || '85%',
+      value: (predictionResult?.probabilities[0] * 100).toFixed(2) || 'Error',
     },
     {
       name: t('analysis.category2'),
-      value: predictionResult?.category2 || '2%',
+      value: (predictionResult?.probabilities[1] * 100).toFixed(2) || 'Error',
     },
     {
       name: t('analysis.category3'),
-      value: predictionResult?.category3 || '12%',
+      value: (predictionResult?.probabilities[2] * 100).toFixed(2) || 'Error',
     },
     {
       name: t('analysis.category4'),
-      value: predictionResult?.category4 || '1%',
+      value: (predictionResult?.probabilities[3] * 100).toFixed(2) || 'Error',
     },
   ];
 
@@ -46,9 +46,19 @@ const Analysis = () => {
         {/* Result Header */}
         <div className='bg-white p-6 rounded-xl shadow-lg flex items-center gap-4'>
           <CheckCircle size={32} className='text-green-500' />
-          <h1 className='text-2xl font-bold text-gray-800'>
-            {t('analysis.results')}
-          </h1>
+          <div>
+            <h1 className='text-2xl font-bold text-gray-800'>
+              {t('analysis.results')}
+            </h1>
+            {predictionResult && (
+              <p className='text-lg mt-1'>
+                {t('analysis.most_likely')}:{' '}
+                <span className='font-bold text-primary'>
+                  {predictionResult.prediction}
+                </span>
+              </p>
+            )}
+          </div>
         </div>
 
         {/* Image and Results Grid */}
@@ -79,7 +89,7 @@ const Analysis = () => {
                   <div className='percentage-bar-container'>
                     <div
                       className='percentage-bar'
-                      style={{ width: category.value }}
+                      style={{ width: `${category.value}%` }}
                     ></div>
                   </div>
                   <span className='percentage-value'>{category.value}</span>

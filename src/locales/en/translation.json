@@ -90,6 +90,11 @@
     "comments": "Comments",
     "save_comments": "Save Comments",
     "no_data_found": "No analysis data found",
-    "upload_first": "Please upload an image and perform the analysis first."
+    "upload_first": "Please upload an image and perform the analysis first.",
+    "most_likely": "Most likely",
+    "category1": "CNV",
+    "category2": "DME",
+    "category3": "DRUSEN",
+    "category4": "NORMAL"
   }
 }
