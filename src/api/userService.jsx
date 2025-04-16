@@ -26,22 +26,3 @@ export const registerUser = async (form) => {
 
   return response.data;
 };
-export const registerAdmin = async (adminData) => {
-  const response = await apiClient.post('/api/users/admin/register/', adminData);
-  return response.data;
-};
-
-export const getUsers = async (params = {}) => {
-  const response = await apiClient.get('/api/users/', { params });
-  return response.data;
-};
-
-export const deleteUser = async (id) => {
-  const response = await apiClient.delete(`/api/users/${id}/`);
-  return response.data;
-};
-
-export const getUserById = async (id) => {
-  const response = await apiClient.get(`/api/users/${id}/`);
-  return response.data;
-};

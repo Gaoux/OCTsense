@@ -6,7 +6,6 @@ import NotFound from '../features/not-found';
 import Upload from '../features/upload';
 import Analysis from '../features/analysis';
 import Home from '../features/home';
-import Dashboard from '../features/admin/Dashboard';
 import { useAuth } from '../context/AuthContext.jsx';
 import UserRegister from '../features/admin/UserRegister';
 import UsersList from '../features/admin/UsersList.jsx';
