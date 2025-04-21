@@ -1,86 +1,105 @@
-import React from 'react';
 import { Link } from 'react-router-dom';
+import React from 'react';
+/*import React, { useEffect, useState } from 'react';
+import axios from '../../api/apiClient'; // Asegúrate de que apiClient esté configurado correctamente
+
+const Dashboard = () => {
+  const [stats, setStats] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchStats = async () => {
+      try {
+        const response = await axios.get('/api/users/admin/dashboard-stats/');
+        setStats(response.data); // Asume que el backend devuelve un objeto con las estadísticas
+      } catch (err) {
+        console.error('Error al obtener estadísticas del Dashboard:', err);
+        setError('No se pudieron cargar las estadísticas.');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchStats();
+  }, []);
+*/
 
 const Dashboard = () => {
   // Datos de estadísticas quemados
   const stats = {
-    totalUsers: 21,
-    totalOphthalmologists: 19,
-    otherUsers: 3,
+    totalUsers: 13,
+    totalPatients: 8,
+    totalOphthalmologists: 3,
+    totalAdmins: 2,
   };
 
-  // Usuarios recientes quemados
+ // Usuarios recientes quemados
   const recentUsers = [
-    { id: '1', name: 'Juan Mendez', profession: 'Oftalmólogo', email: 'JuanM@gmail.com' },
-    { id: '2', name: 'Laura Mojica', profession: 'Oftalmóloga', email: 'LauM@gmail.com' },
-    { id: '3', name: 'Carlos Pérez', profession: 'Paciente', email: 'CarlosP@gmail.com' },
+    { id: '1', name: 'Juan Mendez', profession: 'Profesional', email: 'JuanM@gmail.com' },
+    { id: '2', name: 'Laura Mojica', profession: 'Profesional', email: 'LauM@gmail.com' },
+    { id: '3', name: 'Carlos Pérez', profession: 'Profesional', email: 'CarlosP@gmail.com' },
   ];
 
   return (
-    <div className="min-h-screen bg-sky-400">
-      {/* Header */}
-      <header className="bg-sky-500 p-4 shadow-md flex justify-between items-center">
+    <div className="bg-gradient-to-br from-blue-100 to-blue-300 min-h-screen relative overflow-hidden">
+      {/* Navbar */}
+      <header className="py-2 bg-very-dark-secondary dark:bg-very-dark-secondary fixed top-0 left-0 right-0 z-50 p-4 shadow-md flex justify-between items-center">
         <div className="flex items-center">
-          <img src="/microscope-icon.png" alt="OCTsense" className="h-6 mr-2" />
-          <h1 className="text-white text-xl font-semibold">OCTsense</h1>
+          <img src="/microscope-icon.png" alt="OCTsense" className="h-8 mr-2" />
+          <h1 className="text-white text-2xl font-bold">OCTsense</h1>
         </div>
         <nav className="flex space-x-4">
-          <Link to="/" className="text-white">Inicio</Link>
-          <Link to="/usuarios" className="text-white">Usuarios</Link>
-          <Link to="/registrar" className="text-white">Registrar</Link>
-          <Link to="/usuarios" className="text-white">Editar</Link>
-          <Link to="/profile" className="text-white">
-            <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
-              <path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd" />
-            </svg>
-          </Link>
+          <Link to="/" className="text-white hover:underline">Inicio</Link>
+          <Link to="/usuarios" className="text-white hover:underline">Usuarios</Link>
+          <Link to="/registrar" className="text-white hover:underline">Registrar</Link>
+          <Link to="/editar" className="text-white hover:underline">Editar</Link>
+          <Link to="/profile" className="text-white hover:underline">Perfil</Link>
         </nav>
       </header>
 
-      <div className="container mx-auto p-4">
+      {/* Contenido principal */}
+      <div className="max-w-7xl mx-auto px-6 py-20 relative z-10">
         {/* Título del Dashboard */}
-        <h2 className="text-3xl font-bold mb-6 text-gray-800">Dashboard</h2>
+        <h2 className="text-4xl font-bold text-blue-800 mb-6">Dashboard</h2>
 
         {/* Tarjetas de estadísticas */}
-        <div className="bg-sky-200 rounded-lg p-6 mb-6 grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div className="text-center border-r border-sky-300">
-            <p className="text-sm text-gray-600">Total Usuarios</p>
-            <p className="text-4xl font-bold text-gray-800">{stats.totalUsers}</p>
+        <div className="grid md:grid-cols-4 gap-6 mb-10">
+          <div className="bg-white rounded-2xl shadow-lg p-6 text-center">
+            <p className="text-gray-600 text-sm">Total Usuarios</p>
+            <p className="text-3xl font-bold text-blue-800">{stats.totalUsers}</p>
           </div>
-          <div className="text-center border-r border-sky-300">
-            <p className="text-sm text-gray-600">Total Oftalmólogos</p>
-            <p className="text-4xl font-bold text-gray-800">{stats.totalOphthalmologists}</p>
+          <div className="bg-white rounded-2xl shadow-lg p-6 text-center">
+            <p className="text-gray-600 text-sm">Total Pacientes</p>
+            <p className="text-3xl font-bold text-blue-800">{stats.totalPatients}</p>
           </div>
-          <div className="text-center">
-            <p className="text-sm text-gray-600">Otros Usuarios</p>
-            <p className="text-4xl font-bold text-gray-800">{stats.otherUsers}</p>
+          <div className="bg-white rounded-2xl shadow-lg p-6 text-center">
+            <p className="text-gray-600 text-sm">Total Profesionales</p>
+            <p className="text-3xl font-bold text-blue-800">{stats.totalOphthalmologists}</p>
+          </div>
+          <div className="bg-white rounded-2xl shadow-lg p-6 text-center">
+            <p className="text-gray-600 text-sm">Total Administradores</p>
+            <p className="text-3xl font-bold text-blue-800">{stats.totalAdmins}</p>
           </div>
         </div>
 
-        {/* Tabla de Usuarios Recientes */}
-        <div className="bg-sky-200 rounded-lg p-4">
-          <div className="flex justify-between items-center mb-4">
-            <h3 className="text-xl font-bold">Últimos Usuarios</h3>
-            <button className="bg-red-400 text-white px-3 py-1 rounded">Ver todos</button>
-          </div>
-          <table className="w-full">
-            <thead>
-              <tr className="border-b border-sky-300">
-                <th className="text-left pb-2">Nombre</th>
-                <th className="text-left pb-2">Profesión</th>
-                <th className="text-left pb-2">Correo</th>
-              </tr>
-            </thead>
-            <tbody>
-              {recentUsers.map((user) => (
-                <tr key={user.id} className="border-b border-sky-300">
-                  <td className="py-3">{user.name}</td>
-                  <td className="py-3">{user.profession}</td>
-                  <td className="py-3">{user.email}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+        {/* Usuarios recientes */}
+        <div className="bg-white rounded-2xl shadow-lg p-6">
+          <h3 className="text-xl font-bold text-blue-700 mb-4">Usuarios Recientes</h3>
+          <ul className="space-y-4">
+            {recentUsers.map((user) => (
+              <li
+                key={user.id}
+                className="flex justify-between items-center bg-blue-50 p-4 rounded-lg shadow-sm"
+              >
+                <div>
+                  <p className="text-blue-800 font-semibold">{user.name}</p>
+                  <p className="text-gray-600 text-sm">{user.profession}</p>
+                </div>
+                <p className="text-gray-500 text-sm">{user.email}</p>
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
     </div>

@@ -56,135 +56,94 @@ const UserRegister = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-sky-400">
-      {/* Header */}
-      <header className="bg-sky-500 p-4 shadow-md flex justify-between items-center">
+    <div className="bg-gradient-to-br from-blue-100 to-blue-300 min-h-screen relative overflow-hidden">
+      {/* Navbar */}
+      <header className="py-2 bg-very-dark-secondary dark:bg-very-dark-secondary fixed top-0 left-0 right-0 z-50 p-4 shadow-md flex justify-between items-center">
         <div className="flex items-center">
-          <img src="/microscope-icon.png" alt="OCTsense" className="h-6 mr-2" />
-          <h1 className="text-white text-xl font-semibold">OCTsense</h1>
+          <img src="/microscope-icon.png" alt="OCTsense" className="h-8 mr-2" />
+          <h1 className="text-white text-2xl font-bold">OCTsense</h1>
         </div>
         <nav className="flex space-x-4">
-          <Link to="/" className="text-white">Inicio</Link>
-          <Link to="/usuarios" className="text-white">Usuarios</Link>
-          <Link to="/registrar" className="text-white">Registrar</Link>
-          <Link to="/usuarios" className="text-white">Editar</Link>
-          <Link to="/profile" className="text-white">
-            <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
-              <path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd" />
-            </svg>
-          </Link>
+          <Link to="/" className="text-white hover:underline">Inicio</Link>
+          <Link to="/usuarios" className="text-white hover:underline">Usuarios</Link>
+          <Link to="/registrar" className="text-white hover:underline">Registrar</Link>
+          <Link to="/editar" className="text-white hover:underline">Editar</Link>
+          <Link to="/profile" className="text-white hover:underline">Perfil</Link>
         </nav>
       </header>
 
-      <div className="container mx-auto p-4">
-        {/* Stats Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-          <div className="bg-sky-200 rounded-lg p-4 text-center">
-            <h3 className="font-bold">Total Usuarios</h3>
-            <p className="text-4xl font-bold">{stats.totalUsers}</p>
+      {/* Contenido principal */}
+      <div className="max-w-7xl mx-auto px-6 py-20 relative z-10">
+        {/* Título */}
+        <h2 className="text-4xl font-bold text-blue-800 mb-6">Registrar Usuario</h2>
+
+        {/* Tarjetas de estadísticas */}
+        <div className="grid md:grid-cols-3 gap-6 mb-10">
+          <div className="bg-white rounded-2xl shadow-lg p-6 text-center">
+            <p className="text-gray-600 text-sm">Total Usuarios</p>
+            <p className="text-3xl font-bold text-blue-800">{stats.totalUsers}</p>
           </div>
-          <div className="bg-sky-200 rounded-lg p-4 text-center">
-            <h3 className="font-bold">Total Admin</h3>
-            <p className="text-4xl font-bold">{stats.totalAdmins}</p>
+          <div className="bg-white rounded-2xl shadow-lg p-6 text-center">
+            <p className="text-gray-600 text-sm">Total Administradores</p>
+            <p className="text-3xl font-bold text-blue-800">{stats.totalAdmins}</p>
           </div>
-          <div className="bg-sky-200 rounded-lg p-4 text-center">
-            <h3 className="font-bold">Total Oftalmólogos</h3>
-            <p className="text-4xl font-bold">{stats.totalOphthalmologists}</p>
+          <div className="bg-white rounded-2xl shadow-lg p-6 text-center">
+            <p className="text-gray-600 text-sm">Total Profesionales</p>
+            <p className="text-3xl font-bold text-blue-800">{stats.totalOphthalmologists}</p>
           </div>
         </div>
 
-        {/* Registration Form */}
-        <form onSubmit={handleSubmit} className="bg-sky-200 rounded-lg p-6 max-w-3xl mx-auto">
+        {/* Formulario de registro */}
+        <form onSubmit={handleSubmit} className="bg-white rounded-2xl shadow-lg p-6 max-w-3xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-            <div className="bg-sky-300 rounded p-4">
-              <label className="block text-gray-700 mb-2">Usuario Deseado</label>
-              <input 
-                type="text" 
-                name="username"
-                className="w-full p-2 rounded" 
-                placeholder="Nombre de usuario" 
-                onChange={handleChange}
-              />
-            </div>
-            <div className="bg-sky-300 rounded p-4">
+            <div>
               <label className="block text-gray-700 mb-2">Nombre</label>
-              <input 
-                type="text" 
+              <input
+                type="text"
                 name="name"
-                className="w-full p-2 rounded" 
-                placeholder="Nombre completo" 
+                className="w-full p-2 rounded border"
+                placeholder="Nombre completo"
                 onChange={handleChange}
               />
             </div>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-            <div className="bg-sky-300 rounded p-4">
+            <div>
               <label className="block text-gray-700 mb-2">Correo</label>
-              <input 
-                type="email" 
+              <input
+                type="email"
                 name="email"
-                className="w-full p-2 rounded" 
-                placeholder="correo@ejemplo.com" 
-                onChange={handleChange}
-              />
-            </div>
-            <div className="bg-sky-300 rounded p-4">
-              <label className="block text-gray-700 mb-2">Profesion</label>
-              <input 
-                type="text" 
-                name="profession"
-                className="w-full p-2 rounded" 
-                placeholder="Oftalmólogo/a" 
+                className="w-full p-2 rounded border"
+                placeholder="correo@ejemplo.com"
                 onChange={handleChange}
               />
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-            <div className="bg-sky-300 rounded p-4">
-              <label className="block text-gray-700 mb-2">Rol</label>
-              <input 
-                type="text" 
-                name="role"
-                className="w-full p-2 rounded" 
-                placeholder="Admin/Usuario" 
-                onChange={handleChange}
-              />
-            </div>
-            <div className="bg-sky-300 rounded p-4">
-              <label className="block text-gray-700 mb-2">Id Asignado : {formData.userId}</label>
-              {/* This is shown as non-editable in your design */}
-              <input 
-                type="text" 
-                className="w-full p-2 rounded bg-gray-100" 
-                value={formData.userId} 
-                disabled 
-              />
-            </div>
-          </div>
-
-          <div className="flex items-center justify-between mt-6">
-            <div className="flex items-center">
-              <input 
-                type="checkbox" 
-                name="sendEmail"
-                id="sendEmail" 
-                className="mr-2" 
-                checked={formData.sendEmail}
-                onChange={handleChange}
-              />
-              <label htmlFor="sendEmail" className="text-sm">
-                Al usuario se le enviará un correo donde tendrá que asignar una contraseña para su cuenta
-              </label>
-            </div>
-            <button 
-              type="submit"
-              className="bg-red-400 text-white px-6 py-2 rounded"
+          <div className="mb-4">
+            <label className="block text-gray-700 mb-2">Rol</label>
+            <select
+              name="role"
+              className="w-full p-2 rounded border"
+              onChange={handleChange}
             >
-              Registrar
-            </button>
+              <option value="">Seleccionar rol</option>
+              <option value="Admin">Administrador</option>
+              <option value="Normal">Usuario</option>
+              <option value="Profesional">Profesional</option>
+            </select>
           </div>
+
+          <div className="mb-4">
+            <p className="text-sm text-gray-700">
+              Se enviará un correo al usuario para asignar una contraseña.
+            </p>
+          </div>
+
+          <button
+            type="submit"
+            className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg transition-all"
+          >
+            Registrar
+          </button>
         </form>
       </div>
     </div>

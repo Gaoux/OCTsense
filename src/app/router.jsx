@@ -10,6 +10,7 @@ import Home from '../features/home';
 import { useAuth } from '../context/AuthContext.jsx';
 import UserRegister from '../features/admin/UserRegister';
 import UsersList from '../features/admin/UsersList.jsx';
+import Dashboard from '../features/admin/Dashboard.jsx';
 
 const PrivateRoute = ({ element }) => {
   const { isAuthenticated } = useAuth();
@@ -29,7 +30,7 @@ const AppRoutes = () => (
     <Route path='/upload' element={<PrivateRoute element={<Upload />} />} />
     <Route path='/analysis' element={<PrivateRoute element={<Analysis />} />} />
     <Route path='/settings' element={<PrivateRoute element={<Settings />} />} />
-    <Route path='/admin-dashboard' element={<UserRegister/>} />
+    <Route path='/admin-dashboard' element={<Dashboard/>} />
     <Route path="/registrar" element={<UserRegister />} />
     <Route path="/usuarios" element={<UsersList />} />
     <Route path='*' element={<NotFound />} />
