@@ -3,17 +3,21 @@ import { BrowserRouter, useLocation } from 'react-router-dom';
 import AppRoutes from './router';
 import { AuthProvider } from '../context/AuthContext';
 import { NavbarComponent } from '../components/u-i/Navbar';
+import { Footer } from '../components/u-i/Footer';
 
 const AppWrapper = () => {
   const location = useLocation();
-  const hideNavbarOnRoutes = ['/login', '/register','/registrar', '/usuarios', '/admin-dashboard'];
-  const shouldHideNavbar = hideNavbarOnRoutes.includes(location.pathname);
+  const hideOnRoutes  = ['/login', '/register','/registrar', '/usuarios', '/admin-dashboard'];
+  const shouldHide = hideOnRoutes.includes(location.pathname);
 
   return (
-    <>
-      {!shouldHideNavbar && <NavbarComponent />}
-      <AppRoutes />
-    </>
+    <div className="flex flex-col min-h-screen">
+      {!shouldHide && <NavbarComponent />}
+      <main className="flex-grow">
+        <AppRoutes />
+      </main>
+      {!shouldHide && <Footer />}
+    </div>
   );
 };
 

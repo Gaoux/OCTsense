@@ -121,5 +121,14 @@
       "passwords_mismatch": "Las contraseñas no coinciden",
       "current_password_required": "La contraseña actual es requerida"
     }
+  },
+  "footer": {
+    "project_by": "Proyecto de investigación desarrollado en",
+    "quick_links": "Enlaces rápidos",
+    "contact": "Contacto",
+    "follow_us": "Síguenos",
+    "view_code": "Ver código del proyecto",
+    "all_rights": "Todos los derechos reservados",
+    "disclaimer": "Este es un proyecto académico. No para uso clínico."
   }
 }

@@ -121,5 +121,15 @@
       "passwords_mismatch": "Passwords don't match",
       "current_password_required": "Current password is required"
     }
+  },
+
+  "footer": {
+    "project_by": "Research project developed at",
+    "quick_links": "Quick Links",
+    "contact": "Contact",
+    "follow_us": "Follow Us",
+    "view_code": "View project code",
+    "all_rights": "All rights reserved",
+    "disclaimer": "This is an academic project. Not for clinical use."
   }
 }
