@@ -1,0 +1,16 @@
+services:
+  frontend:
+    build: .
+    container_name: react_oct_frontend
+    ports:
+      - '3000:3000'
+    volumes:
+      - .:/app
+    environment:
+      - NODE_ENV=production
+    networks:
+      - octsense_network
+
+networks:
+  octsense_network:
+    external: true
