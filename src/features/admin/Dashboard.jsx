@@ -1,6 +1,7 @@
 import {Link} from 'react-router-dom';
 import React, {useEffect, useState} from 'react';
 import {getAdminStats} from "../../api/dashboardService.js";
+import AdminNavbar from "../../components/u-i/Navbar/AdminNavbar";
 /*import React, { useEffect, useState } from 'react';
 import axios from '../../api/apiClient'; // Asegúrate de que apiClient esté configurado correctamente
 
@@ -60,21 +61,8 @@ const Dashboard = () => {
 
     return (
         <div className="bg-gradient-to-br from-blue-100 to-blue-300 min-h-screen relative overflow-hidden">
-            {/* Navbar */}
-            <header
-                className="py-2 bg-very-dark-secondary dark:bg-very-dark-secondary fixed top-0 left-0 right-0 z-50 p-4 shadow-md flex justify-between items-center">
-                <div className="flex items-center">
-                    <img src="/microscope-icon.png" alt="OCTsense" className="h-8 mr-2"/>
-                    <h1 className="text-white text-2xl font-bold">OCTsense</h1>
-                </div>
-                <nav className="flex space-x-4">
-                    <Link to="/" className="text-white hover:underline">Inicio</Link>
-                    <Link to="/usuarios" className="text-white hover:underline">Usuarios</Link>
-                    <Link to="/registrar" className="text-white hover:underline">Registrar</Link>
-                    <Link to="/editar" className="text-white hover:underline">Editar</Link>
-                    <Link to="/profile" className="text-white hover:underline">Perfil</Link>
-                </nav>
-            </header>
+            {/* AdminNavbar */}
+            <AdminNavbar />
 
             {/* Contenido principal */}
             <div className="max-w-7xl mx-auto px-6 py-20 relative z-10">

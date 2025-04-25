@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import AdminNavbar from "../../components/u-i/Navbar/AdminNavbar";
 
 const UserRegister = () => {
   // Stats data - will be replaced by API call
@@ -57,41 +58,13 @@ const UserRegister = () => {
 
   return (
     <div className="bg-gradient-to-br from-blue-100 to-blue-300 min-h-screen relative overflow-hidden">
-      {/* Navbar */}
-      <header className="py-2 bg-very-dark-secondary dark:bg-very-dark-secondary fixed top-0 left-0 right-0 z-50 p-4 shadow-md flex justify-between items-center">
-        <div className="flex items-center">
-          <img src="/microscope-icon.png" alt="OCTsense" className="h-8 mr-2" />
-          <h1 className="text-white text-2xl font-bold">OCTsense</h1>
-        </div>
-        <nav className="flex space-x-4">
-          <Link to="/" className="text-white hover:underline">Inicio</Link>
-          <Link to="/usuarios" className="text-white hover:underline">Usuarios</Link>
-          <Link to="/registrar" className="text-white hover:underline">Registrar</Link>
-          <Link to="/editar" className="text-white hover:underline">Editar</Link>
-          <Link to="/profile" className="text-white hover:underline">Perfil</Link>
-        </nav>
-      </header>
+          {/* AdminNavbar */}
+          <AdminNavbar />
 
       {/* Contenido principal */}
       <div className="max-w-7xl mx-auto px-6 py-20 relative z-10">
         {/* Título */}
         <h2 className="text-4xl font-bold text-blue-800 mb-6">Registrar Usuario</h2>
-
-        {/* Tarjetas de estadísticas */}
-        <div className="grid md:grid-cols-3 gap-6 mb-10">
-          <div className="bg-white rounded-2xl shadow-lg p-6 text-center">
-            <p className="text-gray-600 text-sm">Total Usuarios</p>
-            <p className="text-3xl font-bold text-blue-800">{stats.totalUsers}</p>
-          </div>
-          <div className="bg-white rounded-2xl shadow-lg p-6 text-center">
-            <p className="text-gray-600 text-sm">Total Administradores</p>
-            <p className="text-3xl font-bold text-blue-800">{stats.totalAdmins}</p>
-          </div>
-          <div className="bg-white rounded-2xl shadow-lg p-6 text-center">
-            <p className="text-gray-600 text-sm">Total Profesionales</p>
-            <p className="text-3xl font-bold text-blue-800">{stats.totalOphthalmologists}</p>
-          </div>
-        </div>
 
         {/* Formulario de registro */}
         <form onSubmit={handleSubmit} className="bg-white rounded-2xl shadow-lg p-6 max-w-3xl mx-auto">

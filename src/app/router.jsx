@@ -11,6 +11,8 @@ import { useAuth } from '../context/AuthContext.jsx';
 import UserRegister from '../features/admin/UserRegister';
 import UsersList from '../features/admin/UsersList.jsx';
 import Dashboard from '../features/admin/Dashboard.jsx';
+import Kpis from '../features/admin/kpis/index.jsx';
+import EditUser from '../features/admin/EditUser.jsx';
 
 const PrivateRoute = ({ element }) => {
   const { isAuthenticated } = useAuth();
@@ -33,6 +35,8 @@ const AppRoutes = () => (
     <Route path='/admin-dashboard' element={<Dashboard/>} />
     <Route path="/registrar" element={<UserRegister />} />
     <Route path="/usuarios" element={<UsersList />} />
+    <Route path="/admin/kpis" element={<Kpis/>} />
+    <Route path="/editar-usuario/:id" element={<EditUser />} />
     <Route path='*' element={<NotFound />} />
   </Routes>
 );

@@ -37,3 +37,38 @@ export const getRecentUsers = async () => {
         throw error;
     }
 }
+export const getKPIs = async () => {
+    try {
+        const token = Cookies.get('token');
+
+        const response = await apiClient.get('/api/admin/kpis/', {
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`,
+            },
+        });
+
+        return response.data;
+    } catch (error) {
+        console.error('Error obtaining KPIs: ', error);
+        throw error;
+    }
+};
+
+export const deleteUser = async (id) => {
+    try {
+        const token = Cookies.get('token');
+
+        const response = await apiClient.delete(`/api/users/users/${id}/`, {
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`,
+            },
+        });
+
+        return response.data;
+    } catch (error) {
+        console.error('Error deleting user: ', error);
+        throw error;
+    }
+};
