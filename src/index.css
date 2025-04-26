@@ -5,14 +5,15 @@
 @theme {
   --color-primary: #48bdff;
   --color-dark-primary: #3ba1dc;
-  --color-light-primary: #afdef9;
+  --color-light-primary: #ceeafa;
   --color-secondary: #335cf4;
   --color-light-secondary: #6b87f0;
   --color-dark-secondary: #213b9c;
   --color-very-dark-secondary: #0a153c;
   --color-white: #ffffff;
-  --color-very-light-gray: #faf8f8;
-  --color-light-gray: #b8b8b8;
+  --color-very-light-gray: #ebeaea;
+  --color-very-light-gray-hover: #e0e0e0;
+  --color-light-gray: #c5c4c4;
   --color-gray: #908e8e;
   --color-dark-gray: #6a727d;
   --color-very-dark-gray: #1f2937;
@@ -25,6 +26,10 @@ body {
   margin: 0;
   font-family: Arial, sans-serif;
   background: linear-gradient(to bottom, #e6ffff, #bae6fd);
+}
+
+button {
+  cursor: pointer;
 }
 
 .layout-container {
