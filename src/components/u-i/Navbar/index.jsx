@@ -19,6 +19,9 @@ import {
   FileText,
   Globe,
   ChevronDown,
+  Users,
+  UserPlus,
+  LineChart,
   LogIn,
 } from 'lucide-react';
 import { useAuth } from '../../../context/AuthContext';
@@ -31,6 +34,76 @@ export function NavbarComponent() {
   const location = useLocation();
   const { logout, user, isAuthenticated } = useAuth();
   const { t } = useTranslation();
+
+  const links = [
+    {
+      path: '/',
+      icon: <Home className='w-4 h-4 md:w-6 md:h-6 lg:w-5 lg:h-5 text-white' />,
+      label: t('navbar.home'),
+      protected: false,
+    },
+    {
+      path: '/upload',
+      icon: (
+        <Upload className='w-4 h-4 md:w-6 md:h-6 lg:w-5 lg:h-5 text-white' />
+      ),
+      label: t('navbar.upload'),
+      protected: true,
+    },
+    {
+      path: '/analysis',
+      icon: (
+        <BarChart3 className='w-4 h-4 md:w-6 md:h-6 lg:w-5 lg:h-5 text-white' />
+      ),
+      label: t('navbar.analysis'),
+      protected: true,
+    },
+    {
+      path: '/edit-user',
+      icon: (
+        <FileText className='w-4 h-4 md:w-6 md:h-6 lg:w-5 lg:h-5 text-white' />
+      ),
+      label: t('navbar.report'),
+      protected: true,
+    },
+  ];
+
+  const links_admin = [
+    {
+      path: '/admin-dashboard',
+      icon: <Home className='w-4 h-4 md:w-6 md:h-6 lg:w-5 lg:h-5 text-white' />,
+      label: t('navbar.dashboard'),
+      protected: false,
+    },
+    {
+      path: '/users',
+      icon: (
+        <Users className='w-4 h-4 md:w-6 md:h-6 lg:w-5 lg:h-5 text-white' />
+      ),
+      label: t('navbar.users'),
+      protected: true,
+    },
+    {
+      path: '/create-user',
+      icon: (
+        <UserPlus className='w-4 h-4 md:w-6 md:h-6 lg:w-5 lg:h-5 text-white' />
+      ),
+      label: t('navbar.create'),
+      protected: true,
+    },
+    {
+      path: '/kpis',
+      icon: (
+        <LineChart className='w-4 h-4 md:w-6 md:h-6 lg:w-5 lg:h-5 text-white' />
+      ),
+      label: t('navbar.kpis'),
+      protected: true,
+    },
+  ];
+
+  // !! CHECK IF USER IS ADMIN OR NOT !!
+  // !! CHECK IF IT WORKS CORRECTLY !!
+  const selectedLinks = user?.role === 'admin' ? links_admin : links;
 
   const handleLogout = () => {
     logout();
@@ -123,61 +196,22 @@ export function NavbarComponent() {
 
       <NavbarCollapse className='flex-grow items-center lg:max-w-[50%] md:max-w-[30%]'>
         <div className='md:flex md:gap-3 lg:gap-8 items-center py-4 text-base lg:text-lg md:flex-grow md:justify-between'>
-          <NavbarLink
-            as={Link}
-            to='/'
-            active={isActive('/')}
-            className={`flex items-center gap-2 relative ${
-              isActive('/') ? 'active' : ''
-            }`}
-          >
-            <Home className='w-4 h-4 md:w-6 md:h-6 lg:w-5 lg:h-5 text-white' />
-            <span className='md:hidden lg:inline text-white'>
-              {t('navbar.home')}
-            </span>
-          </NavbarLink>
-
-          <NavbarLink
-            as={Link}
-            to={isAuthenticated ? '/upload' : '/login'}
-            active={isActive('/upload')}
-            className={`flex items-center gap-2 relative ${
-              isActive('/upload') ? 'active' : ''
-            }`}
-          >
-            <Upload className='w-4 h-4 md:w-6 md:h-6 lg:w-5 lg:h-5 text-white' />
-            <span className='md:hidden lg:inline text-white'>
-              {t('navbar.upload')}
-            </span>
-          </NavbarLink>
-
-          <NavbarLink
-            as={Link}
-            to={isAuthenticated ? '/analysis' : '/login'}
-            active={isActive('/analysis')}
-            className={`flex items-center gap-2 relative ${
-              isActive('/analysis') ? 'active' : ''
-            }`}
-          >
-            <BarChart3 className='w-4 h-4 md:w-6 md:h-6 lg:w-5 lg:h-5 text-white' />
-            <span className='md:hidden lg:inline text-white'>
-              {t('navbar.analysis')}
-            </span>
-          </NavbarLink>
-
-          <NavbarLink
-            as={Link}
-            to={isAuthenticated ? '/report' : '/login'}
-            active={isActive('/report')}
-            className={`flex items-center gap-2 relative ${
-              isActive('/report') ? 'active' : ''
-            }`}
-          >
-            <FileText className='w-4 h-4 md:w-6 md:h-6 lg:w-5 lg:h-5 text-white' />
-            <span className='md:hidden lg:inline text-white'>
-              {t('navbar.report')}
-            </span>
-          </NavbarLink>
+          {selectedLinks.map(
+            ({ path, icon, label, protected: isProtected }, index) => (
+              <NavbarLink
+                key={index}
+                as={Link}
+                to={isAuthenticated || !isProtected ? path : '/login'}
+                active={isActive(path)}
+                className={`flex items-center gap-2 relative ${
+                  isActive(path) ? 'active' : ''
+                }`}
+              >
+                {icon}
+                <span className='md:hidden lg:inline text-white'>{label}</span>
+              </NavbarLink>
+            )
+          )}
         </div>
       </NavbarCollapse>
     </Navbar>
