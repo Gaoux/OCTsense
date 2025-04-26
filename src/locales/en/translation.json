@@ -84,18 +84,24 @@
   },
 
   "analysis": {
-    "results": "Analysis Results",
-    "original_image": "Original Tomography",
-    "analysis_details": "Analysis Details",
-    "comments": "Comments",
+    "results": "Results",
+    "original_image": "Uploaded Medical Scan (OCT)",
+    "analysis_details": "Diagnosis Probabilities",
+    "comments": "Observations",
     "save_comments": "Save Comments",
-    "no_data_found": "No analysis data found",
-    "upload_first": "Please upload an image and perform the analysis first.",
-    "most_likely": "Most likely",
+    "no_data_found": "No data available",
+    "upload_first": "Please upload an image first.",
+    "most_likely": "Primary Diagnosis",
+    "primary_diagnosis": "Primary Diagnosis",
+    "unknown": "Unknown",
+    "comments_placeholder": "Add your clinical observations and notes here...",
+    "save_report": "Save Report",
     "category1": "CNV",
     "category2": "DME",
     "category3": "DRUSEN",
-    "category4": "NORMAL"
+    "category4": "NORMAL",
+    "probabilities": "Diagnosis Probabilities",
+    "observations": "Observations"
   },
 
   "settings": {
