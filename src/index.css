@@ -11,8 +11,13 @@
   --color-dark-secondary: #213b9c;
   --color-very-dark-secondary: #0a153c;
   --color-white: #ffffff;
-  --color-light-grey: #b8b8b8;
+  --color-very-light-gray: #faf8f8;
+  --color-light-gray: #b8b8b8;
+  --color-gray: #908e8e;
+  --color-dark-gray: #6a727d;
+  --color-very-dark-gray: #1f2937;
   --color-accent: #ff7477;
+  --color-accent-hover: #ff484b;
   --color-background-secondary: #e6ffff;
 }
 
