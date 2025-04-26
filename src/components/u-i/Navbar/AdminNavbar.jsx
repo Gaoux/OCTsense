@@ -12,7 +12,7 @@ import {
   NavbarLink,
   NavbarToggle,
 } from 'flowbite-react';
-import { Home, Users, UserPlus, LogIn } from 'lucide-react';
+import { Home, Users, UserPlus, LogIn, BarChart2 } from 'lucide-react'; // Importa el ícono para KPIs
 import { useAuth } from '../../../context/AuthContext';
 import './styles.css';
 
@@ -111,6 +111,16 @@ export function AdminNavbar() {
           >
             <UserPlus className="w-4 h-4 md:w-6 md:h-6 lg:w-5 lg:h-5 text-white" />
             <span className="text-white">Registrar</span>
+          </NavbarLink>
+
+          {/* Nueva ruta para KPIs */}
+          <NavbarLink
+            as={Link}
+            to="/admin/kpis"
+            className="flex items-center gap-2"
+          >
+            <BarChart2 className="w-4 h-4 md:w-6 md:h-6 lg:w-5 lg:h-5 text-white" />
+            <span className="text-white">KPIs</span>
           </NavbarLink>
         </div>
       </NavbarCollapse>

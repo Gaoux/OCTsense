@@ -41,7 +41,7 @@ export const getKPIs = async () => {
     try {
         const token = Cookies.get('token');
 
-        const response = await apiClient.get('/api/admin/kpis/', {
+        const response = await apiClient.get('/api/users/kpis/admin/kpis/', {
             headers: {
                 'Content-Type': 'application/json',
                 Authorization: `Bearer ${token}`,
@@ -69,6 +69,22 @@ export const deleteUser = async (id) => {
         return response.data;
     } catch (error) {
         console.error('Error deleting user: ', error);
+        throw error;
+    }
+};
+
+export const registerUser = async (userData) => {
+    try {
+        const token = Cookies.get('token');
+        const response = await apiClient.post('/api/users/users/', userData, {
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`,
+            },
+        });
+        return response.data;
+    } catch (error) {
+        console.error('Error registrando usuario:', error);
         throw error;
     }
 };

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import AdminNavbar from '../../../components/u-i/Navbar/AdminNavbar'; // Solo AdminNavbar
+import { getKPIs } from '../../../api/dashboardService'; // Importa el servicio
+import AdminNavbar from '../../../components/u-i/Navbar/AdminNavbar';
 
 const AdminKPIs = () => {
   const [kpis, setKpis] = useState(null);
@@ -10,14 +10,11 @@ const AdminKPIs = () => {
   useEffect(() => {
     const fetchKPIs = async () => {
       try {
-        const response = await axios.get('/api/admin/kpis/', {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem('token')}`, // Asegúrate de incluir el token de autenticación
-          },
-        });
-        setKpis(response.data);
+        const data = await getKPIs(); // Llama al servicio
+        setKpis(data);
       } catch (err) {
-        setError('Error al cargar los KPIs');
+        console.error('Error al cargar los KPIs:', err);
+        setError('No se pudieron cargar los KPIs. Intenta nuevamente más tarde.');
       } finally {
         setLoading(false);
       }
@@ -26,49 +23,74 @@ const AdminKPIs = () => {
     fetchKPIs();
   }, []);
 
-  if (loading) return <p>Cargando KPIs...</p>;
-  if (error) return <p>{error}</p>;
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center min-h-screen bg-gradient-to-br from-blue-100 to-blue-300">
+        <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-blue-500"></div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="flex justify-center items-center min-h-screen bg-gradient-to-br from-blue-100 to-blue-300">
+        <p className="text-red-500 font-bold">{error}</p>
+      </div>
+    );
+  }
 
   return (
-    <div>
+    <div className="bg-gradient-to-br from-blue-100 to-blue-300 min-h-screen">
       {/* Barra de navegación exclusiva para administradores */}
       <AdminNavbar />
       <div className="max-w-7xl mx-auto px-6 py-10">
-        <h1 className="text-4xl font-bold text-blue-800 mb-6">KPIs Administrativos</h1>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <h1 className="text-4xl font-bold text-blue-800 mb-10 text-center">KPIs Administrativos</h1>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {/* Usuarios registrados en los últimos 30 días */}
-          <div className="bg-white rounded-2xl shadow-lg p-6 text-center">
-            <p className="text-gray-600 text-sm">Usuarios registrados en los últimos 30 días</p>
-            <p className="text-3xl font-bold text-blue-800">{kpis?.users_last_30_days ?? 0}</p>
-          </div>
+          <KPIBox
+            title="Usuarios registrados en los últimos 30 días"
+            value={kpis?.users_last_30_days ?? 0}
+            color="bg-blue-100"
+          />
 
           {/* Usuarios activos en el último mes */}
-          <div className="bg-white rounded-2xl shadow-lg p-6 text-center">
-            <p className="text-gray-600 text-sm">Usuarios activos en el último mes</p>
-            <p className="text-3xl font-bold text-blue-800">{kpis?.active_users_last_month ?? 0}</p>
-          </div>
+          <KPIBox
+            title="Usuarios activos en el último mes"
+            value={kpis?.active_users_last_month ?? 0}
+            color="bg-green-100"
+          />
 
           {/* Promedio de inicios de sesión por usuario */}
-          <div className="bg-white rounded-2xl shadow-lg p-6 text-center">
-            <p className="text-gray-600 text-sm">Promedio de inicios de sesión por usuario</p>
-            <p className="text-3xl font-bold text-blue-800">{(kpis?.average_logins_per_user ?? 0).toFixed(2)}</p>
-          </div>
+          <KPIBox
+            title="Promedio de inicios de sesión por usuario"
+            value={kpis?.average_logins_per_user !== undefined ? kpis.average_logins_per_user.toFixed(2) : 0}
+            color="bg-yellow-100"
+          />
 
           {/* Total de errores reportados */}
-          <div className="bg-white rounded-2xl shadow-lg p-6 text-center">
-            <p className="text-gray-600 text-sm">Total de errores reportados</p>
-            <p className="text-3xl font-bold text-blue-800">{kpis?.total_errors_reported ?? 0}</p>
-          </div>
+          <KPIBox
+            title="Total de errores reportados"
+            value={kpis?.total_errors_reported ?? 0}
+            color="bg-red-100"
+          />
 
           {/* Errores no resueltos */}
-          <div className="bg-white rounded-2xl shadow-lg p-6 text-center">
-            <p className="text-gray-600 text-sm">Errores no resueltos</p>
-            <p className="text-3xl font-bold text-blue-800">{kpis?.unresolved_errors ?? 0}</p>
-          </div>
+          <KPIBox
+            title="Errores no resueltos"
+            value={kpis?.unresolved_errors ?? 0}
+            color="bg-purple-100"
+          />
         </div>
       </div>
     </div>
   );
 };
+
+const KPIBox = ({ title, value, color }) => (
+  <div className={`rounded-2xl shadow-lg p-6 text-center ${color}`}>
+    <p className="text-gray-600 text-sm mb-2">{title}</p>
+    <p className="text-4xl font-bold text-blue-800">{value}</p>
+  </div>
+);
 
 export default AdminKPIs;

@@ -40,7 +40,7 @@ const EditUser = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.put(`/api/users/users/${id}`, user);
+      await axios.patch(`/api/users/users/${id}/`, user);
       alert('Usuario actualizado correctamente.');
       navigate('/usuarios'); // Redirige a la lista de usuarios
     } catch (err) {
@@ -89,7 +89,7 @@ const EditUser = () => {
           </div>
           <div className="mb-4">
             <label htmlFor="profession" className="block text-gray-700 font-bold mb-2">
-              Profesión
+              Rol
             </label>
             <input
               type="text"
