@@ -160,7 +160,7 @@ const ReportDetails = () => {
         {/* Back Button */}
         <button
           className='flex items-center gap-2 cursor-pointer text-black/60 hover:text-black/70 mb-8 transition-colors'
-          onClick={() => navigate(-1)}
+          onClick={() => navigate('/report')}
         >
           <ArrowLeft className='w-5 h-5' />
           <span className='text-base font-semibold'>Back</span>

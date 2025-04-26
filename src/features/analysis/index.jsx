@@ -2,12 +2,15 @@ import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { CheckCircle, FilePlus2 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import { createReport } from '../../api/reportService';
 
 const Analysis = () => {
   const { t } = useTranslation();
   const location = useLocation();
   const navigate = useNavigate();
   const { imageFile, predictionResult } = location.state || {};
+  const [progressAnimated, setProgressAnimated] = useState(false);
+  const [comments, setComments] = useState('');
 
   const categories = [
     {
@@ -35,16 +38,47 @@ const Analysis = () => {
         : 0,
     },
   ];
-  const [progressAnimated, setProgressAnimated] = useState(false);
 
   useEffect(() => {
     const timer = setTimeout(() => setProgressAnimated(true), 100); // slight delay
     return () => clearTimeout(timer);
   }, []);
 
-  const handleGenerateReport = () => {
-    console.log('Generating report...');
-    // You could navigate to /generate-report or trigger a backend service
+  const handleGenerateReport = async () => {
+    if (!imageFile || !predictionResult) {
+      console.error('Missing data to generate report.');
+      return;
+    }
+
+    try {
+      const formData = new FormData();
+      formData.append('image_file', imageFile);
+      formData.append('predicted_diagnostic', predictionResult.prediction);
+
+      // Build the correct labeled probabilities object
+      const probabilitiesLabeled = {
+        CNV: predictionResult.probabilities[0],
+        DME: predictionResult.probabilities[1],
+        DRUSEN: predictionResult.probabilities[2],
+        Normal: predictionResult.probabilities[3],
+      };
+
+      formData.append(
+        'diagnostic_probabilities',
+        JSON.stringify(probabilitiesLabeled)
+      );
+      formData.append('comments', comments);
+
+      const response = await createReport(formData);
+
+      if (response && response.data.id) {
+        navigate(`/report/${response.data.id}`);
+      } else {
+        console.error('No report ID returned from server.');
+      }
+    } catch (error) {
+      console.error('Error creating report:', error);
+    }
   };
 
   if (!imageFile || !predictionResult) {
@@ -53,7 +87,7 @@ const Analysis = () => {
         <h2 className='text-2xl font-bold text-gray-700'>
           {t('analysis.no_data_found')}
         </h2>
-        <p className='text-gray-500 mt-2'> {t('analysis.upload_first')}</p>
+        <p className='text-gray-500 mt-2'>{t('analysis.upload_first')}</p>
       </div>
     );
   }
@@ -144,6 +178,8 @@ const Analysis = () => {
               <textarea
                 className='w-full p-4 border bg-white border-light-gray rounded-lg h-32 focus:ring-4 focus:ring-light-secondary focus:border-transparent outline-none transition-all duration-300'
                 placeholder={t('analysis.comments_placeholder')}
+                value={comments}
+                onChange={(e) => setComments(e.target.value)}
               ></textarea>
               <div className='mt-4 flex justify-end'></div>
             </div>
