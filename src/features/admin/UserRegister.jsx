@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
 import { registerUser } from '../../api/dashboardService'; // Importa el servicio
-import AdminNavbar from "../../components/u-i/Navbar/AdminNavbar";
-
 const UserRegister = () => {
   const [formData, setFormData] = useState({
     name: '',
@@ -41,9 +39,6 @@ const UserRegister = () => {
 
   return (
     <div className="bg-gradient-to-br from-blue-100 to-blue-300 min-h-screen relative overflow-hidden">
-      {/* AdminNavbar */}
-      <AdminNavbar />
-
       {/* Contenido principal */}
       <div className="max-w-7xl mx-auto px-6 py-20 relative z-10">
         {/* Título */}

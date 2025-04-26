@@ -101,8 +101,6 @@ export function NavbarComponent() {
     },
   ];
 
-  // !! CHECK IF USER IS ADMIN OR NOT !!
-  // !! CHECK IF IT WORKS CORRECTLY !!
   const selectedLinks = user?.role === 'admin' ? links_admin : links;
 
   const handleLogout = () => {

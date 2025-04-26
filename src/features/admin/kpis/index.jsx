@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { getKPIs } from '../../../api/dashboardService'; // Importa el servicio
-import AdminNavbar from '../../../components/u-i/Navbar/AdminNavbar';
 
 const AdminKPIs = () => {
   const [kpis, setKpis] = useState(null);
@@ -42,7 +41,6 @@ const AdminKPIs = () => {
   return (
     <div className="bg-gradient-to-br from-blue-100 to-blue-300 min-h-screen">
       {/* Barra de navegación exclusiva para administradores */}
-      <AdminNavbar />
       <div className="max-w-7xl mx-auto px-6 py-10">
         <h1 className="text-4xl font-bold text-blue-800 mb-10 text-center">KPIs Administrativos</h1>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">

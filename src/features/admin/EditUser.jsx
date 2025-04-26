@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import AdminNavbar from "../../components/u-i/Navbar/AdminNavbar";
 import axios from '../../api/apiClient'; 
 const EditUser = () => {
   const { id } = useParams(); // Obtiene el ID del usuario desde la URL
@@ -53,9 +52,6 @@ const EditUser = () => {
 
   return (
     <div className="bg-gradient-to-br from-blue-100 to-blue-300 min-h-screen">
-      {/* AdminNavbar */}
-      <AdminNavbar />
-
       <div className="max-w-4xl mx-auto px-6 py-20">
         <h2 className="text-4xl font-bold text-blue-800 mb-6">Editar Usuario</h2>
         <form onSubmit={handleSubmit} className="bg-white rounded-2xl shadow-lg p-6">

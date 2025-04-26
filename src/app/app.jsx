@@ -8,18 +8,11 @@ const AppWrapper = () => {
   const location = useLocation();
 
   // Rutas donde se debe ocultar la barra de navegación
-  const hideNavbarOnRoutes = [
-    '/login',
-    '/register',
-    '/registrar',
-    '/usuarios',
-    '/admin-dashboard',
-    '/admin/kpis',
-  ];
+  const hideNavbarOnRoutes = ['/login', '/register'];
 
   // Verifica si la ruta actual coincide con una ruta estática o dinámica
   const shouldHideNavbar =
-    hideNavbarOnRoutes.includes(location.pathname) || 
+    hideNavbarOnRoutes.includes(location.pathname) ||
     /^\/editar-usuario\/[a-zA-Z0-9]+$/.test(location.pathname); // Ruta dinámica para /editar-usuario/:id
 
   return (

@@ -1,7 +1,6 @@
 import { Link } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
 import { getAdminStats, getRecentUsers } from "../../api/dashboardService.js"; // Importa el servicio
-import AdminNavbar from "../../components/u-i/Navbar/AdminNavbar";
 
 const Dashboard = () => {
     const [stats, setStats] = useState(null);
@@ -51,9 +50,6 @@ const Dashboard = () => {
 
     return (
         <div className="bg-gradient-to-br from-blue-100 to-blue-300 min-h-screen relative overflow-hidden">
-            {/* AdminNavbar */}
-            <AdminNavbar />
-
             {/* Contenido principal */}
             <div className="max-w-7xl mx-auto px-6 py-20 relative z-10">
                 {/* Título del Dashboard */}
