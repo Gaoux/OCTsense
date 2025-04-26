@@ -1,4 +1,5 @@
 import React from 'react';
+import CancelBtn from '../cancelBtn';
 
 const ConfirmDeleteModal = ({ show, onClose, onConfirm, itemName }) => {
   if (!show) return null;
@@ -21,12 +22,7 @@ const ConfirmDeleteModal = ({ show, onClose, onConfirm, itemName }) => {
         </p>
 
         <div className='flex justify-center gap-4'>
-          <button
-            onClick={onClose}
-            className='px-5 py-2 text-sm cursor-pointer font-semibold rounded-lg text-primary bg-very-light-gray border border-primary hover:bg-primary hover:text-white transition-colors'
-          >
-            Cancel
-          </button>
+          <CancelBtn onClick={onClose} />
           <button
             onClick={onConfirm}
             className='px-5 py-2 text-sm font-semibold rounded-lg bg-accent hover:bg-accent-hover text-white transition-colors cursor-pointer'
