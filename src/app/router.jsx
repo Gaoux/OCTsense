@@ -12,6 +12,7 @@ import UserRegister from '../features/admin/UserRegister';
 import UsersList from '../features/admin/UsersList.jsx';
 import Dashboard from '../features/admin/Dashboard.jsx';
 import Report from '../features/report';
+import ReportDetails from '../features/reportDetails';
 
 const PrivateRoute = ({ element }) => {
   const { isAuthenticated } = useAuth();
@@ -35,7 +36,7 @@ const AppRoutes = () => (
     <Route path='/registrar' element={<UserRegister />} />
     <Route path='/usuarios' element={<UsersList />} />
     <Route path='/report' element={<Report />} />
-    {/* <Route path='/report/:id' element={<ReportDetails />} /> */}
+    <Route path='/report/:id' element={<ReportDetails />} />
     <Route path='*' element={<NotFound />} />
   </Routes>
 );
