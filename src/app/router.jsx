@@ -15,28 +15,49 @@ import Kpis from '../features/admin/kpis/index.jsx';
 import EditUser from '../features/admin/EditUser.jsx';
 
 const PrivateRoute = ({ element }) => {
-  const { isAuthenticated } = useAuth();
-  return isAuthenticated ? element : <Navigate to='/login' />;
+  const { isAuthenticated, user } = useAuth(); 
+  return isAuthenticated && user?.role !== 'admin' ? element : <Navigate to='/login' />;
+};
+
+const AdminRoute = ({ element }) => {
+  const { isAuthenticated, user } = useAuth();
+  return isAuthenticated && user?.role === 'admin' ? element : <Navigate to='/login' />;
 };
 
 const PublicRoute = ({ element }) => {
-  const { isAuthenticated } = useAuth();
-  return isAuthenticated ? <Navigate to='/' /> : element;
+  const { isAuthenticated, user } = useAuth();
+
+  if (isAuthenticated && user?.role === 'admin') {
+    return <Navigate to='/admin-dashboard' />;
+  }
+
+  if (isAuthenticated) {
+    return <Navigate to='/' />;
+  }
+
+  return element;
 };
 
 const AppRoutes = () => (
   <Routes>
+    {/* Rutas públicas */}
     <Route path='/' element={<Home />} />
     <Route path='/login' element={<PublicRoute element={<Login />} />} />
     <Route path='/register' element={<PublicRoute element={<Register />} />} />
+
+    {/* Rutas privadas (no accesibles para administradores) */}
     <Route path='/upload' element={<PrivateRoute element={<Upload />} />} />
     <Route path='/analysis' element={<PrivateRoute element={<Analysis />} />} />
     <Route path='/settings' element={<PrivateRoute element={<Settings />} />} />
-    <Route path='/admin-dashboard' element={<Dashboard/>} />
-    <Route path="/registrar" element={<UserRegister />} />
-    <Route path="/usuarios" element={<UsersList />} />
-    <Route path="/admin/kpis" element={<Kpis/>} />
-    <Route path="/editar-usuario/:id" element={<EditUser />} />
+
+    {/* Rutas exclusivas para administradores */}
+    <Route path='/admin-dashboard' element={<AdminRoute element={<Dashboard />} />} />
+    <Route path='/registrar' element={<AdminRoute element={<UserRegister />} />} />
+    <Route path='/usuarios' element={<AdminRoute element={<UsersList />} />} />
+    <Route path='/admin/kpis' element={<AdminRoute element={<Kpis />} />} />
+    <Route path='/editar-usuario/:id' element={<AdminRoute element={<EditUser />} />} />
+
+    {/* Ruta para páginas no encontradas */}
     <Route path='*' element={<NotFound />} />
   </Routes>
 );

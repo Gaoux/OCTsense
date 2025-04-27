@@ -27,7 +27,7 @@ const Login = () => {
 
     try {
       const user = await login(email, password);
-      if (user.is_admin) {
+      if (user.role=== 'admin') {
         navigate('/admin-dashboard'); // futuro
       } else {
         navigate('/'); // landing page para paciente y oftalmólogo

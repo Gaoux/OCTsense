@@ -153,7 +153,7 @@ const UsersList = () => {
                             <path
                               strokeLinecap='round'
                               strokeLinejoin='round'
-                              d='M19 7l-7 7-7-7'
+                              d="M9 3h6a1 1 0 011 1v1h3a1 1 0 110 2h-1v12a2 2 0 01-2 2H8a2 2 0 01-2-2V7H5a1 1 0 110-2h3V4a1 1 0 011-1zm1 4a1 1 0 00-1 1v9a1 1 0 002 0V8a1 1 0 00-1-1zm4 0a1 1 0 00-1 1v9a1 1 0 002 0V8a1 1 0 00-1-1z" 
                             />
                           </svg>
                         </button>

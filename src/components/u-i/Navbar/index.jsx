@@ -72,31 +72,31 @@ export function NavbarComponent() {
     {
       path: '/admin-dashboard',
       icon: <Home className='w-4 h-4 md:w-6 md:h-6 lg:w-5 lg:h-5 text-white' />,
-      label: t('navbar.dashboard'),
+      label: t('Panel'),
       protected: false,
     },
     {
-      path: '/users',
+      path: '/usuarios',
       icon: (
         <Users className='w-4 h-4 md:w-6 md:h-6 lg:w-5 lg:h-5 text-white' />
       ),
-      label: t('navbar.users'),
+      label: t('Usuarios'),
       protected: true,
     },
     {
-      path: '/create-user',
+      path: '/registrar',
       icon: (
         <UserPlus className='w-4 h-4 md:w-6 md:h-6 lg:w-5 lg:h-5 text-white' />
       ),
-      label: t('navbar.create'),
+      label: t('Registrar'),
       protected: true,
     },
     {
-      path: '/kpis',
+      path: '/admin/kpis',
       icon: (
         <LineChart className='w-4 h-4 md:w-6 md:h-6 lg:w-5 lg:h-5 text-white' />
       ),
-      label: t('navbar.kpis'),
+      label: t('KPIs'),
       protected: true,
     },
   ];
