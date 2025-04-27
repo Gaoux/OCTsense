@@ -80,7 +80,7 @@ export function Footer() {
           <div className="flex items-center gap-2 text-gray-300">
             <Github className="w-4 h-4" />
             <a 
-              href="https://github.com/tu-usuario/octsense" 
+              href="https://github.com/Gaoux/OCTsense" 
               target="_blank" 
               rel="noopener noreferrer"
               className="hover:text-white"

@@ -83,18 +83,22 @@ const Analysis = () => {
 
   if (!imageFile || !predictionResult) {
     return (
-      <div className='flex flex-col items-center justify-center min-h-screen bg-very-light-gray'>
-        <h2 className='text-2xl font-bold text-gray-700'>
-          {t('analysis.no_data_found')}
-        </h2>
-        <p className='text-gray-500 mt-2'>{t('analysis.upload_first')}</p>
+      <div className='flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-blue-100 to-blue-300'>
+        <div className='bg-very-dark-secondary p-10 rounded-xl mb-4'>
+          <h2 className='text-2xl font-bold text-gray-100'>
+            {t('analysis.no_data_found')}
+          </h2>
+          <p className='text-gray-400 mt-2 text-center
+          
+          '>{t('analysis.upload_first')}</p>
+        </div>
       </div>
     );
   }
 
   return (
-    <div id='webcrumbs'>
-      <div className="w-[1200px] p-6 bg-[#faf8f8] font-['Open_Sans',_sans-serif] text-gray-800 mx-auto">
+    <div className="bg-gradient-to-br from-blue-100 to-blue-300" id='webcrumbs'>
+      <div className="w-[1200px] p-6 font-['Open_Sans',_sans-serif] text-gray-800 mx-auto">
         {/* Header */}
         <header className='flex items-center justify-center mb-8'>
           <div className='bg-green-100 p-2 rounded-full mr-3'>
