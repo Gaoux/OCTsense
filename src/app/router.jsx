@@ -11,8 +11,13 @@ import { useAuth } from '../context/AuthContext.jsx';
 import UserRegister from '../features/admin/UserRegister';
 import UsersList from '../features/admin/UsersList.jsx';
 import Dashboard from '../features/admin/Dashboard.jsx';
+
 import Kpis from '../features/admin/kpis/index.jsx';
 import EditUser from '../features/admin/EditUser.jsx';
+
+import Report from '../features/report';
+import ReportDetails from '../features/reportDetails';
+
 
 const PrivateRoute = ({ element }) => {
   const { isAuthenticated, user } = useAuth(); 
@@ -50,13 +55,16 @@ const AppRoutes = () => (
     <Route path='/analysis' element={<PrivateRoute element={<Analysis />} />} />
     <Route path='/settings' element={<PrivateRoute element={<Settings />} />} />
 
+
     {/* Rutas exclusivas para administradores */}
     <Route path='/admin-dashboard' element={<AdminRoute element={<Dashboard />} />} />
     <Route path='/registrar' element={<AdminRoute element={<UserRegister />} />} />
     <Route path='/usuarios' element={<AdminRoute element={<UsersList />} />} />
     <Route path='/admin/kpis' element={<AdminRoute element={<Kpis />} />} />
     <Route path='/editar-usuario/:id' element={<AdminRoute element={<EditUser />} />} />
-
+    <Route path='/report' element={<Report />} />
+    <Route path='/report/:id' element={<ReportDetails />} />
+      
     {/* Ruta para páginas no encontradas */}
     <Route path='*' element={<NotFound />} />
   </Routes>
