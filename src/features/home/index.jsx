@@ -132,30 +132,32 @@ const LandingPage = () => {
             {[1, 2, 3].map((step) => (
               <div
                 key={step}
-                className='relative flex-1 bg-white rounded-xl shadow-lg p-8 z-10 border border-gray-100 hover:shadow-xl hover:-translate-y-2 transition-transform duration-300 text-center'
+                className='relative flex-1 min-h-[242px] max-w-[350px] w-full bg-white rounded-xl shadow-lg p-8 z-10 border border-gray-100 hover:shadow-xl hover:-translate-y-2 transition-transform duration-300 flex flex-col justify-between text-center'
               >
-                <div className='absolute -top-5 -left-5 w-10 h-10 bg-blue-600 text-white font-bold text-lg rounded-full flex items-center justify-center shadow-lg group-hover:bg-blue-700 transition-colors duration-300'>
-                  {step}
-                </div>
-                <div className='flex justify-center mb-6'>
-                  <div className='w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center group-hover:bg-blue-200 transition-colors duration-300'>
-                    {step === 1 && (
-                      <Upload className='w-10 h-10 text-blue-600' />
-                    )}
-                    {step === 2 && (
-                      <ScanLine className='w-10 h-10 text-blue-600' />
-                    )}
-                    {step === 3 && (
-                      <FileText className='w-10 h-10 text-blue-600' />
-                    )}
+                <div>
+                  <div className='absolute -top-5 -left-5 w-10 h-10 bg-blue-600 text-white font-bold text-lg rounded-full flex items-center justify-center shadow-lg group-hover:bg-blue-700 transition-colors duration-300'>
+                    {step}
                   </div>
+                  <div className='flex justify-center mb-6'>
+                    <div className='w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center group-hover:bg-blue-200 transition-colors duration-300'>
+                      {step === 1 && (
+                        <Upload className='w-10 h-10 text-blue-600' />
+                      )}
+                      {step === 2 && (
+                        <ScanLine className='w-10 h-10 text-blue-600' />
+                      )}
+                      {step === 3 && (
+                        <FileText className='w-10 h-10 text-blue-600' />
+                      )}
+                    </div>
+                  </div>
+                  <h3 className='text-xl font-semibold mb-3 text-blue-800'>
+                    {t(`home.step${step}.title`)}
+                  </h3>
+                  <p className='text-gray-600 leading-snug h-[48px] flex items-center text-center'>
+                    {t(`home.step${step}.description`)}
+                  </p>
                 </div>
-                <h3 className='text-xl font-semibold mb-3 text-blue-800'>
-                  {t(`home.step${step}.title`)}
-                </h3>
-                <p className='text-gray-600'>
-                  {t(`home.step${step}.description`)}
-                </p>
               </div>
             ))}
           </div>
