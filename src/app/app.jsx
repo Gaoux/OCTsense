@@ -9,11 +9,11 @@ const AppWrapper = () => {
 
   // Rutas donde se debe ocultar la barra de navegación
   const hideNavbarOnRoutes = ['/login', '/register'];
-
-
+  const shouldHideNavbar =
+  hideNavbarOnRoutes.includes(location.pathname);
   return (
     <>
-       <NavbarComponent />
+     {!shouldHideNavbar && <NavbarComponent />}
       <AppRoutes />
     </>
   );
