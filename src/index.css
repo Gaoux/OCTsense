@@ -19,13 +19,13 @@
   --color-very-dark-gray: #1f2937;
   --color-accent: #ff7477;
   --color-accent-hover: #ff484b;
-  --color-background-secondary: #e6ffff;
+  --color-background-secondary: #E1EFFE;
 }
 
 body {
   margin: 0;
   font-family: Arial, sans-serif;
-  background: linear-gradient(to bottom, #e6ffff, #bae6fd);
+  background: linear-gradient(to bottom, #E1EFFE, #A4CAFE);
 }
 
 button {
@@ -34,7 +34,7 @@ button {
 
 .layout-container {
   display: flex;
-  justify-content: center;
+  /* justify-content: center; */
   align-items: center;
   min-height: 100vh;
 }

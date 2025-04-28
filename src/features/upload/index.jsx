@@ -64,7 +64,7 @@ const Upload = () => {
   };
 
   return (
-    <div className='layout-container flex-col'>
+    <div className='bg-gradient-to-br from-blue-100 to-blue-300 layout-container flex-col'>
       <div className='w-full text-center mt-4 mb-10'>
         <h1 className='text-[50px] font-bold text-black mb-4'>
           {t('upload.title')}

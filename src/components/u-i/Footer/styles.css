@@ -1,0 +1,7 @@
+footer a {
+    transition: color 0.2s ease;
+  }
+  
+  footer a:hover {
+    color: var(--color-primary);
+  }
