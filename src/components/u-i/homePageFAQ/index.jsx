@@ -43,7 +43,7 @@ const HomePageFAQ = () => {
             key={idx}
             className='bg-white rounded-xl shadow-md border border-gray-100 overflow-hidden group transition-all duration-300 hover:shadow-lg'
           >
-            <summary className='flex items-center justify-between p-6 cursor-pointer font-semibold text-lg text-blue-800'>
+            <summary className='flex items-center justify-between p-6 cursor-pointer font-semibold text-base md:text-lg text-blue-800'>
               <span>{faq.question}</span>
               <svg
                 className='w-5 h-5 text-blue-600 transform transition-transform duration-300 group-open:rotate-180'
@@ -61,7 +61,7 @@ const HomePageFAQ = () => {
               </svg>
             </summary>
             <div className='p-6 pt-0 text-gray-600 border-t border-gray-100 transition-all duration-300'>
-              <p>{faq.answer}</p>
+              <p className='text-sm md:text-base'>{faq.answer}</p>
             </div>
           </details>
         ))}

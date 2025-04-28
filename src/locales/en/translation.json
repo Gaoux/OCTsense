@@ -32,15 +32,15 @@
     "howItWorksDescription": "Our simple three-step process delivers rapid and accurate OCT image analysis.",
     "step1": {
       "title": "Upload Image",
-      "description": "Simply upload your OCT images through our secure web portal."
+      "description": "Upload your OCT images through our secure web portal."
     },
     "step2": {
       "title": "AI Analysis",
-      "description": "Our advanced AI algorithms analyze the images, identifying patterns and potential issues."
+      "description": "Our AI scans and detects retinal conditions."
     },
     "step3": {
       "title": "Receive Report",
-      "description": "Get detailed, annotated reports with findings and suggested actions within seconds."
+      "description": "Download a detailed diagnostic report."
     },
     "faq": {
       "title": "Frequently Asked Questions",

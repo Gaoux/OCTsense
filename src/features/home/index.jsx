@@ -10,8 +10,9 @@ const LandingPage = () => {
   const navigate = useNavigate();
 
   return (
-    <div className='bg-gray-50 min-h-screen'>
-      <div className='fixed top-20 right-0 lg:right-30 w-64 md:w-80 lg:w-166 pointer-events-none opacity-40 select-none z-[-1] hidden md:block'>
+    <div className='relative'>
+      {/* Background Image */}
+      <div className='fixed top-20 right-0 lg:right-32 w-48 md:w-72 lg:w-[28rem] pointer-events-none opacity-30 select-none z-[-1] hidden md:block'>
         <img
           src={redFondo}
           alt='Background Globe'
@@ -19,29 +20,32 @@ const LandingPage = () => {
         />
       </div>
 
-      <div className='w-[1200px] p-6 mx-auto'>
+      <div className='max-w-[1200px] w-full px-4 sm:px-6 lg:px-8 mx-auto'>
         {/* Hero Section */}
-        <header className='flex flex-col lg:flex-row items-center justify-between py-16 mb-20'>
-          <div className='w-full lg:w-1/2 pr-0 lg:pr-10 mb-10 lg:mb-0'>
-            <h1 className='text-4xl md:text-5xl font-bold text-blue-800 mb-6 leading-tight'>
+        <header className='flex flex-col lg:flex-row items-center justify-between py-10 md:py-16 mb-16'>
+          {/* Text */}
+          <div className='w-full lg:w-1/2 mb-10 lg:mb-0 text-center lg:text-left'>
+            <h1 className='text-3xl md:text-4xl lg:text-5xl font-bold text-blue-800 mb-6 leading-tight'>
               {t('home.heroTitle')}
             </h1>
-            <p className='text-lg text-gray-700 mb-8 leading-relaxed'>
+            <p className='text-base md:text-lg text-gray-700 mb-8 leading-relaxed'>
               {t('home.heroDescription')}
             </p>
-            <button
-              onClick={() => navigate('/upload')}
-              className='bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-8 rounded-lg shadow-lg transform transition-all duration-300 hover:scale-105 hover:shadow-xl flex items-center'
-            >
-              <span>{t('home.getStarted')}</span>
-            </button>
+            <div className='flex justify-center lg:justify-start'>
+              <button
+                onClick={() => navigate('/upload')}
+                className='bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 md:px-8 rounded-lg shadow-lg transform transition-all duration-300 hover:scale-105 hover:shadow-xl flex items-center'
+              >
+                <span>{t('home.getStarted')}</span>
+              </button>
+            </div>
           </div>
 
-          {/* Hero Background Globe */}
-          <div className='w-full lg:w-1/2 relative'>
-            <div className='relative w-full h-[400px] rounded-xl overflow-hidden shadow-2xl'>
+          {/* Hero Image */}
+          <div className='w-full lg:w-1/2'>
+            <div className='relative w-full h-[250px] sm:h-[300px] md:h-[400px] rounded-xl overflow-hidden shadow-2xl'>
               <img
-                src='https://images.unsplash.com/photo-1618249987208-1dca78ad5a47?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3MzkyNDZ8MHwxfHNlYXJjaHwxfHxvcGh0aGFsbW9sb2d5fGVufDB8fHx8MTc0NTg1MjE4NHww&ixlib=rb-4.0.3&q=80&w=1080'
+                src='https://images.unsplash.com/photo-1618249987208-1dca78ad5a47?...'
                 alt={t('home.heroAlt')}
                 className='w-full h-full object-contain rounded-xl'
               />
@@ -50,41 +54,36 @@ const LandingPage = () => {
         </header>
 
         {/* Benefits Section */}
-        <section className='py-16 mb-20'>
+        <section className='py-10 md:py-16 mb-20'>
           <div className='text-center mb-14'>
             <h2 className='text-3xl font-bold text-blue-800 mb-4'>
               {t('home.benefitsTitle')}
             </h2>
-            <p className='text-lg text-gray-600 max-w-3xl mx-auto'>
+            <p className='text-base md:text-lg text-gray-600 max-w-3xl mx-auto'>
               {t('home.benefitsDescription')}
             </p>
           </div>
 
-          <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8'>
+          <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8'>
             {[1, 2, 3, 4].map((index) => (
               <div
                 key={index}
-                className='bg-white rounded-xl shadow-lg p-6 hover:shadow-xl hover:bg-blue-50 border border-gray-100 transition-transform duration-300 hover:-translate-y-1'
+                className='bg-white rounded-xl shadow-lg p-6 hover:shadow-xl hover:bg-blue-50 border border-gray-100 transition-transform duration-300 hover:-translate-y-1 text-center'
               >
                 <div className='flex justify-center mb-4'>
-                  {index === 1 && (
-                    <Upload className='w-10 h-10 text-blue-600' />
-                  )}
+                  {index === 1 && <Upload className='w-8 h-8 text-blue-600' />}
                   {index === 2 && (
-                    <BarChart3 className='w-10 h-10 text-blue-600' />
+                    <BarChart3 className='w-8 h-8 text-blue-600' />
                   )}
                   {index === 3 && (
-                    <FileText className='w-10 h-10 text-blue-600' />
+                    <FileText className='w-8 h-8 text-blue-600' />
                   )}
-                  {index === 4 && (
-                    <Upload className='w-10 h-10 text-blue-600' />
-                  )}{' '}
-                  {/* Placeholder, change icon if needed */}
+                  {index === 4 && <Upload className='w-8 h-8 text-blue-600' />}
                 </div>
-                <h3 className='text-xl font-semibold mb-3 text-blue-800 text-center'>
+                <h3 className='text-xl font-semibold mb-3 text-blue-800'>
                   {t(`home.benefit${index}.title`)}
                 </h3>
-                <p className='text-gray-600 text-center'>
+                <p className='text-gray-600'>
                   {t(`home.benefit${index}.description`)}
                 </p>
               </div>
@@ -93,96 +92,72 @@ const LandingPage = () => {
         </section>
 
         {/* Video Section */}
-        <section className='py-16 mb-20 bg-blue-50 rounded-2xl p-10'>
+        <section className='py-10 md:py-16 mb-20 bg-blue-50 rounded-2xl px-6 md:px-10'>
           <div className='text-center mb-12'>
             <h2 className='text-3xl font-bold text-blue-800 mb-4'>
               {t('home.videoTitle')}
             </h2>
-            <p className='text-lg text-gray-600 max-w-3xl mx-auto'>
+            <p className='text-base md:text-lg text-gray-600 max-w-3xl mx-auto'>
               {t('home.videoDescription')}
             </p>
           </div>
 
-          <div className='max-w-4xl mx-auto'>
-            <div className='relative w-full h-[400px] rounded-xl overflow-hidden shadow-2xl'>
+          <div className='w-full max-w-4xl mx-auto'>
+            <div className='relative w-full h-[250px] sm:h-[300px] md:h-[400px] rounded-xl overflow-hidden shadow-2xl'>
               <img
-                src='https://images.unsplash.com/photo-1576091160550-2173dba999ef?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3MzkyNDZ8MHwxfHNlYXJjaHwxfHxtZWRpY2FsfGVufDB8fHx8MTc0NTg1MjIxNXww&ixlib=rb-4.0.3&q=80&w=1080'
+                src='https://images.unsplash.com/photo-1576091160550-2173dba999ef?...'
                 alt={t('home.videoAlt')}
-                className='w-full h-full object-cover'
+                className='w-full h-full object-cover rounded-xl'
               />
             </div>
           </div>
         </section>
 
         {/* How It Works Section */}
-        <section className='py-16 mb-20'>
+        <section className='py-10 md:py-16 mb-20'>
           <div className='text-center mb-14'>
             <h2 className='text-3xl font-bold text-blue-800 mb-4'>
               {t('home.howItWorksTitle')}
             </h2>
-            <p className='text-lg text-gray-600 max-w-3xl mx-auto'>
+            <p className='text-base md:text-lg text-gray-600 max-w-3xl mx-auto'>
               {t('home.howItWorksDescription')}
             </p>
           </div>
 
-          <div className='flex flex-col md:flex-row items-center justify-between gap-8 relative'>
+          <div className='flex flex-col md:flex-row items-center justify-between gap-6 relative'>
             {/* Connection Lines (Desktop Only) */}
-            <div className='hidden md:block absolute top-1/3 left-[28%] w-[20%] h-[3px] bg-blue-200 z-0'></div>
-            <div className='hidden md:block absolute top-1/3 right-[28%] w-[20%] h-[3px] bg-blue-200 z-0'></div>
+            <div className='hidden md:block absolute top-1/3 left-[28%] w-[20%] h-[2px] bg-dark-primary z-0'></div>
+            <div className='hidden md:block absolute top-1/3 right-[28%] w-[20%] h-[2px] bg-dark-primary z-0'></div>
 
-            {/* Step 1 */}
-            <div className='relative w-full md:w-1/3 bg-white rounded-xl shadow-lg p-8 z-10 transition-all duration-300 hover:shadow-xl hover:-translate-y-2 group border border-gray-100'>
-              <div className='absolute -top-5 -left-5 w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center text-white font-bold text-lg shadow-lg group-hover:bg-blue-700 transition-colors duration-300'>
-                1
-              </div>
-              <div className='flex justify-center mb-6'>
-                <div className='w-20 h-20 bg-blue-100 rounded-full flex items-center justify-center group-hover:bg-blue-200 transition-colors duration-300'>
-                  <Upload className='w-10 h-10 text-blue-600' />
+            {[1, 2, 3].map((step) => (
+              <div
+                key={step}
+                className='relative flex-1 bg-white rounded-xl shadow-lg p-8 z-10 border border-gray-100 hover:shadow-xl hover:-translate-y-2 transition-transform duration-300 text-center'
+              >
+                <div className='absolute -top-5 -left-5 w-10 h-10 bg-blue-600 text-white font-bold text-lg rounded-full flex items-center justify-center shadow-lg group-hover:bg-blue-700 transition-colors duration-300'>
+                  {step}
                 </div>
-              </div>
-              <h3 className='text-xl font-semibold mb-3 text-center text-blue-800'>
-                {t('home.step1.title')}
-              </h3>
-              <p className='text-gray-600 text-center'>
-                {t('home.step1.description')}
-              </p>
-            </div>
-
-            {/* Step 2 */}
-            <div className='relative w-full md:w-1/3 bg-white rounded-xl shadow-lg p-8 z-10 transition-all duration-300 hover:shadow-xl hover:-translate-y-2 group border border-gray-100'>
-              <div className='absolute -top-5 -left-5 w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center text-white font-bold text-lg shadow-lg group-hover:bg-blue-700 transition-colors duration-300'>
-                2
-              </div>
-              <div className='flex justify-center mb-6'>
-                <div className='w-20 h-20 bg-blue-100 rounded-full flex items-center justify-center group-hover:bg-blue-200 transition-colors duration-300'>
-                  <ScanLine className='w-10 h-10 text-blue-600' />
+                <div className='flex justify-center mb-6'>
+                  <div className='w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center group-hover:bg-blue-200 transition-colors duration-300'>
+                    {step === 1 && (
+                      <Upload className='w-10 h-10 text-blue-600' />
+                    )}
+                    {step === 2 && (
+                      <ScanLine className='w-10 h-10 text-blue-600' />
+                    )}
+                    {step === 3 && (
+                      <FileText className='w-10 h-10 text-blue-600' />
+                    )}
+                  </div>
                 </div>
+                <h3 className='text-xl font-semibold mb-3 text-blue-800'>
+                  {t(`home.step${step}.title`)}
+                </h3>
+                <p className='text-gray-600'>
+                  {t(`home.step${step}.description`)}
+                </p>
               </div>
-              <h3 className='text-xl font-semibold mb-3 text-center text-blue-800'>
-                {t('home.step2.title')}
-              </h3>
-              <p className='text-gray-600 text-center'>
-                {t('home.step2.description')}
-              </p>
-            </div>
-
-            {/* Step 3 */}
-            <div className='relative w-full md:w-1/3 bg-white rounded-xl shadow-lg p-8 z-10 transition-all duration-300 hover:shadow-xl hover:-translate-y-2 group border border-gray-100'>
-              <div className='absolute -top-5 -left-5 w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center text-white font-bold text-lg shadow-lg group-hover:bg-blue-700 transition-colors duration-300'>
-                3
-              </div>
-              <div className='flex justify-center mb-6'>
-                <div className='w-20 h-20 bg-blue-100 rounded-full flex items-center justify-center group-hover:bg-blue-200 transition-colors duration-300'>
-                  <FileText className='w-10 h-10 text-blue-600' />
-                </div>
-              </div>
-              <h3 className='text-xl font-semibold mb-3 text-center text-blue-800'>
-                {t('home.step3.title')}
-              </h3>
-              <p className='text-gray-600 text-center'>
-                {t('home.step3.description')}
-              </p>
-            </div>
+            ))}
           </div>
         </section>
 
