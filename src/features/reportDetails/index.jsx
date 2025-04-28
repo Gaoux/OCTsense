@@ -6,9 +6,9 @@ import {
   updateReportComments,
   getReportImage,
 } from '../../api/reportService';
-import FullImageModal from '../../components/u-i/imageModal';
-import ReportDetailsInfo from '../../components/u-i/reportDetailsInfo';
-import ConfirmDeleteModal from '../../components/u-i/confirmDeleteModal';
+import FullImageModal from '../../components/ui/imageModal';
+import ReportDetailsInfo from '../../components/ui/reportDetailsInfo';
+import ConfirmDeleteModal from '../../components/ui/confirmDeleteModal';
 import { ArrowLeft, Trash2 } from 'lucide-react';
 import jsPDF from 'jspdf';
 

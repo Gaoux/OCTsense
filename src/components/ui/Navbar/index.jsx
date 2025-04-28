@@ -129,7 +129,7 @@ export function NavbarComponent() {
             to='/'
             active={isActive('/')}
             className={`flex items-center gap-2 relative ${
-              isActive('/') ? 'md:active' : ''
+              isActive('/') ? 'active' : ''
             }`}
           >
             <Home className='w-4 h-4 md:w-6 md:h-6 lg:w-5 lg:h-5 text-white' />
@@ -143,7 +143,7 @@ export function NavbarComponent() {
             to={isAuthenticated ? '/upload' : '/login'}
             active={isActive('/upload')}
             className={`flex items-center gap-2 relative ${
-              isActive('/upload') ? 'md:active' : ''
+              isActive('/upload') ? 'active' : ''
             }`}
           >
             <Upload className='w-4 h-4 md:w-6 md:h-6 lg:w-5 lg:h-5 text-white' />
@@ -157,7 +157,7 @@ export function NavbarComponent() {
             to={isAuthenticated ? '/analysis' : '/login'}
             active={isActive('/analysis')}
             className={`flex items-center gap-2 relative ${
-              isActive('/analysis') ? 'md:active' : ''
+              isActive('/analysis') ? 'active' : ''
             }`}
           >
             <BarChart3 className='w-4 h-4 md:w-6 md:h-6 lg:w-5 lg:h-5 text-white' />
@@ -171,7 +171,7 @@ export function NavbarComponent() {
             to={isAuthenticated ? '/report' : '/login'}
             active={isActive('/report')}
             className={`flex items-center gap-2 relative ${
-              isActive('/report') ? 'md:active' : ''
+              isActive('/report') ? 'active' : ''
             }`}
           >
             <FileText className='w-4 h-4 md:w-6 md:h-6 lg:w-5 lg:h-5 text-white' />

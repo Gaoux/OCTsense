@@ -2,7 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Upload, BarChart3, FileText, ScanLine } from 'lucide-react';
-import HomePageFAQ from '../../components/u-i/homePageFAQ';
+import HomePageFAQ from '../../components/ui/homePageFAQ';
 import redFondo from '../../assets/fondo-red.png';
 
 const LandingPage = () => {
