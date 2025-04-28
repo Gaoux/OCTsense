@@ -155,7 +155,7 @@ const ReportDetails = () => {
   }
 
   return (
-    <div className='font-sans min-h-screen p-6 bg-background-secondary'>
+    <div className='font-sans min-h-screen p-6'>
       <div className='max-w-4xl mx-auto bg-white rounded-2xl shadow-lg p-8 relative'>
         {/* Back Button */}
         <button

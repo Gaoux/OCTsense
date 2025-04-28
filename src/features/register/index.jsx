@@ -81,13 +81,13 @@ const Register = () => {
         </p>
         {error && <p className='text-sm text-red-600'>{error}</p>}
         <div className='space-y-4'>
-          <input
+          {/* <input
             type='text'
             name='username'
             placeholder={t('register.placeholders.username')}
             onChange={handleChange}
             className='w-full px-4 py-2 border rounded-md focus:outline-none focus:ring focus:ring-cyan-300'
-          />
+          /> */}
           <input
             type='text'
             name='name'

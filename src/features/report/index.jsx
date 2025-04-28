@@ -41,9 +41,9 @@ const Report = () => {
   };
 
   return (
-    <div className='font-sans min-h-screen p-4 md:p-6 lg:p-8 transition-all duration-300 bg-gradient-to-br from-blue-100 to-blue-300'>
+    <div className='bg-gradient-to-br from-blue-100 to-blue-300 font-sans min-h-screen p-4 md:p-6 lg:p-8 transition-all duration-300'>
       <div className='max-w-7xl mx-auto rounded-2xl shadow-lg overflow-hidden transition-all duration-300 bg-white'>
-        <header className='bg-dark-secondary p-6 text-white'>
+        <header className='bg-very-dark-secondary p-6 text-white'>
           <h1 className='text-3xl font-bold'>Reports History</h1>
           <p className='mt-1 text-light-primary text-lg'>
             View and manage your previous medical reports
@@ -61,7 +61,7 @@ const Report = () => {
               />
             ))
           ) : (
-            <div className='col-span-full text-center text-dark-primary font-medium'>
+            <div className='col-span-full text-center text-gray font-medium'>
               No reports available.
             </div>
           )}
