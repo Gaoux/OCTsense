@@ -1,23 +1,72 @@
 {
   "home": {
-    "title": "Optimiza tus imágenes OCT con",
-    "description": "Un sistema avanzado de detección en imágenes OCT basado en inteligencia artificial. Nuestro objetivo es facilitar la detección temprana de patologías oculares, proporcionando herramientas para un diagnóstico más preciso y eficiente.",
-    "benefits": {
-      "title": "¿Por qué usar OCTsense?",
-      "diagnosis": "Diagnóstico más rápido con inteligencia artificial",
-      "reduction": "Reducción de errores en el diagnóstico gracias al análisis asistido por IA",
-      "compatibility": "Compatibilidad con múltiples formatos de imagen",
-      "security": "Acceso seguro"
+    "heroTitle": "OCTsense: Análisis de Imágenes OCT Potenciado por IA",
+    "heroDescription": "Tecnología de inteligencia artificial revolucionaria que ayuda a los oftalmólogos a analizar imágenes OCT con precisión y eficiencia, mejorando las capacidades diagnósticas y ahorrando tiempo valioso.",
+    "heroAlt": "Fondo de análisis de imagen OCT",
+    "getStarted": "Comenzar",
+
+    "benefitsTitle": "Beneficios Clave",
+    "benefitsDescription": "Experimenta las ventajas de la tecnología de IA de vanguardia de OCTsense en tu práctica oftalmológica.",
+    "benefit1": {
+      "title": "Soporte Diagnóstico",
+      "description": "El análisis impulsado por IA proporciona una evaluación precisa e identificación de patologías en imágenes OCT, apoyando tus decisiones clínicas."
     },
-    "try_it": "Pruébalo",
-    "interactive_guide": "Guía interactiva",
-    "guide": {
-      "upload": "Carga",
-      "upload_description": "Gestión de imágenes de manera rápida y segura.",
-      "analysis": "Análisis",
-      "analysis_description": "Asistido por IA para obtener prediagnósticos confiables.",
-      "report": "Informe",
-      "report_description": "Resultados detallados del análisis."
+    "benefit2": {
+      "title": "Reducción de Tiempo",
+      "description": "Reduce el tiempo dedicado al análisis manual de imágenes hasta en un 70%, permitiéndote enfocarte más en la atención al paciente."
+    },
+    "benefit3": {
+      "title": "Compatibilidad de Dispositivos",
+      "description": "Compatible con todos los principales dispositivos y formatos OCT, asegurando una integración perfecta en tu flujo de trabajo clínico."
+    },
+    "benefit4": {
+      "title": "Seguridad de Datos",
+      "description": "Plataforma compatible con HIPAA con cifrado de extremo a extremo, garantizando que los datos de tus pacientes permanezcan seguros y privados."
+    },
+
+    "videoTitle": "Mira OCTsense en Acción",
+    "videoDescription": "Observa cómo nuestra tecnología de IA analiza imágenes OCT y genera informes completos en segundos.",
+    "videoAlt": "Miniatura del video de demostración de OCTsense",
+
+    "howItWorksTitle": "Cómo Funciona",
+    "howItWorksDescription": "Nuestro sencillo proceso de tres pasos proporciona un análisis rápido y preciso de imágenes OCT.",
+    "step1": {
+      "title": "Subir Imagen",
+      "description": "Simplemente sube tus imágenes OCT a través de nuestro portal web seguro."
+    },
+    "step2": {
+      "title": "Análisis de IA",
+      "description": "Nuestros algoritmos avanzados de IA analizan las imágenes, identificando patrones y posibles problemas."
+    },
+    "step3": {
+      "title": "Recibir Informe",
+      "description": "Obtén informes detallados y anotados con hallazgos y acciones sugeridas en cuestión de segundos."
+    },
+    "faq": {
+      "title": "Preguntas Frecuentes",
+      "description": "Encuentra respuestas a las preguntas más comunes sobre la tecnología OCTsense y cómo puede beneficiar a tu práctica.",
+      "questions": [
+        {
+          "q": "¿Qué tan precisa es el análisis de IA de OCTsense?",
+          "a": "OCTsense alcanza más del 95% de precisión en la identificación de patologías retinianas comunes como CNV, DME, DRUSEN o tejido normal. El modelo de IA ha sido entrenado y validado con miles de imágenes OCT anotadas por expertos para garantizar su fiabilidad clínica."
+        },
+        {
+          "q": "¿OCTsense cumple con las normativas de protección de datos médicos?",
+          "a": "Sí, OCTsense cumple con los estándares de HIPAA en los Estados Unidos y con el GDPR en Europa. Todos los datos de pacientes se cifran durante la transmisión y almacenamiento, asegurando su protección total."
+        },
+        {
+          "q": "¿Qué tipos de enfermedades puede detectar OCTsense?",
+          "a": "Actualmente, OCTsense se enfoca en la detección automática de CNV (Neovascularización Coroidal), DME (Edema Macular Diabético), DRUSEN (marcadores de Degeneración Macular Relacionada con la Edad) y tejido retiniano normal. Próximas versiones podrían ampliar las categorías diagnósticas."
+        },
+        {
+          "q": "¿OCTsense se integra con sistemas EMR u hospitalarios?",
+          "a": "En esta etapa, OCTsense no ofrece integración directa con EMR. Sin embargo, los resultados y reportes pueden descargarse fácilmente como archivos estandarizados y adjuntarse manualmente a los sistemas de historial médico existentes."
+        },
+        {
+          "q": "¿Cómo maneja OCTsense el entrenamiento y soporte al usuario?",
+          "a": "Ofrecemos guías de inicio, tutoriales paso a paso y soporte ilimitado por correo electrónico y chat. Nuestro equipo garantiza que cada usuario pueda aprender rápidamente a utilizar OCTsense sin necesidad de conocimientos técnicos especializados."
+        }
+      ]
     }
   },
   "navbar": {
