@@ -65,13 +65,13 @@ export function NavbarComponent() {
         <Dropdown
           arrowIcon={false}
           inline
+          className='bg-very-dark-gray dark:bg-very-dark-gray shadow-lg rounded-lg' // <-- ADD THIS
           label={
             <div className='flex items-center gap-1 text-white cursor-pointer hover:opacity-90'>
               <Globe className='w-5 h-5' />
               <ChevronDown className='w-4 h-4' />
             </div>
           }
-          onBlur={() => setLanguageOpen(false)}
         >
           <DropdownItem onClick={() => changeLanguage('en')}>EN</DropdownItem>
           <DropdownItem onClick={() => changeLanguage('es')}>ES</DropdownItem>
@@ -81,6 +81,7 @@ export function NavbarComponent() {
           <Dropdown
             arrowIcon={false}
             inline
+            className='bg-very-dark-gray dark:bg-very-dark-gray shadow-lg rounded-lg' // <-- ADD THIS
             label={
               <Avatar
                 alt='User avatar'
@@ -127,8 +128,9 @@ export function NavbarComponent() {
             as={Link}
             to='/'
             active={isActive('/')}
-            className={`flex items-center gap-2 relative ${isActive('/') ? 'active' : ''
-              }`}
+            className={`flex items-center gap-2 relative ${
+              isActive('/') ? 'active' : ''
+            }`}
           >
             <Home className='w-4 h-4 md:w-6 md:h-6 lg:w-5 lg:h-5 text-white' />
             <span className='md:hidden lg:inline text-white'>
@@ -140,8 +142,9 @@ export function NavbarComponent() {
             as={Link}
             to={isAuthenticated ? '/upload' : '/login'}
             active={isActive('/upload')}
-            className={`flex items-center gap-2 relative ${isActive('/upload') ? 'active' : ''
-              }`}
+            className={`flex items-center gap-2 relative ${
+              isActive('/upload') ? 'active' : ''
+            }`}
           >
             <Upload className='w-4 h-4 md:w-6 md:h-6 lg:w-5 lg:h-5 text-white' />
             <span className='md:hidden lg:inline text-white'>
@@ -153,8 +156,9 @@ export function NavbarComponent() {
             as={Link}
             to={isAuthenticated ? '/analysis' : '/login'}
             active={isActive('/analysis')}
-            className={`flex items-center gap-2 relative ${isActive('/analysis') ? 'active' : ''
-              }`}
+            className={`flex items-center gap-2 relative ${
+              isActive('/analysis') ? 'active' : ''
+            }`}
           >
             <BarChart3 className='w-4 h-4 md:w-6 md:h-6 lg:w-5 lg:h-5 text-white' />
             <span className='md:hidden lg:inline text-white'>
@@ -166,8 +170,9 @@ export function NavbarComponent() {
             as={Link}
             to={isAuthenticated ? '/report' : '/login'}
             active={isActive('/report')}
-            className={`flex items-center gap-2 relative ${isActive('/report') ? 'active' : ''
-              }`}
+            className={`flex items-center gap-2 relative ${
+              isActive('/report') ? 'active' : ''
+            }`}
           >
             <FileText className='w-4 h-4 md:w-6 md:h-6 lg:w-5 lg:h-5 text-white' />
             <span className='md:hidden lg:inline text-white'>

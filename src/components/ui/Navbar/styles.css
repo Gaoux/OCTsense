@@ -6,3 +6,10 @@
   height: 4px;
   background-color: var(--color-primary);
 }
+
+/* Hide the underline effect for small screens */
+@media (max-width: 767px) {
+  .active::after {
+    display: none;
+  }
+}
