@@ -33,6 +33,12 @@ const Login = () => {
         navigate('/'); // landing page para paciente y oftalmólogo
       }
     } catch (err) {
+      const backendError = err?.response?.data?.error;
+      if (backendError === 'Debes confirmar tu correo antes de iniciar sesión.') {
+        setError("Tu correo aún no ha sido verificado. Revisa tu bandeja de entrada.");
+      } else {
+        setError(t('login.error'));
+      }
       console.error(err);
       setError(t('login.error'));
     } finally {
@@ -71,7 +77,7 @@ const Login = () => {
           <div className='flex justify-end items-center gap-2 text-sm'>
             {/* {t('login.forgotPassword')}{' '} */}
             <Link
-              to='/reset-password'
+              to='/forgot-password'
               className='text-primary underline hover:text-dark-primary'
             >
               {t('login.forgotPassword')}

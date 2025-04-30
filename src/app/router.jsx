@@ -13,6 +13,9 @@ import UsersList from '../features/admin/UsersList.jsx';
 import Dashboard from '../features/admin/Dashboard.jsx';
 import Report from '../features/report';
 import ReportDetails from '../features/reportDetails';
+import ForgotPassword from '../features/ForgotPassword/index.jsx';
+import ResetPassword from '../features/ResetPassword/index.jsx';
+import VerifyEmailPage from '../features/verify-email/index.jsx';
 
 const PrivateRoute = ({ element }) => {
   const { isAuthenticated } = useAuth();
@@ -38,6 +41,9 @@ const AppRoutes = () => (
     <Route path='/report' element={<Report />} />
     <Route path='/report/:id' element={<ReportDetails />} />
     <Route path='*' element={<NotFound />} />
+    <Route path="/forgot-password" element={<ForgotPassword />} />
+    <Route path="/reset-password" element={<ResetPassword />} />
+    <Route path="/verify-email" element={<VerifyEmailPage />} />
   </Routes>
 );
 
