@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getReportHistory, deleteReport } from '../../api/reportService';
-import ReportCard from '../../components/u-i/reportCard';
-import ConfirmDeleteModal from '../../components/u-i/confirmDeleteModal'; // 👈 Import
+import ReportCard from '../../components/ui/reportCard';
+import ConfirmDeleteModal from '../../components/ui/confirmDeleteModal'; // 👈 Import
 import { useAuth } from '../../context/AuthContext';
 
 const Report = () => {
