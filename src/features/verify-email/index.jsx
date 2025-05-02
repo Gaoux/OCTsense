@@ -14,7 +14,7 @@ function VerifyEmailPage() {
 
     if (token) {
       axios
-        .get(`http://localhost:8000/api/verify-email?token=${token}`)
+      .get(`http://localhost:8000/api/users/verify-email?token=${token}`)
         .then(() => {
           setMessage('Tu correo fue verificado exitosamente.');
           setSuccess(true);

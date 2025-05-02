@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 function ResetPassword() {
@@ -9,11 +9,12 @@ function ResetPassword() {
 
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
+  console.log("Componente cargado. Token:", token);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('/api/reset-password/', { token, password });
+      const response = await axios.post('http://localhost:8000/api/users/reset-password/', { token, password });
       setMessage(response.data.message);
       setTimeout(() => {
         navigate('/login');
