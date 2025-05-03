@@ -8,6 +8,7 @@
   --color-light-primary: #ceeafa;
   --color-secondary: #335cf4;
   --color-light-secondary: #6b87f0;
+  --color-very-light-secondary: #aabcfe;
   --color-dark-secondary: #213b9c;
   --color-very-dark-secondary: #0a153c;
   --color-white: #ffffff;
@@ -19,14 +20,64 @@
   --color-very-dark-gray: #1f2937;
   --color-accent: #ff7477;
   --color-accent-hover: #ff484b;
-  --color-background-secondary: #E1EFFE;
+  --color-background-begin: #E1EFFE;
+  --color-background-end: #A4CAFE;
 }
 
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: linear-gradient(to bottom, #E1EFFE, #A4CAFE);
+.theme-normal {
+  --color-light-primary: #497255;
+  --color-primary: #1E2F23;
+  --color-dark-primary: #032e10;
+  --color-very-light-secondary: #cbe391;
+  --color-light-secondary: #90a758;
+  --color-secondary: #768948;
+  --color-dark-secondary: #607744;
+  --color-very-dark-secondary: #34623F;
+  --color-white: #ffffff;
+  --color-very-light-gray: #ebeaea;
+  --color-very-light-gray-hover: #e0e0e0;
+  --color-light-gray: #c5c4c4;
+  --color-gray: #908e8e;
+  --color-dark-gray: #6a727d;
+  --color-very-dark-gray: #1f2937;
+  --color-accent: #f8bc4d;
+  --color-accent-hover: #ef9a00;
+  --color-background-begin: #f7ffe4;
+  --color-background-end: #f0ffcd;
 }
+
+body.theme-normal,
+.theme-normal {
+  background: linear-gradient(to bottom, var(--color-background-begin), var(--color-background-end));
+}
+
+.theme-professional {
+  --color-light-primary: #7f91a7;
+  --color-primary: #465d7a;
+  --color-dark-primary: #274060;
+  --color-very-light-secondary: #bac4e7;
+  --color-light-secondary: #6b87f0;
+  --color-secondary: #335cf4;
+  --color-dark-secondary: #1b3388;
+  --color-very-dark-secondary: #0a153c;
+  --color-white: #ffffff;
+  --color-very-light-gray: #ebeaea;
+  --color-very-light-gray-hover: #e0e0e0;
+  --color-light-gray: #c5c4c4;
+  --color-gray: #908e8e;
+  --color-dark-gray: #6a727d;
+  --color-very-dark-gray: #1f2937;
+  --color-accent: #C2CAE8;
+  --color-accent-hover: #990D35;
+  --color-background-begin: #e8f3ff;
+  --color-background-end: #cce2ff;
+}
+
+body.theme-profesional,
+.theme-professional {
+  background: linear-gradient(to bottom, var(--color-background-begin), var(--color-background-end));
+}
+
 
 button {
   cursor: pointer;
@@ -130,6 +181,7 @@ button {
   font-size: 1.5rem;
   color: #1e3a8a;
 }
+
 .select {
   appearance: none;
   background-color: #38bdf8;
@@ -140,9 +192,11 @@ button {
   border-radius: 0.5rem;
   font-size: 1rem;
 }
+
 .select-wrapper {
   position: relative;
 }
+
 .select-icon {
   position: absolute;
   right: 1rem;
@@ -165,6 +219,7 @@ button {
   font-weight: bold;
   text-align: left;
 }
+
 .clip-triangle {
   clip-path: polygon(100% 0, 100% 100%, 0 100%);
 }

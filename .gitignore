@@ -173,6 +173,9 @@ sketch
 .history
 .ionide
 
+# Ignore independent notes
+TODO.txt
+
 .env
 
 # End of https://www.toptal.com/developers/gitignore/api/react,visualstudiocode,node

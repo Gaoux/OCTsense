@@ -29,7 +29,7 @@ import './styles.css';
 export function NavbarComponent() {
   const navigate = useNavigate();
   const location = useLocation();
-  const { logout, user, isAuthenticated } = useAuth();
+  const { logout, user, isAuthenticated, isNormal } = useAuth();
   const { t } = useTranslation();
 
   const handleLogout = () => {
@@ -46,7 +46,7 @@ export function NavbarComponent() {
   return (
     <Navbar
       fluid
-      className='py-2 bg-very-dark-secondary dark:bg-very-dark-secondary'
+      className='py-2 bg-very-dark-secondary dark:bg-very-dark-secondary navbar-shadow sticky top-0 z-50'
     >
       <Link to='/' className='flex items-center'>
         <img
@@ -65,7 +65,7 @@ export function NavbarComponent() {
         <Dropdown
           arrowIcon={false}
           inline
-          className='bg-very-dark-gray dark:bg-very-dark-gray shadow-lg rounded-lg' // <-- ADD THIS
+          className='bg-very-dark-secondary dark:bg-very-dark-secondary shadow-lg rounded-lg !border-solid border-3 border-dark-secondary'
           label={
             <div className='flex items-center gap-1 text-white cursor-pointer hover:opacity-90'>
               <Globe className='w-5 h-5' />
@@ -81,7 +81,7 @@ export function NavbarComponent() {
           <Dropdown
             arrowIcon={false}
             inline
-            className='bg-very-dark-gray dark:bg-very-dark-gray shadow-lg rounded-lg' // <-- ADD THIS
+            className='bg-very-dark-secondary dark:bg-very-dark-secondary shadow-lg rounded-lg !border-solid border-4 border-dark-secondary'
             label={
               <Avatar
                 alt='User avatar'
@@ -91,10 +91,10 @@ export function NavbarComponent() {
             }
           >
             <DropdownHeader>
-              <span className='block text-sm font-bold text-wihte'>
+              <span className='block text-sm font-bold text-white'>
                 {user?.name || t('navbar.user')}
               </span>
-              <span className='block truncate text-sm font-medium text-white opacity-60'>
+              <span className='block truncate text-sm font-medium text-very-light-secondary'>
                 {user?.email || t('navbar.email')}
               </span>
             </DropdownHeader>
@@ -166,19 +166,22 @@ export function NavbarComponent() {
             </span>
           </NavbarLink>
 
-          <NavbarLink
-            as={Link}
-            to={isAuthenticated ? '/report' : '/login'}
-            active={isActive('/report')}
-            className={`flex items-center gap-2 relative ${
-              isActive('/report') ? 'active' : ''
-            }`}
-          >
-            <FileText className='w-4 h-4 md:w-6 md:h-6 lg:w-5 lg:h-5 text-white' />
-            <span className='md:hidden lg:inline text-white'>
-              {t('navbar.report')}
-            </span>
-          </NavbarLink>
+          {/* Report Link - Solo visible si NO es usuario normal */}
+          {!isNormal() && (
+            <NavbarLink
+              as={Link}
+              to={isAuthenticated ? '/report' : '/login'}
+              active={isActive('/report')}
+              className={`flex items-center gap-2 relative ${
+                isActive('/report') ? 'active' : ''
+              }`}
+            >
+              <FileText className='w-4 h-4 md:w-6 md:h-6 lg:w-5 lg:h-5 text-white' />
+              <span className='md:hidden lg:inline text-white'>
+                {t('navbar.report')}
+              </span>
+            </NavbarLink>
+          )}
         </div>
       </NavbarCollapse>
     </Navbar>

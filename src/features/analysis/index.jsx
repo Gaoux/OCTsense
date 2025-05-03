@@ -44,6 +44,12 @@ const Analysis = () => {
     return () => clearTimeout(timer);
   }, []);
 
+  const getTranslatedDiagnosis = (diagnosisCode) => {
+    return t(`diagnoses.${diagnosisCode}`, {
+      defaultValue: diagnosisCode // Fallback si no hay traducción
+    });
+  };
+
   const handleGenerateReport = async () => {
     if (!imageFile || !predictionResult) {
       console.error('Missing data to generate report.');
@@ -83,28 +89,28 @@ const Analysis = () => {
 
   if (!imageFile || !predictionResult) {
     return (
-      <div className='flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-blue-100 to-blue-300'>
+      <div className='flex flex-col items-center justify-center min-h-screen'>
         <div className='bg-very-dark-secondary p-10 rounded-xl mb-4'>
-          <h2 className='text-2xl font-bold text-gray-100'>
+          <h2 className='text-2xl font-bold text-very-light-gray'>
             {t('analysis.no_data_found')}
           </h2>
-          <p className='text-gray-400 mt-2 text-center
-          
-          '>{t('analysis.upload_first')}</p>
+          <p className='text-accent mt-2 text-center'>
+            {t('analysis.upload_first')}
+          </p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="bg-gradient-to-br from-blue-100 to-blue-300" id='webcrumbs'>
-      <div className="w-[1200px] p-6 font-['Open_Sans',_sans-serif] text-gray-800 mx-auto">
+    <div className="" id='webcrumbs'>
+      <div className="w-[1200px] p-6 font-['Open_Sans',_sans-serif] text-dark-primary mx-auto">
         {/* Header */}
         <header className='flex items-center justify-center mb-8'>
-          <div className='bg-green-100 p-2 rounded-full mr-3'>
-            <CheckCircle className='h-6 w-6 text-green-600' />
+          <div className='bg-green-200 p-2 rounded-full mr-3'>
+            <CheckCircle className='h-5 w-5 text-green-800' />
           </div>
-          <h1 className='text-3xl font-bold text-gray-800'>
+          <h1 className='text-[50px] font-bold text-very-dark-secondary'>
             {t('analysis.results')}
           </h1>
         </header>
@@ -113,11 +119,11 @@ const Analysis = () => {
         <div className='bg-white rounded-xl shadow-md p-8 mb-8 transition-all duration-300 hover:shadow-lg'>
           {/* Diagnosis Header */}
           <div className='text-center mb-8'>
-            <p className='text-gray-600 mb-2'>
+            <p className='text-light-primary mb-2'>
               {t('analysis.primary_diagnosis')}
             </p>
             <h2 className='text-3xl font-bold text-primary'>
-              {predictionResult.prediction || t('analysis.unknown')}
+              {getTranslatedDiagnosis(predictionResult.prediction) || t('analysis.unknown')}
             </h2>
           </div>
 
@@ -126,7 +132,7 @@ const Analysis = () => {
             {/* Uploaded Image */}
             <div className='transition-all duration-500 opacity-0 animate-[fadeIn_1s_ease_forwards]'>
               <div className='bg-very-light-gray p-4 rounded-xl border border-light-gray shadow-sm h-full'>
-                <h3 className='font-bold mb-4 text-gray-700'>
+                <h3 className='font-bold mb-4 text-dark-primary'>
                   {t('analysis.original_image')}
                 </h3>
                 <div className='overflow-hidden rounded-xl shadow-md hover:shadow-lg transition-transform'>
@@ -142,7 +148,7 @@ const Analysis = () => {
             {/* Probabilities */}
             <div className='transition-all duration-500 opacity-0 animate-[fadeIn_1.2s_ease_forwards]'>
               <div className='bg-very-light-gray p-4 rounded-xl border border-light-gray shadow-sm h-full'>
-                <h3 className='font-bold mb-6 text-gray-700'>
+                <h3 className='font-bold mb-6 text-dark-primary'>
                   {t('analysis.probabilities')}
                 </h3>
                 <div className='space-y-5'>
@@ -176,11 +182,12 @@ const Analysis = () => {
           {/* Clinical Observations */}
           <div className='transition-all duration-500 opacity-0 animate-[fadeIn_1.4s_ease_forwards]'>
             <div className='bg-very-light-gray p-6 rounded-xl border border-light-gray shadow-sm mb-8'>
-              <h3 className='font-bold mb-4 text-gray-700'>
+              <h3 className='font-bold mb-4 text-dark-primary'>
                 {t('analysis.observations')}
               </h3>
               <textarea
-                className='w-full p-4 border bg-white border-light-gray rounded-lg h-32 focus:ring-4 focus:ring-light-secondary focus:border-transparent outline-none transition-all duration-300'
+                className='w-full p-4 border bg-white border-light-gray rounded-lg h-32 focus:ring-4 focus:ring-light-secondary 
+                focus:border-transparent outline-none transition-all duration-300'
                 placeholder={t('analysis.comments_placeholder')}
                 value={comments}
                 onChange={(e) => setComments(e.target.value)}
@@ -193,7 +200,8 @@ const Analysis = () => {
           <div className='flex justify-center mt-8 transition-all duration-500 opacity-0 animate-[fadeIn_1.6s_ease_forwards]'>
             <button
               onClick={handleGenerateReport}
-              className='px-6 gap-2 py-3 bg-primary text-white rounded-lg hover:bg-dark-primary transition-all duration-300 shadow-md hover:shadow-lg transform hover:scale-105 flex items-center'
+              className='px-6 gap-2 py-3 bg-dark-secondary hover:bg-accent-hover text-white rounded-lg transition-all duration-300 
+              shadow-md hover:shadow-lg transform hover:scale-105 flex items-center'
             >
               <FilePlus2 className='w-6 h-6' />
               {t('analysis.save_report')}

@@ -134,7 +134,7 @@
 
   "analysis": {
     "results": "Results",
-    "original_image": "Uploaded Medical Scan (OCT)",
+    "original_image": "Uploaded medical scan (OCT)",
     "analysis_details": "Diagnosis Probabilities",
     "comments": "Observations",
     "save_comments": "Save Comments",
@@ -151,6 +151,13 @@
     "category4": "NORMAL",
     "probabilities": "Diagnosis Probabilities",
     "observations": "Observations"
+  },
+
+  "diagnoses": {
+    "CNV": "Choroidal Neovascularization",
+    "DME": "Diabetic Macular Edema",
+    "DRUSEN": "Retinal Drusen",
+    "Normal": "Normal Retina"
   },
 
   "settings": {

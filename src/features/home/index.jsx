@@ -25,16 +25,16 @@ const LandingPage = () => {
         <header className='flex flex-col lg:flex-row items-center justify-between py-10 md:py-16 mb-16'>
           {/* Text */}
           <div className='w-full lg:w-1/2 mb-10 lg:mb-0 text-center lg:text-left'>
-            <h1 className='text-3xl md:text-4xl lg:text-5xl font-bold text-blue-800 mb-6 leading-tight'>
+            <h1 className='text-3xl md:text-4xl lg:text-5xl font-bold text-dark-secondary mb-6 mr-10 leading-tight'>
               {t('home.heroTitle')}
             </h1>
-            <p className='text-base md:text-lg text-gray-700 mb-8 leading-relaxed'>
+            <p className='text-base md:text-lg text-dark-primary mb-8 mr-10 text-justify leading-relaxed'>
               {t('home.heroDescription')}
             </p>
             <div className='flex justify-center lg:justify-start'>
               <button
                 onClick={() => navigate('/upload')}
-                className='bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 md:px-8 rounded-lg shadow-lg transform transition-all duration-300 hover:scale-105 hover:shadow-xl flex items-center'
+                className='bg-dark-secondary hover:bg-accent-hover text-white font-semibold py-3 px-6 md:px-8 rounded-lg shadow-lg transform transition-all duration-300 hover:scale-105 hover:shadow-xl flex items-center'
               >
                 <span>{t('home.getStarted')}</span>
               </button>
@@ -56,10 +56,10 @@ const LandingPage = () => {
         {/* Benefits Section */}
         <section className='py-10 md:py-16 mb-20'>
           <div className='text-center mb-14'>
-            <h2 className='text-3xl font-bold text-blue-800 mb-4'>
+            <h2 className='text-3xl font-bold text-dark-secondary mb-4'>
               {t('home.benefitsTitle')}
             </h2>
-            <p className='text-base md:text-lg text-gray-600 max-w-3xl mx-auto'>
+            <p className='text-base md:text-lg text-primary max-w-3xl mx-auto'>
               {t('home.benefitsDescription')}
             </p>
           </div>
@@ -68,22 +68,22 @@ const LandingPage = () => {
             {[1, 2, 3, 4].map((index) => (
               <div
                 key={index}
-                className='bg-white rounded-xl shadow-lg p-6 hover:shadow-xl hover:bg-blue-50 border border-gray-100 transition-transform duration-300 hover:-translate-y-1 text-center'
+                className='bg-white rounded-xl shadow-lg p-6 hover:shadow-xl hover:bg-accent border border-gray-100 transition-transform duration-300 hover:-translate-y-1 text-center'
               >
                 <div className='flex justify-center mb-4'>
-                  {index === 1 && <Upload className='w-8 h-8 text-blue-600' />}
+                  {index === 1 && <Upload className='w-8 h-8 text-secondary' />}
                   {index === 2 && (
-                    <BarChart3 className='w-8 h-8 text-blue-600' />
+                    <BarChart3 className='w-8 h-8 text-secondary' />
                   )}
                   {index === 3 && (
-                    <FileText className='w-8 h-8 text-blue-600' />
+                    <FileText className='w-8 h-8 text-secondary' />
                   )}
-                  {index === 4 && <Upload className='w-8 h-8 text-blue-600' />}
+                  {index === 4 && <Upload className='w-8 h-8 text-secondary' />}
                 </div>
-                <h3 className='text-xl font-semibold mb-3 text-blue-800'>
+                <h3 className='text-xl font-semibold mb-3 text-very-dark-secondary'>
                   {t(`home.benefit${index}.title`)}
                 </h3>
-                <p className='text-gray-600'>
+                <p className='text-primary'>
                   {t(`home.benefit${index}.description`)}
                 </p>
               </div>
@@ -92,12 +92,12 @@ const LandingPage = () => {
         </section>
 
         {/* Video Section */}
-        <section className='py-10 md:py-16 mb-20 bg-blue-50 rounded-2xl px-6 md:px-10'>
+        <section className='py-10 md:py-16 mb-20 bg-very-light-secondary rounded-2xl px-6 md:px-10'>
           <div className='text-center mb-12'>
-            <h2 className='text-3xl font-bold text-blue-800 mb-4'>
+            <h2 className='text-3xl font-bold text-very-dark-secondary mb-4'>
               {t('home.videoTitle')}
             </h2>
-            <p className='text-base md:text-lg text-gray-600 max-w-3xl mx-auto'>
+            <p className='text-base md:text-lg text-primary max-w-3xl mx-auto'>
               {t('home.videoDescription')}
             </p>
           </div>
@@ -116,10 +116,10 @@ const LandingPage = () => {
         {/* How It Works Section */}
         <section className='py-10 md:py-16 mb-20'>
           <div className='text-center mb-14'>
-            <h2 className='text-3xl font-bold text-blue-800 mb-4'>
+            <h2 className='text-3xl font-bold text-very-dark-secondary mb-4'>
               {t('home.howItWorksTitle')}
             </h2>
-            <p className='text-base md:text-lg text-gray-600 max-w-3xl mx-auto'>
+            <p className='text-base md:text-lg text-primary max-w-3xl mx-auto'>
               {t('home.howItWorksDescription')}
             </p>
           </div>
@@ -135,26 +135,26 @@ const LandingPage = () => {
                 className='relative flex-1 min-h-[242px] max-w-[350px] w-full bg-white rounded-xl shadow-lg p-8 z-10 border border-gray-100 hover:shadow-xl hover:-translate-y-2 transition-transform duration-300 flex flex-col justify-between text-center'
               >
                 <div>
-                  <div className='absolute -top-5 -left-5 w-10 h-10 bg-blue-600 text-white font-bold text-lg rounded-full flex items-center justify-center shadow-lg group-hover:bg-blue-700 transition-colors duration-300'>
+                  <div className='absolute -top-5 -left-5 w-10 h-10 bg-secondary text-white font-bold text-lg rounded-full flex items-center justify-center shadow-lg group-hover:bg-blue-700 transition-colors duration-300'>
                     {step}
                   </div>
                   <div className='flex justify-center mb-6'>
                     <div className='w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center group-hover:bg-blue-200 transition-colors duration-300'>
                       {step === 1 && (
-                        <Upload className='w-10 h-10 text-blue-600' />
+                        <Upload className='w-10 h-10 text-secondary' />
                       )}
                       {step === 2 && (
-                        <ScanLine className='w-10 h-10 text-blue-600' />
+                        <ScanLine className='w-10 h-10 text-secondary' />
                       )}
                       {step === 3 && (
-                        <FileText className='w-10 h-10 text-blue-600' />
+                        <FileText className='w-10 h-10 text-secondary' />
                       )}
                     </div>
                   </div>
-                  <h3 className='text-xl font-semibold mb-3 text-blue-800'>
+                  <h3 className='text-xl font-semibold mb-3 text-very-dark-secondary'>
                     {t(`home.step${step}.title`)}
                   </h3>
-                  <p className='text-gray-600 leading-snug h-[48px] flex items-center text-center'>
+                  <p className='text-primary leading-snug h-[48px] flex items-center text-center'>
                     {t(`home.step${step}.description`)}
                   </p>
                 </div>
