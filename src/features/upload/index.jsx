@@ -66,7 +66,7 @@ const Upload = () => {
   return (
     <div className='bg-gradient-to-br from-blue-100 to-blue-300 layout-container flex-col'>
       <div className='w-full text-center mt-4 mb-10'>
-        <h1 className='text-[50px] font-bold text-black mb-4'>
+        <h1 className='text-[50px] font-bold text-blue-800 mb-4'>
           {t('upload.title')}
         </h1>
         <p className='text-[20px] text-black opacity-50 max-w-3xl mx-auto'>
@@ -94,7 +94,8 @@ const Upload = () => {
               )}
               <button
                 onClick={() => document.getElementById('image')?.click()}
-                className='w-full relative bg-white border border-gray-300 text-gray-800 py-2 px-4 rounded-lg shadow-sm cursor-pointer hover:border-gray-400 transition-all'
+                className='w-full relative bg-white border border-gray-300 text-gray-800 py-2 px-4 rounded-lg shadow-sm 
+                cursor-pointer hover:border-gray-400 transition-all'
               >
                 <span className='block text-center w-full'>
                   {t('upload.buttonUpload')}
@@ -117,11 +118,11 @@ const Upload = () => {
             <button
               onClick={handleSubmit}
               disabled={loading}
-              className={`w-full bg-blue-500 border border-blue-500 text-white py-2 px-4 rounded-lg shadow-md transition-colors ${
-                loading
+              className={`w-full bg-dark-secondary text-white py-2 px-4 rounded-lg shadow-md hover:bg-accent-hover
+                transition-all duration-300 shadow-md hover:shadow-lg transform hover:scale-105 ${loading
                   ? 'opacity-60 cursor-not-allowed'
-                  : 'hover:bg-blue-600 cursor-pointer'
-              }`}
+                  : 'hover:bg-accent-hover cursor-pointer'
+                }`}
             >
               {loading ? (
                 <div className='flex items-center justify-center gap-2'>
@@ -155,11 +156,10 @@ const Upload = () => {
 
           <div
             className={`flex-[1.5] min-h-[10rem] md:h-110 flex items-center justify-center rounded-lg border transition-all 
-    ${
-      isDragging
-        ? 'border-blue-500 bg-blue-100'
-        : 'border-dashed border-gray-300 bg-white'
-    }`}
+    ${isDragging
+                ? 'border-blue-500 bg-blue-100'
+                : 'border-dashed border-gray-300 bg-white'
+              }`}
             onDragEnter={handleDragEnter}
             onDragLeave={handleDragLeave}
             onDragOver={(e) => e.preventDefault()}

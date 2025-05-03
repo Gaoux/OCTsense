@@ -134,7 +134,7 @@
 
   "analysis": {
     "results": "Resultados",
-    "original_image": "Tomografía Médica Subida (OCT)",
+    "original_image": "Tomografía médica subida (OCT)",
     "analysis_details": "Probabilidades de Diagnóstico",
     "comments": "Observaciones",
     "probabilities": "Probabilidades de diagnóstico",
@@ -151,6 +151,13 @@
     "category2": "DME",
     "category3": "DRUSEN",
     "category4": "NORMAL"
+  },
+
+  "diagnoses": {
+    "CNV": "Neovascularización Coroidea",
+    "DME": "Edema Macular Diabético",
+    "DRUSEN": "Drusas Retinianas",
+    "Normal": "Retina Normal"
   },
 
   "settings": {

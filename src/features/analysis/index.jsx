@@ -44,6 +44,12 @@ const Analysis = () => {
     return () => clearTimeout(timer);
   }, []);
 
+  const getTranslatedDiagnosis = (diagnosisCode) => {
+    return t(`diagnoses.${diagnosisCode}`, {
+      defaultValue: diagnosisCode // Fallback si no hay traducción
+    });
+  };
+
   const handleGenerateReport = async () => {
     if (!imageFile || !predictionResult) {
       console.error('Missing data to generate report.');
@@ -88,9 +94,9 @@ const Analysis = () => {
           <h2 className='text-2xl font-bold text-gray-100'>
             {t('analysis.no_data_found')}
           </h2>
-          <p className='text-gray-400 mt-2 text-center
-          
-          '>{t('analysis.upload_first')}</p>
+          <p className='text-light-primary mt-2 text-center'>
+            {t('analysis.upload_first')}
+          </p>
         </div>
       </div>
     );
@@ -102,9 +108,9 @@ const Analysis = () => {
         {/* Header */}
         <header className='flex items-center justify-center mb-8'>
           <div className='bg-green-100 p-2 rounded-full mr-3'>
-            <CheckCircle className='h-6 w-6 text-green-600' />
+            <CheckCircle className='h-5 w-5 text-green-600' />
           </div>
-          <h1 className='text-3xl font-bold text-gray-800'>
+          <h1 className='text-[50px] font-bold text-blue-800'>
             {t('analysis.results')}
           </h1>
         </header>
@@ -117,7 +123,7 @@ const Analysis = () => {
               {t('analysis.primary_diagnosis')}
             </p>
             <h2 className='text-3xl font-bold text-primary'>
-              {predictionResult.prediction || t('analysis.unknown')}
+              {getTranslatedDiagnosis(predictionResult.prediction) || t('analysis.unknown')}
             </h2>
           </div>
 
@@ -180,7 +186,8 @@ const Analysis = () => {
                 {t('analysis.observations')}
               </h3>
               <textarea
-                className='w-full p-4 border bg-white border-light-gray rounded-lg h-32 focus:ring-4 focus:ring-light-secondary focus:border-transparent outline-none transition-all duration-300'
+                className='w-full p-4 border bg-white border-light-gray rounded-lg h-32 focus:ring-4 focus:ring-light-secondary 
+                focus:border-transparent outline-none transition-all duration-300'
                 placeholder={t('analysis.comments_placeholder')}
                 value={comments}
                 onChange={(e) => setComments(e.target.value)}
@@ -193,7 +200,8 @@ const Analysis = () => {
           <div className='flex justify-center mt-8 transition-all duration-500 opacity-0 animate-[fadeIn_1.6s_ease_forwards]'>
             <button
               onClick={handleGenerateReport}
-              className='px-6 gap-2 py-3 bg-primary text-white rounded-lg hover:bg-dark-primary transition-all duration-300 shadow-md hover:shadow-lg transform hover:scale-105 flex items-center'
+              className='px-6 gap-2 py-3 bg-dark-secondary hover:bg-accent-hover text-white rounded-lg transition-all duration-300 
+              shadow-md hover:shadow-lg transform hover:scale-105 flex items-center'
             >
               <FilePlus2 className='w-6 h-6' />
               {t('analysis.save_report')}
