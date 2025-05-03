@@ -47,7 +47,7 @@ const Upload = () => {
       setPredictionResult(result);
 
       const destino =
-        user?.role === 'professional' ? '/analysis-oftalmologo' : '/analysis';
+        user?.role === 'professional' ? '/analysis' : '/analysis';
 
       navigate(destino, {
         state: {
