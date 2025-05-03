@@ -52,13 +52,13 @@ body.theme-normal,
 }
 
 .theme-professional {
-  --color-primary: #48bdff;
-  --color-dark-primary: #3ba1dc;
-  --color-light-primary: #ceeafa;
-  --color-secondary: #335cf4;
+  --color-light-primary: #7f91a7;
+  --color-primary: #465d7a;
+  --color-dark-primary: #274060;
+  --color-very-light-secondary: #bac4e7;
   --color-light-secondary: #6b87f0;
-  --color-very-light-secondary: #aabcfe;
-  --color-dark-secondary: #213b9c;
+  --color-secondary: #335cf4;
+  --color-dark-secondary: #1b3388;
   --color-very-dark-secondary: #0a153c;
   --color-white: #ffffff;
   --color-very-light-gray: #ebeaea;
@@ -67,14 +67,14 @@ body.theme-normal,
   --color-gray: #908e8e;
   --color-dark-gray: #6a727d;
   --color-very-dark-gray: #1f2937;
-  --color-accent: #ff7477;
-  --color-accent-hover: #ff484b;
-  --color-background-begin: #E1EFFE;
-  --color-background-end: #A4CAFE;
+  --color-accent: #C2CAE8;
+  --color-accent-hover: #990D35;
+  --color-background-begin: #e8f3ff;
+  --color-background-end: #cce2ff;
 }
 
 body.theme-profesional,
-.theme-profesional {
+.theme-professional {
   background: linear-gradient(to bottom, var(--color-background-begin), var(--color-background-end));
 }
 
