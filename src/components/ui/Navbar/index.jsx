@@ -29,7 +29,7 @@ import './styles.css';
 export function NavbarComponent() {
   const navigate = useNavigate();
   const location = useLocation();
-  const { logout, user, isAuthenticated } = useAuth();
+  const { logout, user, isAuthenticated, isNormal } = useAuth();
   const { t } = useTranslation();
 
   const handleLogout = () => {
@@ -91,10 +91,10 @@ export function NavbarComponent() {
             }
           >
             <DropdownHeader>
-              <span className='block text-sm font-bold text-wihte'>
+              <span className='block text-sm font-bold text-white'>
                 {user?.name || t('navbar.user')}
               </span>
-              <span className='block truncate text-sm font-medium text-white opacity-60'>
+              <span className='block truncate text-sm font-medium text-very-light-secondary'>
                 {user?.email || t('navbar.email')}
               </span>
             </DropdownHeader>
@@ -166,19 +166,22 @@ export function NavbarComponent() {
             </span>
           </NavbarLink>
 
-          <NavbarLink
-            as={Link}
-            to={isAuthenticated ? '/report' : '/login'}
-            active={isActive('/report')}
-            className={`flex items-center gap-2 relative ${
-              isActive('/report') ? 'active' : ''
-            }`}
-          >
-            <FileText className='w-4 h-4 md:w-6 md:h-6 lg:w-5 lg:h-5 text-white' />
-            <span className='md:hidden lg:inline text-white'>
-              {t('navbar.report')}
-            </span>
-          </NavbarLink>
+          {/* Report Link - Solo visible si NO es usuario normal */}
+          {!isNormal() && (
+            <NavbarLink
+              as={Link}
+              to={isAuthenticated ? '/report' : '/login'}
+              active={isActive('/report')}
+              className={`flex items-center gap-2 relative ${
+                isActive('/report') ? 'active' : ''
+              }`}
+            >
+              <FileText className='w-4 h-4 md:w-6 md:h-6 lg:w-5 lg:h-5 text-white' />
+              <span className='md:hidden lg:inline text-white'>
+                {t('navbar.report')}
+              </span>
+            </NavbarLink>
+          )}
         </div>
       </NavbarCollapse>
     </Navbar>

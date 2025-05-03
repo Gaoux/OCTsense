@@ -7,7 +7,7 @@ interface User {
   id: string;
   email: string;
   name: string;
-  role: string;
+  role: 'normal' | 'professional' | 'admin';
 }
 
 interface AuthContextProps {
@@ -18,6 +18,9 @@ interface AuthContextProps {
   isAuthenticated: boolean;
   validateEmail: (email: string) => boolean;
   updateUser: (updatedUser: Partial<User>) => Promise<User>;
+  isNormal: () => boolean;
+  isOftalmologo: () => boolean;
+  isAdmin: () => boolean;
 }
 
 const AuthContext = createContext<AuthContextProps>({
@@ -36,6 +39,9 @@ const AuthContext = createContext<AuthContextProps>({
   updateUser: async () => {
     throw new Error("updateUser function not implemented");
   },
+  isNormal: () => false,
+  isOftalmologo: () => false,
+  isAdmin: () => false,
 });
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
@@ -98,6 +104,10 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     return newUser;
   };
 
+  const isNormal = () => user?.role === 'normal';
+  const isOftalmologo = () => user?.role === 'professional';
+  const isAdmin = () => user?.role === 'admin';
+
   return (
     <AuthContext.Provider
       value={{
@@ -108,6 +118,9 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         isAuthenticated: !!user,
         validateEmail,
         updateUser,
+        isNormal,
+        isOftalmologo,
+        isAdmin
       }}
     >
       {children}

@@ -109,7 +109,7 @@ const Register = () => {
             className='w-full px-4 py-2 border rounded-md bg-white text-gray-700 focus:outline-none focus:ring focus:ring-cyan-300'
           >
             <option value=''>{t('register.placeholders.selectRole')}</option>
-            <option value='normal'>{t('register.roles.normal')}</option>
+            <option value='mormal'>{t('register.roles.normal')}</option>
             <option value='professional'>
               {t('register.roles.professional')}
             </option>

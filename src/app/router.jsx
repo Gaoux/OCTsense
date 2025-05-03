@@ -22,6 +22,16 @@ const PrivateRoute = ({ element }) => {
   return isAuthenticated ? element : <Navigate to='/login' />;
 };
 
+// const PrivateRoute = ({ element, allowedRoles = [] }) => {
+//   const { isAuthenticated, user } = useAuth();
+
+//   if (!isAuthenticated) return <Navigate to='/login' />;
+//   if (allowedRoles.length > 0 && !allowedRoles.includes(user?.role)) {
+//     return <Navigate to='/' />;
+//   }
+//   return element;
+// };
+
 const PublicRoute = ({ element }) => {
   const { isAuthenticated } = useAuth();
   return isAuthenticated ? <Navigate to='/' /> : element;
@@ -40,6 +50,14 @@ const AppRoutes = () => (
     <Route path='/usuarios' element={<UsersList />} />
     <Route path='/report' element={<Report />} />
     <Route path='/report/:id' element={<ReportDetails />} />
+    {/* <Route
+      path='/report'
+      element={<PrivateRoute element={<Report />} allowedRoles={['oftalmologo', 'admin']} />}
+    />
+    <Route
+      path='/report/:id'
+      element={<PrivateRoute element={<ReportDetails />} allowedRoles={['oftalmologo', 'admin']} />}
+    /> */}
     <Route path='*' element={<NotFound />} />
     <Route path="/forgot-password" element={<ForgotPassword />} />
     <Route path="/reset-password" element={<ResetPassword />} />

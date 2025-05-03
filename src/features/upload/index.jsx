@@ -64,12 +64,12 @@ const Upload = () => {
   };
 
   return (
-    <div className='bg-gradient-to-br from-blue-100 to-blue-300 layout-container flex-col'>
+    <div className='layout-container flex-col'>
       <div className='w-full text-center mt-4 mb-10'>
-        <h1 className='text-[50px] font-bold text-blue-800 mb-4'>
+        <h1 className='text-[50px] font-bold text-very-dark-secondary mb-4'>
           {t('upload.title')}
         </h1>
-        <p className='text-[20px] text-black opacity-50 max-w-3xl mx-auto'>
+        <p className='text-[20px] text-dark-primary opacity-50 max-w-3xl mx-auto'>
           {t('upload.subtitle')}
         </p>
       </div>
@@ -78,11 +78,11 @@ const Upload = () => {
         <div className='bg-white p-6 rounded-t-lg shadow-lg flex flex-col md:flex-row gap-6 border-[1px] border-gray-200'>
           <div className='flex basis-[33%] flex-col justify-center gap-4 md:mb-0 mb-5'>
             <div className='flex flex-col items-center gap-3 md:mb-0 mb-20'>
-              <h3 className='text-gray-700 font-semibold text-3xl text-center mt-4'>
+              <h3 className='text-primary font-semibold text-3xl text-center mt-4'>
                 {t('upload.subtitle2')}
               </h3>
               {imageFile && (
-                <p className='text-gray-400 text-sm text-center break-words max-w-full px-4'>
+                <p className='text-light-primary text-sm text-center break-words max-w-full px-4'>
                   {imageFile.name}
                 </p>
               )}
@@ -90,11 +90,11 @@ const Upload = () => {
 
             <div className='mt-auto'>
               {error && (
-                <p className='text-red-400 text-center mb-2'>{error}</p>
+                <p className='text-accent text-center mb-2'>{error}</p>
               )}
               <button
                 onClick={() => document.getElementById('image')?.click()}
-                className='w-full relative bg-white border border-gray-300 text-gray-800 py-2 px-4 rounded-lg shadow-sm 
+                className='w-full relative bg-white border border-gray-300 text-dark-primary py-2 px-4 rounded-lg shadow-sm 
                 cursor-pointer hover:border-gray-400 transition-all'
               >
                 <span className='block text-center w-full'>
@@ -180,7 +180,7 @@ const Upload = () => {
           </div>
         </div>
 
-        <div className='bg-gray-800 text-white py-2 px-4 rounded-b-lg border-1 border-gray-800'>
+        <div className='bg-dark-primary text-white py-2 px-4 rounded-b-lg border-1 border-gray-800'>
           {t('upload.formats')}
         </div>
       </div>
