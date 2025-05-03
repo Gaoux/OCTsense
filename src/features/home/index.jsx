@@ -25,7 +25,7 @@ const LandingPage = () => {
         <header className='flex flex-col lg:flex-row items-center justify-between py-10 md:py-16 mb-16'>
           {/* Text */}
           <div className='w-full lg:w-1/2 mb-10 lg:mb-0 text-center lg:text-left'>
-            <h1 className='text-3xl md:text-4xl lg:text-5xl font-bold text-blue-800 mb-6 leading-tight'>
+            <h1 className='text-3xl md:text-4xl lg:text-5xl font-bold text-dark-secondary mb-6 leading-tight'>
               {t('home.heroTitle')}
             </h1>
             <p className='text-base md:text-lg text-gray-700 mb-8 leading-relaxed'>
@@ -34,7 +34,7 @@ const LandingPage = () => {
             <div className='flex justify-center lg:justify-start'>
               <button
                 onClick={() => navigate('/upload')}
-                className='bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 md:px-8 rounded-lg shadow-lg transform transition-all duration-300 hover:scale-105 hover:shadow-xl flex items-center'
+                className='bg-dark-secondary hover:bg-accent-hover text-white font-semibold py-3 px-6 md:px-8 rounded-lg shadow-lg transform transition-all duration-300 hover:scale-105 hover:shadow-xl flex items-center'
               >
                 <span>{t('home.getStarted')}</span>
               </button>

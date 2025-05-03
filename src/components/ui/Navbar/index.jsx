@@ -46,7 +46,7 @@ export function NavbarComponent() {
   return (
     <Navbar
       fluid
-      className='py-2 bg-very-dark-secondary dark:bg-very-dark-secondary'
+      className='py-2 bg-very-dark-secondary dark:bg-very-dark-secondary navbar-shadow sticky top-0 z-50'
     >
       <Link to='/' className='flex items-center'>
         <img
@@ -65,7 +65,7 @@ export function NavbarComponent() {
         <Dropdown
           arrowIcon={false}
           inline
-          className='bg-very-dark-gray dark:bg-very-dark-gray shadow-lg rounded-lg' // <-- ADD THIS
+          className='bg-very-dark-secondary dark:bg-very-dark-secondary shadow-lg rounded-lg !border-solid border-3 border-dark-secondary'
           label={
             <div className='flex items-center gap-1 text-white cursor-pointer hover:opacity-90'>
               <Globe className='w-5 h-5' />
@@ -81,7 +81,7 @@ export function NavbarComponent() {
           <Dropdown
             arrowIcon={false}
             inline
-            className='bg-very-dark-gray dark:bg-very-dark-gray shadow-lg rounded-lg' // <-- ADD THIS
+            className='bg-very-dark-secondary dark:bg-very-dark-secondary shadow-lg rounded-lg !border-solid border-4 border-dark-secondary'
             label={
               <Avatar
                 alt='User avatar'
