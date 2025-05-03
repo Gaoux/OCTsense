@@ -4,6 +4,7 @@ import AppRoutes from './router';
 import { AuthProvider } from '../context/AuthContext';
 import { NavbarComponent } from '../components/ui/Navbar';
 import { Footer } from '../components/ui/Footer';
+import ThemeWrapper from '../components/ui/ThemeWrapper';
 
 const AppWrapper = () => {
   const location = useLocation();
@@ -31,7 +32,9 @@ const App = () => {
   return (
     <BrowserRouter>
       <AuthProvider>
-        <AppWrapper />
+        <ThemeWrapper>
+          <AppWrapper />
+        </ThemeWrapper>
       </AuthProvider>
     </BrowserRouter>
   );

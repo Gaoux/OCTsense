@@ -27,17 +27,17 @@ const Settings = () => {
 
   const validateForm = () => {
     const newErrors = {};
-    
+
     if (!formData.name.trim()) {
       newErrors.name = t('settings.errors.name_required');
     }
-    
+
     if (!formData.email.trim()) {
       newErrors.email = t('settings.errors.email_required');
     } else if (!validateEmail(formData.email)) {
       newErrors.email = t('settings.errors.email_invalid');
     }
-    
+
     if (formData.newPassword && formData.newPassword !== formData.confirmPassword) {
       newErrors.confirmPassword = t('settings.errors.passwords_mismatch');
     }
@@ -45,7 +45,7 @@ const Settings = () => {
     if (formData.newPassword && !formData.currentPassword) {
       newErrors.currentPassword = t('settings.errors.current_password_required');
     }
-    
+
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -53,7 +53,7 @@ const Settings = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!validateForm()) return;
-    
+
     try {
       await updateUser(formData);
       setSuccessMessage(t('settings.success.update_success'));
@@ -64,8 +64,8 @@ const Settings = () => {
   };
 
   return (
-    <div className="bg-gradient-to-br from-blue-100 to-blue-300 min-h-screen py-12 px-4 sm:px-6 lg:px-8">
-      <motion.div 
+    <div className="min-h-screen py-12 px-4 sm:px-6 lg:px-8">
+      <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
@@ -74,16 +74,16 @@ const Settings = () => {
         {/* Header */}
         <div className="bg-very-dark-secondary px-6 py-4">
           <h2 className="text-2xl font-bold text-white flex items-center gap-2">
-            <FaUser className="text-blue-200" />
+            <FaUser className="text-very-light-secondary" />
             {t('settings.title')}
           </h2>
-          <p className="text-blue-100 mt-1">
+          <p className="text-very-light-secondary mt-1">
             {t('settings.subtitle')}
           </p>
         </div>
 
         {/* Formulario */}
-        <form onSubmit={handleSubmit} className="px-6 py-8 space-y-6">
+        <form onSubmit={handleSubmit} className="px-6 text-secondary py-8 space-y-6">
           {errors.submit && (
             <div className="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 mb-4">
               {errors.submit}
@@ -104,7 +104,7 @@ const Settings = () => {
             </h3>
 
             <div>
-              <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
+              <label htmlFor="name" className="block text-sm font-medium text-dark-primary mb-1">
                 {t('settings.name')}
               </label>
               <input
@@ -119,7 +119,7 @@ const Settings = () => {
             </div>
 
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+              <label htmlFor="email" className="block text-sm font-medium text-dark-primary mb-1">
                 {t('settings.email')}
               </label>
               <input
@@ -140,12 +140,12 @@ const Settings = () => {
               <FaKey className="text-very-dark-secondary" />
               {t('settings.change_password')}
             </h3>
-            <p className="text-sm text-gray-600">
+            <p className="text-sm text-primary">
               {t('settings.password_instructions')}
             </p>
 
             <div>
-              <label htmlFor="currentPassword" className="block text-sm font-medium text-gray-700 mb-1">
+              <label htmlFor="currentPassword" className="block text-sm font-medium text-dark-primary mb-1">
                 {t('settings.current_password')}
               </label>
               <input
@@ -159,7 +159,7 @@ const Settings = () => {
             </div>
 
             <div>
-              <label htmlFor="newPassword" className="block text-sm font-medium text-gray-700 mb-1">
+              <label htmlFor="newPassword" className="block text-sm font-medium text-dark-primary mb-1">
                 {t('settings.new_password')}
               </label>
               <input
@@ -173,7 +173,7 @@ const Settings = () => {
             </div>
 
             <div>
-              <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700 mb-1">
+              <label htmlFor="confirmPassword" className="block text-sm font-medium text-dark-primary mb-1">
                 {t('settings.confirm_password')}
               </label>
               <input
@@ -201,7 +201,8 @@ const Settings = () => {
 
             <button
               type="submit"
-              className="flex items-center justify-center gap-2 px-6 py-2 bg-very-dark-secondary text-white rounded-lg hover:bg-blue-700 transition-colors"
+              className="flex items-center justify-center gap-2 px-6 py-2 bg-dark-secondary hover:bg-accent-hover text-white rounded-lg transition-all duration-300 
+              shadow-md hover:shadow-lg transform hover:scale-105 items-center'"
             >
               <FaSave />
               {t('settings.save_changes')}
