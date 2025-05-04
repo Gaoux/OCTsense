@@ -1,10 +1,10 @@
 import { useAuth } from "../../../context/AuthContext";
 
 const ThemeWrapper = ({ children }) => {
-  const { isNormal } = useAuth();
+  const { isPatient } = useAuth();
   
   return (
-    <div className={isNormal() ? 'theme-normal' : 'theme-professional'}>
+    <div className={isPatient() ? 'theme-patient' : 'theme-professional'}>
       {children}
     </div>
   );

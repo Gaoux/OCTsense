@@ -27,9 +27,9 @@ const ReportCard = ({ report, onView, onDelete }) => {
               {report.predicted_diagnostic}
             </span>
           </h3>
-          {/* // !! Add this line to show pacient name for professional users */}
+          {/* // !! Add this line to show patient name for professional users */}
           {/* <p className='mt-3 text-sm text-dark-gray leading-relaxed w-[160px] truncate'>
-            Pacient: {report.comments || 'No user comment provided.'}{' '}
+            Patient: {report.comments || 'No user comment provided.'}{' '}
             dfgdgdgfdgdg
           </p> */}
           <p className='mt-3 text-sm text-dark-gray leading-relaxed w-[160px] truncate'>

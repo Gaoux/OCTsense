@@ -29,7 +29,7 @@ import './styles.css';
 export function NavbarComponent() {
   const navigate = useNavigate();
   const location = useLocation();
-  const { logout, user, isAuthenticated, isNormal } = useAuth();
+  const { logout, user, isAuthenticated, isPatient } = useAuth();
   const { t } = useTranslation();
 
   const handleLogout = () => {
@@ -166,8 +166,8 @@ export function NavbarComponent() {
             </span>
           </NavbarLink>
 
-          {/* Report Link - Solo visible si NO es usuario normal */}
-          {!isNormal() && (
+          {/* Report Link - Solo visible si NO es usuario paciente */}
+          {!isPatient() && (
             <NavbarLink
               as={Link}
               to={isAuthenticated ? '/report' : '/login'}
