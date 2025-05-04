@@ -4,7 +4,7 @@ OCTsense is a **web platform (SPA)** for the **automated analysis of OCT (Optica
 It is designed for **ophthalmologists** who need support diagnosing ocular diseases such as **C, AMD (Age-Related Macular Degeneration)**, macular edema, and others — **without depending on image experts**.
 
 OCTsense is a **web platform (SPA)** for the **automated analysis of OCT (Optical Coherence Tomography) images** using artificial intelligence.
-It is designed for ophthalmologists or pacients who need support diagnosing ocular conditions, specifically detecting:
+It is designed for ophthalmologists or patients who need support diagnosing ocular conditions, specifically detecting:
 Choroidal Neovascularization (CNV), Diabetic Macular Edema (DME), Drusen lesions (DRUSEN), and identifying Healthy retinal tissue — without depending on image experts.
 
 ---

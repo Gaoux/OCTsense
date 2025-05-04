@@ -104,7 +104,7 @@
       "confirmPassword": "Confirm Password"
     },
     "roles": {
-      "normal": "Normal",
+      "patient": "Patient",
       "professional": "Professional"
     },
     "button": "Register",

@@ -55,7 +55,7 @@ const UsersList = () => {
                             onChange={(e) => setRole(e.target.value)}
                         >
                             <option value="Todos">Todos</option>
-                            <option value="normal">Usuario</option>
+                            <option value="patient">Paciente</option>
                             <option value="professional">Profesional</option>
                             <option value="admin">Admin</option>
                         </select>

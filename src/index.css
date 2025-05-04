@@ -24,7 +24,7 @@
   --color-background-end: #A4CAFE;
 }
 
-.theme-normal {
+.theme-patient {
   --color-light-primary: #497255;
   --color-primary: #1E2F23;
   --color-dark-primary: #032e10;
@@ -46,8 +46,8 @@
   --color-background-end: #f0ffcd;
 }
 
-body.theme-normal,
-.theme-normal {
+body.theme-patient,
+.theme-patient {
   background: linear-gradient(to bottom, var(--color-background-begin), var(--color-background-end));
 }
 

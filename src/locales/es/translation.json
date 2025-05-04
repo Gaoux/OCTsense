@@ -104,8 +104,8 @@
       "confirmPassword": "Confirmar contraseña"
     },
     "roles": {
-      "normal": "Normal",
-      "professional": "Professional"
+      "patient": "Paciente",
+      "professional": "Profesional"
     },
     "button": "Registrarse",
     "alreadyHaveAccount": "¿Ya tienes cuenta?",
