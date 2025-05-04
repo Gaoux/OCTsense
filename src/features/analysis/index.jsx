@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { CheckCircle, FilePlus2 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { createReport } from '../../api/reportService';
+import { useAuth } from '../../context/AuthContext';
 
 const Analysis = () => {
   const { t } = useTranslation();
@@ -11,28 +12,29 @@ const Analysis = () => {
   const { imageFile, predictionResult } = location.state || {};
   const [progressAnimated, setProgressAnimated] = useState(false);
   const [comments, setComments] = useState('');
+  const { isPatient } = useAuth();
 
   const categories = [
     {
-      name: t('analysis.category1') || 'Macular Degeneration',
+      name: t('analysis.category1') || 'CNV',
       value: predictionResult
         ? (predictionResult.probabilities[0] * 100).toFixed(0)
         : 0,
     },
     {
-      name: t('analysis.category2') || 'Diabetic Retinopathy',
+      name: t('analysis.category2') || 'DME',
       value: predictionResult
         ? (predictionResult.probabilities[1] * 100).toFixed(0)
         : 0,
     },
     {
-      name: t('analysis.category3') || 'Glaucoma',
+      name: t('analysis.category3') || 'DRUSEN',
       value: predictionResult
         ? (predictionResult.probabilities[2] * 100).toFixed(0)
         : 0,
     },
     {
-      name: t('analysis.category4') || 'Healthy',
+      name: t('analysis.category4') || 'NORMAL',
       value: predictionResult
         ? (predictionResult.probabilities[3] * 100).toFixed(0)
         : 0,
@@ -61,7 +63,6 @@ const Analysis = () => {
       formData.append('image_file', imageFile);
       formData.append('predicted_diagnostic', predictionResult.prediction);
 
-      // Build the correct labeled probabilities object
       const probabilitiesLabeled = {
         CNV: predictionResult.probabilities[0],
         DME: predictionResult.probabilities[1],
@@ -73,7 +74,17 @@ const Analysis = () => {
         'diagnostic_probabilities',
         JSON.stringify(probabilitiesLabeled)
       );
-      formData.append('comments', comments);
+
+      // Añadir descripción automática si es paciente
+      if (isPatient()) {
+        const autoDescription = t(`diagnoses.description.${predictionResult.prediction}`, {
+          defaultValue: t('analysis.no_description_available')
+        });
+        formData.append('description', autoDescription);
+      } else {
+        // Añadir observaciones del profesional
+        formData.append('observations', comments);
+      }
 
       const response = await createReport(formData);
 
@@ -179,20 +190,30 @@ const Analysis = () => {
             </div>
           </div>
 
-          {/* Clinical Observations */}
+          {/* Clinical Description/Observations */}
           <div className='transition-all duration-500 opacity-0 animate-[fadeIn_1.4s_ease_forwards]'>
             <div className='bg-very-light-gray p-6 rounded-xl border border-light-gray shadow-sm mb-8'>
               <h3 className='font-bold mb-4 text-dark-primary'>
-                {t('analysis.observations')}
+                {isPatient() ? t('analysis.description') : t('analysis.observations')}
               </h3>
-              <textarea
-                className='w-full p-4 border bg-white border-light-gray rounded-lg h-32 focus:ring-4 focus:ring-light-secondary 
-                focus:border-transparent outline-none transition-all duration-300'
-                placeholder={t('analysis.comments_placeholder')}
-                value={comments}
-                onChange={(e) => setComments(e.target.value)}
-              ></textarea>
-              <div className='mt-4 flex justify-end'></div>
+
+              {isPatient() ? (
+                <div className='bg-white p-4 rounded-lg border border-light-gray'>
+                  <p className='text-dark-primary text-justify'>
+                    {t(`diagnoses.description.${predictionResult.prediction}`, {
+                      defaultValue: t('analysis.no_description_available')
+                    })}
+                  </p>
+                </div>
+              ) : (
+                <textarea
+                  className='w-full p-4 border bg-white border-light-gray rounded-lg h-32 focus:ring-4 focus:ring-light-secondary 
+                            focus:border-transparent outline-none transition-all duration-300'
+                  placeholder={t('analysis.comments_placeholder')}
+                  value={comments}
+                  onChange={(e) => setComments(e.target.value)}
+                ></textarea>
+              )}
             </div>
           </div>
 
