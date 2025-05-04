@@ -4,7 +4,6 @@
     "heroDescription": "Revolutionary AI technology that assists ophthalmologists in analyzing OCT images with precision and efficiency, enhancing diagnostic capabilities while saving valuable time.",
     "heroAlt": "OCT image analysis background",
     "getStarted": "Get Started",
-
     "benefitsTitle": "Key Benefits",
     "benefitsDescription": "Experience the advantages of OCTsense's cutting-edge AI technology in your ophthalmology practice.",
     "benefit1": {
@@ -23,11 +22,9 @@
       "title": "Data Security",
       "description": "HIPAA-compliant platform with end-to-end encryption ensuring that your patients' data remains secure and private."
     },
-
     "videoTitle": "See OCTsense in Action",
     "videoDescription": "Watch how our AI technology analyzes OCT images and provides comprehensive reports in seconds.",
     "videoAlt": "OCTsense demo video thumbnail",
-
     "howItWorksTitle": "How It Works",
     "howItWorksDescription": "Our simple three-step process delivers rapid and accurate OCT image analysis.",
     "step1": {
@@ -131,7 +128,6 @@
     "error": "Error uploading image.",
     "formats": "Accepted formats: JPG, JPEG, and PNG."
   },
-
   "analysis": {
     "results": "Results",
     "original_image": "Uploaded medical scan (OCT)",
@@ -150,16 +146,22 @@
     "category3": "DRUSEN",
     "category4": "NORMAL",
     "probabilities": "Diagnosis Probabilities",
-    "observations": "Observations"
+    "observations": "Observations",
+    "description": "Summary of your diagnosis",
+    "no_description_available": "Description not available for this diagnosis"
   },
-
   "diagnoses": {
     "CNV": "Choroidal Neovascularization",
     "DME": "Diabetic Macular Edema",
     "DRUSEN": "Retinal Drusen",
-    "Normal": "Normal Retina"
+    "NORMAL": "Normal Retina",
+    "description": {
+      "CNV": "Choroidal neovascularization (CNV) is the abnormal growth of new blood vessels in the choroid, the vascular layer between the sclera and the retina. These new vessels can grow from the choroid into the retina, through a tear in Bruch's membrane, causing leakage and scarring, which can lead to vision loss.",
+      "DME": "Diabetic macular edema (DME) is a complication of diabetic retinopathy characterized by the accumulation of fluid in the macula, the central part of the retina responsible for sharp vision. This fluid accumulation can cause blurred, distorted vision or loss of central vision.",
+      "DRUSEN": "Retinal drusen are yellowish deposits that accumulate under the retina, often in the macula, the central area of the retina responsible for detailed vision.",
+      "NORMAL": "Your results show no significant anomalies."
+    }
   },
-
   "settings": {
     "title": "User Settings",
     "subtitle": "Manage your account information and security",
@@ -184,7 +186,6 @@
       "current_password_required": "Current password is required"
     }
   },
-
   "footer": {
     "project_by": "Research project developed at",
     "quick_links": "Quick Links",

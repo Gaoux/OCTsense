@@ -4,7 +4,6 @@
     "heroDescription": "Tecnología de inteligencia artificial revolucionaria que ayuda a los oftalmólogos a analizar imágenes OCT con precisión y eficiencia, mejorando las capacidades diagnósticas y ahorrando tiempo valioso.",
     "heroAlt": "Fondo de análisis de imagen OCT",
     "getStarted": "Comenzar",
-
     "benefitsTitle": "Beneficios Clave",
     "benefitsDescription": "Experimenta las ventajas de la tecnología de IA de vanguardia de OCTsense en tu práctica oftalmológica.",
     "benefit1": {
@@ -23,11 +22,9 @@
       "title": "Seguridad de Datos",
       "description": "Plataforma compatible con HIPAA con cifrado de extremo a extremo, garantizando que los datos de tus pacientes permanezcan seguros y privados."
     },
-
     "videoTitle": "Mira OCTsense en Acción",
     "videoDescription": "Observa cómo nuestra tecnología de IA analiza imágenes OCT y genera informes completos en segundos.",
     "videoAlt": "Miniatura del video de demostración de OCTsense",
-
     "howItWorksTitle": "Cómo Funciona",
     "howItWorksDescription": "Nuestro sencillo proceso de tres pasos proporciona un análisis rápido y preciso de imágenes OCT.",
     "step1": {
@@ -131,7 +128,6 @@
     "error": "Error subiendo Imagen.",
     "formats": "Formatos admitidos: JPG, JPEG y PNG."
   },
-
   "analysis": {
     "results": "Resultados",
     "original_image": "Tomografía médica subida (OCT)",
@@ -150,16 +146,22 @@
     "category1": "CNV",
     "category2": "DME",
     "category3": "DRUSEN",
-    "category4": "NORMAL"
+    "category4": "NORMAL",
+    "description": "Resumen de tu diagnóstico",
+    "no_description_available": "Descripción no disponible para este diagnóstico"
   },
-
   "diagnoses": {
     "CNV": "Neovascularización Coroidea",
     "DME": "Edema Macular Diabético",
     "DRUSEN": "Drusas Retinianas",
-    "Normal": "Retina Normal"
+    "NORMAL": "Retina Normal",
+    "description": {
+      "CNV": "La neovascularización coroidea (CNV) es el crecimiento anormal de nuevos vasos sanguíneos en la coroides, la capa vascular que se encuentra entre la esclerótica y la retina. Estos nuevos vasos pueden crecer desde la coroides hacia la retina, a través de una ruptura en la membrana de Bruch, causando fugas y cicatrización, lo que puede llevar a una pérdida de visión. ",
+      "DME": "El edema macular diabético (DME) es una complicación de la retinopatía diabética que se caracteriza por la acumulación de líquido en la mácula, la parte central de la retina responsable de la visión nítida. Esta acumulación de líquido puede provocar visión borrosa, distorsionada o pérdida de visión central. ",
+      "DRUSEN": "Las drusas retinianas son depósitos amarillentos que se acumulan debajo de la retina, a menudo en la mácula, la zona central de la retina encargada de la visión detallada.",
+      "NORMAL": "Tus resultados no muestran anomalías significativas."
+    }
   },
-
   "settings": {
     "title": "Configuración de Usuario",
     "subtitle": "Administra tu información de cuenta y seguridad",
