@@ -141,6 +141,8 @@
     "unknown": "Unknown",
     "comments_placeholder": "Add your clinical observations and notes here...",
     "save_report": "Save Report",
+    "download_report": "Download Report",
+    "generated_on": "Report generated on",
     "category1": "CNV",
     "category2": "DME",
     "category3": "DRUSEN",

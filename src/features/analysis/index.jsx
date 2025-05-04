@@ -4,6 +4,7 @@ import { CheckCircle, FilePlus2 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { createReport } from '../../api/reportService';
 import { useAuth } from '../../context/AuthContext';
+import jsPDF from 'jspdf';
 
 const Analysis = () => {
   const { t } = useTranslation();
@@ -48,7 +49,7 @@ const Analysis = () => {
 
   const getTranslatedDiagnosis = (diagnosisCode) => {
     return t(`diagnoses.${diagnosisCode}`, {
-      defaultValue: diagnosisCode // Fallback si no hay traducción
+      defaultValue: diagnosisCode, // Fallback si no hay traducción
     });
   };
 
@@ -77,9 +78,12 @@ const Analysis = () => {
 
       // Añadir descripción automática si es paciente
       if (isPatient()) {
-        const autoDescription = t(`diagnoses.description.${predictionResult.prediction}`, {
-          defaultValue: t('analysis.no_description_available')
-        });
+        const autoDescription = t(
+          `diagnoses.description.${predictionResult.prediction}`,
+          {
+            defaultValue: t('analysis.no_description_available'),
+          }
+        );
         formData.append('description', autoDescription);
       } else {
         // Añadir observaciones del profesional
@@ -98,6 +102,101 @@ const Analysis = () => {
     }
   };
 
+  const handleDownload = () => {
+    if (!imageFile || !predictionResult) {
+      console.error('Missing data to download report.');
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = function (e) {
+      const imageData = e.target.result;
+
+      const doc = new jsPDF();
+
+      // Title
+      doc.setFontSize(18);
+      doc.text(t('analysis.results') || 'OCT Report', 14, 20);
+
+      // Timestamp
+      const now = new Date();
+      const formattedDate = now.toLocaleString();
+      doc.setFontSize(11);
+      doc.setTextColor(100);
+      doc.text(
+        `${t('analysis.generated_on') || 'Generated on'}: ${formattedDate}`,
+        14,
+        28
+      );
+
+      // Primary diagnosis
+      doc.setFontSize(12);
+      doc.setTextColor(0);
+      doc.text(`${t('analysis.primary_diagnosis')}:`, 14, 40);
+      doc.setFont('Helvetica', 'bold');
+      doc.text(getTranslatedDiagnosis(predictionResult.prediction), 18, 48);
+      doc.setFont('Helvetica', 'normal');
+
+      // Image
+      doc.setFontSize(12);
+      doc.text(t('analysis.original_image') + ':', 14, 58);
+      doc.addImage(imageData, 'JPEG', 14, 62, 90, 60); // adjust size as needed
+
+      let y = 130; // new section after image
+
+      // Probabilities
+      doc.text(t('analysis.probabilities') + ':', 14, y);
+      y += 10;
+      const probabilities = [
+        {
+          label: t('analysis.category1') || 'CNV',
+          value: predictionResult.probabilities[0],
+        },
+        {
+          label: t('analysis.category2') || 'DME',
+          value: predictionResult.probabilities[1],
+        },
+        {
+          label: t('analysis.category3') || 'DRUSEN',
+          value: predictionResult.probabilities[2],
+        },
+        {
+          label: t('analysis.category4') || 'NORMAL',
+          value: predictionResult.probabilities[3],
+        },
+      ];
+
+      probabilities.forEach(({ label, value }) => {
+        doc.text(`- ${label}: ${(value * 100).toFixed(2)}%`, 18, y);
+        y += 10;
+      });
+
+      // Description or Comments
+      y += 10;
+      if (isPatient()) {
+        doc.text(`${t('analysis.description')}:`, 14, y);
+        y += 8;
+        const description = t(
+          `diagnoses.description.${predictionResult.prediction}`,
+          {
+            defaultValue: t('analysis.no_description_available'),
+          }
+        );
+        doc.text(description, 18, y, { maxWidth: 170 });
+      } else {
+        doc.text(`${t('analysis.observations')}:`, 14, y);
+        y += 8;
+        doc.text(comments || t('analysis.no_description_available'), 18, y, {
+          maxWidth: 170,
+        });
+      }
+
+      doc.save('oct_report.pdf');
+    };
+
+    reader.readAsDataURL(imageFile);
+  };
+
   if (!imageFile || !predictionResult) {
     return (
       <div className='flex flex-col items-center justify-center min-h-screen'>
@@ -114,7 +213,7 @@ const Analysis = () => {
   }
 
   return (
-    <div className="" id='webcrumbs'>
+    <div className='' id='webcrumbs'>
       <div className="w-[1200px] p-6 font-['Open_Sans',_sans-serif] text-dark-primary mx-auto">
         {/* Header */}
         <header className='flex items-center justify-center mb-8'>
@@ -134,7 +233,8 @@ const Analysis = () => {
               {t('analysis.primary_diagnosis')}
             </p>
             <h2 className='text-3xl font-bold text-primary'>
-              {getTranslatedDiagnosis(predictionResult.prediction) || t('analysis.unknown')}
+              {getTranslatedDiagnosis(predictionResult.prediction) ||
+                t('analysis.unknown')}
             </h2>
           </div>
 
@@ -194,14 +294,16 @@ const Analysis = () => {
           <div className='transition-all duration-500 opacity-0 animate-[fadeIn_1.4s_ease_forwards]'>
             <div className='bg-very-light-gray p-6 rounded-xl border border-light-gray shadow-sm mb-8'>
               <h3 className='font-bold mb-4 text-dark-primary'>
-                {isPatient() ? t('analysis.description') : t('analysis.observations')}
+                {isPatient()
+                  ? t('analysis.description')
+                  : t('analysis.observations')}
               </h3>
 
               {isPatient() ? (
                 <div className='bg-white p-4 rounded-lg border border-light-gray'>
                   <p className='text-dark-primary text-justify'>
                     {t(`diagnoses.description.${predictionResult.prediction}`, {
-                      defaultValue: t('analysis.no_description_available')
+                      defaultValue: t('analysis.no_description_available'),
                     })}
                   </p>
                 </div>
@@ -219,14 +321,25 @@ const Analysis = () => {
 
           {/* Generate Report Button */}
           <div className='flex justify-center mt-8 transition-all duration-500 opacity-0 animate-[fadeIn_1.6s_ease_forwards]'>
-            <button
-              onClick={handleGenerateReport}
-              className='px-6 gap-2 py-3 bg-dark-secondary hover:bg-accent-hover text-white rounded-lg transition-all duration-300 
-              shadow-md hover:shadow-lg transform hover:scale-105 flex items-center'
-            >
-              <FilePlus2 className='w-6 h-6' />
-              {t('analysis.save_report')}
-            </button>
+            {isPatient ? (
+              <button
+                onClick={handleDownload}
+                className='px-6 gap-2 py-3 bg-dark-secondary hover:bg-accent-hover text-white rounded-lg transition-all duration-300 
+        shadow-md hover:shadow-lg transform hover:scale-105 flex items-center'
+              >
+                <FilePlus2 className='w-6 h-6' />
+                {t('analysis.download_report')}
+              </button>
+            ) : (
+              <button
+                onClick={handleGenerateReport}
+                className='px-6 gap-2 py-3 bg-dark-secondary hover:bg-accent-hover text-white rounded-lg transition-all duration-300 
+        shadow-md hover:shadow-lg transform hover:scale-105 flex items-center'
+              >
+                <FilePlus2 className='w-6 h-6' />
+                {t('analysis.save_report')}
+              </button>
+            )}
           </div>
         </div>
 
