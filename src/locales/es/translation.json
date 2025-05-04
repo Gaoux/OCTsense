@@ -1,0 +1,200 @@
+{
+  "home": {
+    "heroTitle": "OCTsense: Análisis de Imágenes OCT Potenciado por IA",
+    "heroDescription": "Tecnología de inteligencia artificial revolucionaria que ayuda a los oftalmólogos a analizar imágenes OCT con precisión y eficiencia, mejorando las capacidades diagnósticas y ahorrando tiempo valioso.",
+    "heroAlt": "Fondo de análisis de imagen OCT",
+    "getStarted": "Comenzar",
+    "benefitsTitle": "Beneficios Clave",
+    "benefitsDescription": "Experimenta las ventajas de la tecnología de IA de vanguardia de OCTsense en tu práctica oftalmológica.",
+    "benefit1": {
+      "title": "Soporte Diagnóstico",
+      "description": "El análisis impulsado por IA proporciona una evaluación precisa e identificación de patologías en imágenes OCT, apoyando tus decisiones clínicas."
+    },
+    "benefit2": {
+      "title": "Reducción de Tiempo",
+      "description": "Reduce el tiempo dedicado al análisis manual de imágenes hasta en un 70%, permitiéndote enfocarte más en la atención al paciente."
+    },
+    "benefit3": {
+      "title": "Compatibilidad de Dispositivos",
+      "description": "Compatible con todos los principales dispositivos y formatos OCT, asegurando una integración perfecta en tu flujo de trabajo clínico."
+    },
+    "benefit4": {
+      "title": "Seguridad de Datos",
+      "description": "Plataforma compatible con HIPAA con cifrado de extremo a extremo, garantizando que los datos de tus pacientes permanezcan seguros y privados."
+    },
+    "videoTitle": "Mira OCTsense en Acción",
+    "videoDescription": "Observa cómo nuestra tecnología de IA analiza imágenes OCT y genera informes completos en segundos.",
+    "videoAlt": "Miniatura del video de demostración de OCTsense",
+    "howItWorksTitle": "Cómo Funciona",
+    "howItWorksDescription": "Nuestro sencillo proceso de tres pasos proporciona un análisis rápido y preciso de imágenes OCT.",
+    "step1": {
+      "title": "Subir Imagen",
+      "description": "Sube tus imágenes OCT a través de nuestro portal web seguro."
+    },
+    "step2": {
+      "title": "Análisis IA",
+      "description": "Nuestro IA analiza y detecta condiciones retinianas."
+    },
+    "step3": {
+      "title": "Recibe el Reporte",
+      "description": "Descarga un informe diagnóstico detallado."
+    },
+    "faq": {
+      "title": "Preguntas Frecuentes",
+      "description": "Encuentra respuestas a las preguntas más comunes sobre la tecnología OCTsense y cómo puede beneficiar a tu práctica.",
+      "questions": [
+        {
+          "q": "¿Qué tan precisa es el análisis de IA de OCTsense?",
+          "a": "OCTsense alcanza más del 95% de precisión en la identificación de patologías retinianas comunes como CNV, DME, DRUSEN o tejido normal. El modelo de IA ha sido entrenado y validado con miles de imágenes OCT anotadas por expertos para garantizar su fiabilidad clínica."
+        },
+        {
+          "q": "¿OCTsense cumple con las normativas de protección de datos médicos?",
+          "a": "Sí, OCTsense cumple con los estándares de HIPAA en los Estados Unidos y con el GDPR en Europa. Todos los datos de pacientes se cifran durante la transmisión y almacenamiento, asegurando su protección total."
+        },
+        {
+          "q": "¿Qué tipos de enfermedades puede detectar OCTsense?",
+          "a": "Actualmente, OCTsense se enfoca en la detección automática de CNV (Neovascularización Coroidal), DME (Edema Macular Diabético), DRUSEN (marcadores de Degeneración Macular Relacionada con la Edad) y tejido retiniano normal. Próximas versiones podrían ampliar las categorías diagnósticas."
+        },
+        {
+          "q": "¿OCTsense se integra con sistemas EMR u hospitalarios?",
+          "a": "En esta etapa, OCTsense no ofrece integración directa con EMR. Sin embargo, los resultados y reportes pueden descargarse fácilmente como archivos estandarizados y adjuntarse manualmente a los sistemas de historial médico existentes."
+        },
+        {
+          "q": "¿Cómo maneja OCTsense el entrenamiento y soporte al usuario?",
+          "a": "Ofrecemos guías de inicio, tutoriales paso a paso y soporte ilimitado por correo electrónico y chat. Nuestro equipo garantiza que cada usuario pueda aprender rápidamente a utilizar OCTsense sin necesidad de conocimientos técnicos especializados."
+        }
+      ]
+    }
+  },
+  "navbar": {
+    "home": "Inicio",
+    "upload": "Carga",
+    "analysis": "Análisis",
+    "report": "Informe",
+    "login": "Iniciar sesión",
+    "logout": "Cerrar sesión",
+    "settings": "Configuración",
+    "user": "Usuario",
+    "email": "correo@ejemplo.com"
+  },
+  "login": {
+    "title": "OCTsense",
+    "subtitle": "Inicia sesión con tu cuenta",
+    "email": "Correo electrónico",
+    "password": "Contraseña",
+    "forgotPassword": "¿Olvidaste tu contraseña?",
+    "dontHaveAccount": "¿No tienes cuenta?",
+    "registerLink": "Regístrate",
+    "loginButton": "Iniciar sesión",
+    "loading": "Cargando",
+    "error": "Usuario o contraseña inválidos.",
+    "emptyFields": "Por favor, complete todos los campos.",
+    "invalidEmail": "Por favor, ingrese una dirección de correo electrónico válida."
+  },
+  "register": {
+    "subtitle": "Crea una cuenta para empezar",
+    "placeholders": {
+      "email": "Correo electrónico",
+      "fullName": "Nombre completo",
+      "selectRole": "Selecciona tu rol",
+      "password": "Contraseña",
+      "confirmPassword": "Confirmar contraseña"
+    },
+  "role": {
+    "patient": "Paciente",
+    "professional": "Profesional"
+    },
+    "button": "Registrarse",
+    "alreadyHaveAccount": "¿Ya tienes cuenta?",
+    "loginLink": "Inicia sesión",
+    "loading": "Cargando",
+    "errors": {
+      "emptyFields": "Please fill out all required fields.",
+      "passwordMismatch": "Passwords do not match.",
+      "invalidEmail": "Please enter a valid email address.",
+      "passwordRequirements": "Password must be at least 8 characters long, with one uppercase letter, one lowercase letter, and one number.",
+      "registrationFailed": "Registration failed. Please try again.",
+      "roleRequired": "Please select a role."
+    }
+  },
+  "upload": {
+    "title": "Carga de imagen",
+    "subtitle": "Sube una tomografía",
+    "subtitle2": "Sube aquí",
+    "uploadPrompt": "Arrastra la imagen aquí",
+    "buttonUpload": "Cargar imagen",
+    "buttonAnalyze": "Analizar",
+    "no_image_error": "Por favor selecciona un archivo de imagen.",
+    "error": "Error subiendo Imagen.",
+    "formats": "Formatos admitidos: JPG, JPEG y PNG."
+  },
+  "analysis": {
+    "results": "Resultados",
+    "original_image": "Tomografía médica subida (OCT)",
+    "analysis_details": "Probabilidades de Diagnóstico",
+    "comments": "Observaciones",
+    "probabilities": "Probabilidades de diagnóstico",
+    "save_comments": "Guardar Comentarios",
+    "no_data_found": "No hay datos disponibles",
+    "upload_first": "Por favor, sube una imagen primero.",
+    "most_likely": "Diagnóstico Principal",
+    "primary_diagnosis": "Diagnóstico Principal",
+    "unknown": "Desconocido",
+    "comments_placeholder": "Agrega tus observaciones clínicas aquí...",
+    "save_report": "Guardar Reporte",
+    "download_report": "Descargar Reporte",
+    "generated_on": "Reporte generado el",
+    "observations": "Observaciones",
+    "category1": "CNV",
+    "category2": "DME",
+    "category3": "DRUSEN",
+    "category4": "NORMAL",
+    "description": "Resumen de tu diagnóstico",
+    "no_description_available": "Descripción no disponible para este diagnóstico"
+  },
+  "diagnoses": {
+    "CNV": "Neovascularización Coroidea",
+    "DME": "Edema Macular Diabético",
+    "DRUSEN": "Drusas Retinianas",
+    "NORMAL": "Retina Normal",
+    "description": {
+      "CNV": "La neovascularización coroidea (CNV) es el crecimiento anormal de nuevos vasos sanguíneos en la coroides, la capa vascular que se encuentra entre la esclerótica y la retina. Estos nuevos vasos pueden crecer desde la coroides hacia la retina, a través de una ruptura en la membrana de Bruch, causando fugas y cicatrización, lo que puede llevar a una pérdida de visión. ",
+      "DME": "El edema macular diabético (DME) es una complicación de la retinopatía diabética que se caracteriza por la acumulación de líquido en la mácula, la parte central de la retina responsable de la visión nítida. Esta acumulación de líquido puede provocar visión borrosa, distorsionada o pérdida de visión central. ",
+      "DRUSEN": "Las drusas retinianas son depósitos amarillentos que se acumulan debajo de la retina, a menudo en la mácula, la zona central de la retina encargada de la visión detallada.",
+      "NORMAL": "Tus resultados no muestran anomalías significativas."
+    }
+  },
+  "settings": {
+    "title": "Configuración de Usuario",
+    "subtitle": "Administra tu información de cuenta y seguridad",
+    "personal_info": "Información Personal",
+    "change_password": "Cambiar Contraseña",
+    "name": "Nombre Completo",
+    "email": "Correo Electrónico",
+    "current_password": "Contraseña Actual",
+    "new_password": "Nueva Contraseña",
+    "confirm_password": "Confirmar Nueva Contraseña",
+    "password_instructions": "Deja en blanco si no deseas cambiar tu contraseña",
+    "save_changes": "Guardar Cambios",
+    "logout": "Cerrar Sesión",
+    "success": {
+      "update_success": "¡Tus configuraciones se han actualizado correctamente!"
+    },
+    "errors": {
+      "name_required": "El nombre es requerido",
+      "email_required": "El correo electrónico es requerido",
+      "email_invalid": "Por favor ingresa un correo electrónico válido",
+      "passwords_mismatch": "Las contraseñas no coinciden",
+      "current_password_required": "La contraseña actual es requerida"
+    }
+  },
+  "footer": {
+    "project_by": "Proyecto de investigación desarrollado en",
+    "quick_links": "Enlaces rápidos",
+    "contact": "Contacto",
+    "follow_us": "Síguenos",
+    "view_code": "Ver código del proyecto",
+    "all_rights": "Todos los derechos reservados",
+    "disclaimer": "Este es un proyecto académico. No para uso clínico."
+  }
+}
