@@ -142,6 +142,8 @@
     "unknown": "Desconocido",
     "comments_placeholder": "Agrega tus observaciones clínicas aquí...",
     "save_report": "Guardar Reporte",
+    "download_report": "Descargar Reporte",
+    "generated_on": "Reporte generado el",
     "observations": "Observaciones",
     "category1": "CNV",
     "category2": "DME",
