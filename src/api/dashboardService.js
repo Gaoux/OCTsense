@@ -75,16 +75,27 @@ export const deleteUser = async (id) => {
 
 export const registerUser = async (userData) => {
     try {
-        const token = Cookies.get('token');
-        const response = await apiClient.post('/api/users/users/', userData, {
-            headers: {
-                'Content-Type': 'application/json',
-                Authorization: `Bearer ${token}`,
-            },
-        });
-        return response.data;
+      console.log('Datos enviados al backend:', userData); // Depuración
+      const response = await apiClient.post('/api/users/register/', userData, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      console.log('Respuesta del backend:', response.data); // Depuración
+      return response.data;
     } catch (error) {
-        console.error('Error registrando usuario:', error);
-        throw error;
+      console.error('Error registrando usuario:', error.response?.data || error.message); // Depuración
+      throw error;
     }
+  };
+
+export const getReports = async () => {
+  try {
+    const response = await apiClient.get('/api/reports/'); // Endpoint para obtener todos los reportes
+    return response.data; // Devuelve los datos de los reportes
+  } catch (error) {
+    console.error('Error al obtener los reportes:', error);
+    throw error;
+  }
 };
+

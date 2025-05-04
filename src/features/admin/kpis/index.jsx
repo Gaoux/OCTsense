@@ -18,6 +18,7 @@ const AdminKPIs = () => {
         setLoading(false);
       }
     };
+    
 
     fetchKPIs();
   }, []);
@@ -65,19 +66,6 @@ const AdminKPIs = () => {
             color="bg-white"
           />
 
-          {/* Total de errores reportados */}
-          <KPIBox
-            title="Total de errores reportados"
-            value={kpis?.total_errors_reported ?? 0}
-            color="bg-white"
-          />
-
-          {/* Errores no resueltos */}
-          <KPIBox
-            title="Errores no resueltos"
-            value={kpis?.unresolved_errors ?? 0}
-            color="bg-white"
-          />
         </div>
       </div>
     </div>

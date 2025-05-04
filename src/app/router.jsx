@@ -11,6 +11,7 @@ import { useAuth } from '../context/AuthContext.jsx';
 import UserRegister from '../features/admin/UserRegister';
 import UsersList from '../features/admin/UsersList.jsx';
 import Dashboard from '../features/admin/Dashboard.jsx';
+import UploadModel from './../features/admin/UploadModel/index.jsx';
 
 import Kpis from '../features/admin/kpis/index.jsx';
 import EditUser from '../features/admin/EditUser.jsx';
@@ -64,6 +65,8 @@ const AppRoutes = () => (
     <Route path='/editar-usuario/:id' element={<AdminRoute element={<EditUser />} />} />
     <Route path='/report' element={<Report />} />
     <Route path='/report/:id' element={<ReportDetails />} />
+    <Route path="/admin/upload-model" element={<UploadModel />} />
+
       
     {/* Ruta para páginas no encontradas */}
     <Route path='*' element={<NotFound />} />

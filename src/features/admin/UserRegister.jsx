@@ -20,15 +20,11 @@ const UserRegister = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    // Agregar lógica para establecer is_admin
-    const dataToSend = {
-      ...formData,
-      is_admin: formData.role === 'admin', // Si el rol es admin, is_admin será true
-    };
-
+    console.log('handleSubmit ejecutado'); // Depuración
+  
     try {
-      const response = await registerUser(dataToSend); // Llama al servicio
+      console.log('Datos enviados al backend:', formData); // Depuración
+      const response = await registerUser(formData); // Llama al servicio
       alert(response.message || 'Usuario registrado exitosamente'); // Notificación de éxito
       setFormData({
         name: '',
@@ -38,7 +34,8 @@ const UserRegister = () => {
         sendEmail: true,
       });
     } catch (error) {
-      alert('Error al registrar el usuario. Verifica los datos e intenta nuevamente.'); // Notificación de error
+      console.error('Error al registrar el usuario:', error.response?.data || error.message); // Depuración
+      alert('Error al registrar el usuario. Verifica los datos e intenta nuevamente.');
     }
   };
 

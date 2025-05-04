@@ -73,7 +73,7 @@ export function NavbarComponent() {
       path: '/admin-dashboard',
       icon: <Home className='w-4 h-4 md:w-6 md:h-6 lg:w-5 lg:h-5 text-white' />,
       label: t('Panel'),
-      protected: false,
+      protected: true,
     },
     {
       path: '/usuarios',
@@ -97,6 +97,12 @@ export function NavbarComponent() {
         <LineChart className='w-4 h-4 md:w-6 md:h-6 lg:w-5 lg:h-5 text-white' />
       ),
       label: t('KPIs'),
+      protected: true,
+    },
+    {
+      path: '/admin/upload-model',
+      icon: <Upload className="w-4 h-4 md:w-6 md:h-6 lg:w-5 lg:h-5 text-white" />,
+      label: 'Cargar Modelo',
       protected: true,
     },
   ];
