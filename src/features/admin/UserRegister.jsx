@@ -104,7 +104,7 @@ const UserRegister = () => {
             >
               <option value="">Seleccionar rol</option>
               <option value="admin">Administrador</option>
-              <option value="normal">Usuario</option>
+              <option value="patient">Paciente</option>
               <option value="professional">Profesional</option>
             </select>
           </div>
