@@ -100,7 +100,7 @@
       "password": "Password",
       "confirmPassword": "Confirm Password"
     },
-    "roles": {
+    "role": {
       "patient": "Patient",
       "professional": "Professional"
     },

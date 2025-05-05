@@ -100,9 +100,9 @@
       "password": "Contraseña",
       "confirmPassword": "Confirmar contraseña"
     },
-    "roles": {
-      "patient": "Paciente",
-      "professional": "Profesional"
+  "role": {
+    "patient": "Paciente",
+    "professional": "Profesional"
     },
     "button": "Registrarse",
     "alreadyHaveAccount": "¿Ya tienes cuenta?",

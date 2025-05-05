@@ -20,7 +20,7 @@ export const registerUser = async (form) => {
             email: form.email,
             password: form.password,
             name: form.name,
-            profession: form.role,
+            role: form.role,
         },
         {withCredentials: true}
     );

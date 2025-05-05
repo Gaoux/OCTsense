@@ -53,13 +53,8 @@ const Register = () => {
 
     try {
       setLoading(true);
+      console.log("FORM ENVIADO:", form);
       await register(form);
-      const newUser = {
-        email: form.email,
-        name: form.name,
-        password: form.password,
-        role: form.role,
-      };
       navigate('/login');
     } catch (err) {
       console.error(err);
@@ -109,9 +104,8 @@ const Register = () => {
             className='w-full px-4 py-2 border rounded-md bg-white text-gray-700 focus:outline-none focus:ring focus:ring-cyan-300'
           >
             <option value=''>{t('register.placeholders.selectRole')}</option>
-            <option value='patient'>{t('register.roles.patient')}</option>
-            <option value='professional'>
-              {t('register.roles.professional')}
+            <option value='patient'>{t('register.role.patient')}</option>
+            <option value='professional'>{t('register.role.professional')}
             </option>
           </select>
           <input
