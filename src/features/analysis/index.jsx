@@ -88,7 +88,7 @@ const Analysis = () => {
         formData.append('description', autoDescription);
       } else {
         // Añadir observaciones del profesional
-        formData.append('observations', comments);
+        formData.append('comments', comments);
       }
 
       const response = await createReport(formData);
@@ -214,34 +214,35 @@ const Analysis = () => {
   }
 
   return (
-    <div className="min-h-screen py-8 px-4 sm:px-6 lg:px-8">
+    <div className='min-h-screen py-8 px-4 sm:px-6 lg:px-8'>
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1, ease: "easeInOut" }}
-        className="max-w-6xl mx-auto bg-white rounded-2xl shadow-xl overflow-hidden"
+        transition={{ duration: 1, ease: 'easeInOut' }}
+        className='max-w-6xl mx-auto bg-white rounded-2xl shadow-xl overflow-hidden'
       >
         {/* Header */}
-        <div className="bg-very-dark-secondary px-6 py-4">
-          <div className="flex items-center justify-center gap-3">
+        <div className='bg-very-dark-secondary px-6 py-4'>
+          <div className='flex items-center justify-center gap-3'>
             <div className='bg-green-200 p-2 rounded-full'>
               <CheckCircle className='h-5 w-5 text-green-800' />
             </div>
-            <h1 className="text-2xl md:text-4xl font-bold text-white">
+            <h1 className='text-2xl md:text-4xl font-bold text-white'>
               {t('analysis.results')}
             </h1>
           </div>
         </div>
 
         {/* Contenido Principal */}
-        <div className="p-4 md:p-8 space-y-6">
+        <div className='p-4 md:p-8 space-y-6'>
           {/* Diagnosis Header */}
           <div className='text-center'>
             <p className='text-light-primary mb-2 text-sm md:text-base'>
               {t('analysis.primary_diagnosis')}
             </p>
             <h2 className='text-xl md:text-3xl font-bold text-primary'>
-              {getTranslatedDiagnosis(predictionResult.prediction) || t('analysis.unknown')}
+              {getTranslatedDiagnosis(predictionResult.prediction) ||
+                t('analysis.unknown')}
             </h2>
           </div>
 
@@ -282,7 +283,9 @@ const Analysis = () => {
                         <div
                           className='h-full bg-secondary rounded-full transition-all duration-1000 ease-out'
                           style={{
-                            width: progressAnimated ? `${category.value}%` : '0%',
+                            width: progressAnimated
+                              ? `${category.value}%`
+                              : '0%',
                           }}
                         ></div>
                       </div>
@@ -324,7 +327,7 @@ const Analysis = () => {
 
           {/* Generate Report Button */}
           <div className='flex justify-center opacity-100'>
-            {isPatient ? (
+            {isPatient() ? (
               <button
                 onClick={handleDownload}
                 className='px-4 md:px-6 gap-2 py-2 md:py-3 bg-dark-secondary hover:bg-accent-hover text-white rounded-lg transition-all duration-300 
