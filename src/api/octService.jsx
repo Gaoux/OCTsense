@@ -20,3 +20,20 @@ export const predictOCT = async (imageFile) => {
     throw error;
   }
 };
+
+export const uploadModel = async (file) => {
+  const formData = new FormData();
+  formData.append('file', file);
+
+  try {
+    const response = await apiClient.post('/api/oct_analysis/upload-model/', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Error al cargar el modelo:', error);
+    throw error;
+  }
+};
