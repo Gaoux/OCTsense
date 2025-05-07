@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import axios from '../../api/apiClient'; 
+import axios from '../../api/apiClient';
+
 const EditUser = () => {
   const { id } = useParams(); // Obtiene el ID del usuario desde la URL
   const navigate = useNavigate();
@@ -12,6 +13,8 @@ const EditUser = () => {
   });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  const roles = ['admin', 'professional', 'patient']; // Lista de roles disponibles
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -84,18 +87,26 @@ const EditUser = () => {
             />
           </div>
           <div className="mb-4">
-            <label htmlFor="profession" className="block text-gray-700 font-bold mb-2">
+            <label htmlFor="role" className="block text-gray-700 font-bold mb-2">
               Rol
             </label>
-            <input
-              type="text"
-              id="profession"
+            <select
+              id="role"
               name="role"
               value={user.role}
               onChange={handleChange}
               className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
               required
-            />
+            >
+              <option value="" disabled>
+                Selecciona un rol
+              </option>
+              {roles.map((role) => (
+                <option key={role} value={role}>
+                  {role.charAt(0).toUpperCase() + role.slice(1)} {/* Capitaliza el rol */}
+                </option>
+              ))}
+            </select>
           </div>
           <div className="flex justify-end">
             <button
