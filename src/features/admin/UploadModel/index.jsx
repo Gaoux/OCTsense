@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { uploadModel } from '../../../api/octService';
+import { uploadModel } from '../../../api/octService'; // Asegúrate de que este servicio esté configurado
 
 const UploadModel = () => {
   const [file, setFile] = useState(null);
@@ -21,8 +21,11 @@ const UploadModel = () => {
     }
 
     try {
-      const response = await uploadModel(file);
-      setMessage(response.message);
+      const formData = new FormData();
+      formData.append('model', file);
+
+      const response = await uploadModel(formData); // Llama al servicio para cargar el modelo
+      setMessage(response.message || 'Modelo cargado correctamente.');
     } catch (err) {
       setError('Error al cargar el archivo. Intenta nuevamente.');
     }
