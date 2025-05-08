@@ -131,7 +131,7 @@ const Upload = () => {
                   }`}
             >
               <Scissors size={18} />
-              Crop Image
+              {t('crop.button')}
             </button>
             <button
               onClick={handleSubmit}

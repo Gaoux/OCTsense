@@ -100,9 +100,9 @@
       "password": "Contraseña",
       "confirmPassword": "Confirmar contraseña"
     },
-  "role": {
-    "patient": "Paciente",
-    "professional": "Profesional"
+    "role": {
+      "patient": "Paciente",
+      "professional": "Profesional"
     },
     "button": "Registrarse",
     "alreadyHaveAccount": "¿Ya tienes cuenta?",
@@ -196,5 +196,11 @@
     "view_code": "Ver código del proyecto",
     "all_rights": "Todos los derechos reservados",
     "disclaimer": "Este es un proyecto académico. No para uso clínico."
+  },
+  "crop": {
+    "alt": "Para recortar",
+    "instructions": "Arrastra las esquinas para ajustar el área de recorte. También puedes mover el área.",
+    "minSize": "Tamaño mínimo de recorte: {{size}}px",
+    "button": "Recortar imagen"
   }
 }

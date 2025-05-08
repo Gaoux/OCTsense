@@ -196,5 +196,11 @@
     "view_code": "View project code",
     "all_rights": "All rights reserved",
     "disclaimer": "This is an academic project. Not for clinical use."
+  },
+  "crop": {
+    "alt": "To crop",
+    "instructions": "Drag the corners to adjust the crop area. You can also move the crop area around.",
+    "minSize": "Minimum crop size: {{size}}px",
+    "button": "Crop image"
   }
 }

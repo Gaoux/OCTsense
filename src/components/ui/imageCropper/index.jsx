@@ -8,6 +8,7 @@ import 'react-image-crop/dist/ReactCrop.css';
 import setCanvasPreview from '../../../utils/cropUtils';
 import CancelBtn from '../cancelBtn';
 import ConfirmBtn from '../confirmBtn';
+import { useTranslation } from 'react-i18next';
 
 const ASPECT_RATIO = undefined; // Freeform crop
 const MIN_DIMENSION = 150;
@@ -28,6 +29,7 @@ const ImageCropper = ({
     height: 50,
   });
   const [error, setError] = useState('');
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (defaultImageFile) {
@@ -96,16 +98,13 @@ const ImageCropper = ({
           </ReactCrop>
         </div>
       )}
-      <p className='text-sm text-gray-400 mt-4'>
-        Drag the corners to adjust the crop area. You can also move the crop
-        area around.
-      </p>
+      <p className='text-sm text-gray-400 mt-4'>{t('crop.instructions')}</p>
       <p className='text-sm text-gray-400'>
-        Minimum crop size: {MIN_DIMENSION}px
+        {t('crop.minSize', { size: MIN_DIMENSION })}
       </p>
       <div className='w-full flex justify-center items-center mt-4 gap-4'>
         <CancelBtn onClick={closeModal} />
-        <ConfirmBtn onClick={handleCrop} text={'Crop image'} />
+        <ConfirmBtn onClick={handleCrop} text={t('crop.button')} />
       </div>
       <canvas ref={previewCanvasRef} style={{ display: 'none' }} />
     </div>
