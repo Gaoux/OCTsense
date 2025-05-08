@@ -11,10 +11,12 @@ import ReportDetailsInfo from '../../components/ui/reportDetailsInfo';
 import ConfirmDeleteModal from '../../components/ui/confirmDeleteModal';
 import { ArrowLeft, Trash2 } from 'lucide-react';
 import jsPDF from 'jspdf';
+import { useTranslation } from 'react-i18next';
 
 const ReportDetails = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const [report, setReport] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -106,11 +108,12 @@ const ReportDetails = () => {
     doc.text('OCT Report Details', 14, 20);
 
     doc.setFontSize(12);
-    doc.text(`Report ID: ${report.id}`, 14, 40);
-    doc.text(`Created At: ${report.created_at?.split('T')[0]}`, 14, 50);
-    doc.text(`Predicted Diagnostic: ${report.predicted_diagnostic}`, 14, 60);
+    doc.text(t('report.pdfTitle'), 14, 20);
+    doc.text(`${t('report.id')}: ${report.id}`, 14, 40);
+    doc.text(`${t('report.createdAt')}: ${report.created_at?.split('T')[0]}`, 14, 50);
+    doc.text(`${t('report.predictedDiagnostic')}: ${report.predicted_diagnostic}`, 14, 60);
 
-    doc.text('Diagnostic Probabilities:', 14, 80);
+    doc.text(`${t('report.probabilities')}:`, 14, 80);
     let yPosition = 90;
     if (report.diagnostic_probabilities) {
       Object.entries(report.diagnostic_probabilities).forEach(
@@ -125,11 +128,9 @@ const ReportDetails = () => {
       );
     }
 
-    doc.text('User Comment:', 14, yPosition + 10);
+    doc.text(`${t('report.userComment')}:`, 14, yPosition + 10);
     doc.setFontSize(11);
-    doc.text(report.comments || 'No comment provided.', 18, yPosition + 20, {
-      maxWidth: 170,
-    });
+    doc.text(report.comments || t('report.noComment'), 18, yPosition + 20, { maxWidth: 170 });
 
     doc.save(`report_${report.id}.pdf`);
   };
@@ -138,7 +139,7 @@ const ReportDetails = () => {
     return (
       <div className='min-h-screen flex items-center justify-center'>
         <div className='text-dark-primary text-lg font-semibold'>
-          Loading report...
+        {t('report.loading')}
         </div>
       </div>
     );
@@ -148,7 +149,7 @@ const ReportDetails = () => {
     return (
       <div className='min-h-screen flex items-center justify-center'>
         <div className='text-dark-secondary font-bold text-4xl'>
-          Report not found
+        {t('report.notFound')}
         </div>
       </div>
     );
@@ -204,7 +205,7 @@ const ReportDetails = () => {
         show={showDeleteModal}
         onClose={() => setShowDeleteModal(false)}
         onConfirm={handleDelete}
-        itemName='report'
+        itemName={t('report.name')}
       />
     </div>
   );

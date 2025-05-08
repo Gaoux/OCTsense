@@ -100,9 +100,9 @@
       "password": "Contraseña",
       "confirmPassword": "Confirmar contraseña"
     },
-  "role": {
-    "patient": "Paciente",
-    "professional": "Profesional"
+    "role": {
+      "patient": "Paciente",
+      "professional": "Profesional"
     },
     "button": "Registrarse",
     "alreadyHaveAccount": "¿Ya tienes cuenta?",
@@ -164,6 +164,22 @@
       "NORMAL": "Tus resultados no muestran anomalías significativas."
     }
   },
+  "report": {
+    "detailsTitle": "Detalles del Reporte",
+    "id": "ID del Reporte",
+    "createdAt": "Fecha de Creación",
+    "predictedDiagnostic": "Diagnóstico Previsto",
+    "probabilities": "Probabilidades de Diagnóstico",
+    "userComment": "Comentario del Usuario",
+    "noComment": "No se proporcionó comentario.",
+    "loading": "Cargando reporte...",
+    "notFound": "Reporte no encontrado",
+    "pdfTitle": "Detalles del Reporte OCT",
+    "name": "reporte",
+    "historyTitle": "Historial de Reportes",
+    "historySubtitle": "Consulta y gestiona tus reportes médicos anteriores",
+    "empty": "No hay reportes disponibles."
+  },
   "settings": {
     "title": "Configuración de Usuario",
     "subtitle": "Administra tu información de cuenta y seguridad",
@@ -196,5 +212,24 @@
     "view_code": "Ver código del proyecto",
     "all_rights": "Todos los derechos reservados",
     "disclaimer": "Este es un proyecto académico. No para uso clínico."
+  },
+  "crop": {
+    "alt": "Para recortar",
+    "instructions": "Arrastra las esquinas para ajustar el área de recorte. También puedes mover el área.",
+    "minSize": "Tamaño mínimo de recorte: {{size}}px",
+    "button": "Recortar imagen"
+  },
+  "deleteModal": {
+    "title": "Confirmar Eliminación",
+    "confirm": "¿Estás seguro de que deseas eliminar este",
+    "warning": "Esta acción es irreversible. Por favor confirma."
+  },
+  "buttons": {
+    "save": "Guardar",
+    "download": "Descargar",
+    "delete": "Eliminar",
+    "previous": "Reporte Anterior",
+    "next": "Siguiente Reporte",
+    "back": "Volver"
   }
 }

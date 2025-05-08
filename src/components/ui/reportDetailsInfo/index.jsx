@@ -1,6 +1,7 @@
 import React from 'react';
 import { Maximize2, Pencil, Trash2, Download } from 'lucide-react';
 import CancelBtn from '../cancelBtn';
+import { useTranslation } from 'react-i18next';
 
 const ReportDetailsInfo = ({
   report,
@@ -16,12 +17,14 @@ const ReportDetailsInfo = ({
   onDownload,
   onDelete,
 }) => {
+  const { t } = useTranslation();
+
   return (
     <div className='rounded-lg bg-white lg:px-6 transition-all duration-300'>
       {/* Title + Scan Image */}
       <div className='flex justify-between items-start mb-6'>
         <h1 className='text-3xl font-bold text-dark-secondary'>
-          Report Details
+          {t('report.detailsTitle')}
         </h1>
         {imageUrl && (
           <div
@@ -44,13 +47,17 @@ const ReportDetailsInfo = ({
       <div className='grid grid-cols-1 md:grid-cols-2 gap-6'>
         {/* Report ID */}
         <div className='bg-very-light-gray p-4 rounded-md transition hover:bg-very-light-gray-hover'>
-          <h2 className='text-sm uppercase text-dark-gray mb-1'>Report ID</h2>
+          <h2 className='text-sm uppercase text-dark-gray mb-1'>
+            {t('report.id')}
+          </h2>
           <p className='font-mono text-very-dark-gray'>{report.id}</p>
         </div>
 
         {/* Created At */}
         <div className='bg-very-light-gray p-4 rounded-md transition hover:bg-very-light-gray-hover'>
-          <h2 className='text-sm uppercase text-dark-gray mb-1'>Created At</h2>
+          <h2 className='text-sm uppercase text-dark-gray mb-1'>
+            {t('report.createdAt')}
+          </h2>
           <p className='text-very-dark-gray'>
             {report.created_at?.split('T')[0]}
           </p>
@@ -59,7 +66,7 @@ const ReportDetailsInfo = ({
         {/* Predicted Diagnostic */}
         <div className='bg-background-secondary p-4 rounded-md border-l-4 border-secondary md:col-span-2 transition hover:bg-light-primary'>
           <h2 className='text-sm uppercase text-secondary mb-1'>
-            Predicted Diagnostic
+            {t('report.predictedDiagnostic')}
           </h2>
           <p className='text-dark-secondary font-semibold text-lg'>
             {report.predicted_diagnostic}
@@ -69,7 +76,7 @@ const ReportDetailsInfo = ({
         {/* Diagnostic Probabilities */}
         <div className='bg-very-light-gray p-4 rounded-md md:col-span-2 transition hover:bg-very-light-gray-hover'>
           <h2 className='text-sm uppercase text-dark-gray mb-3'>
-            Diagnostic Probabilities
+            {t('report.probabilities')}
           </h2>
           <div className='space-y-3'>
             {report.diagnostic_probabilities &&
@@ -97,7 +104,7 @@ const ReportDetailsInfo = ({
         {/* User Comment Section */}
         <div className='bg-white border border-light-gray p-4 rounded-md md:col-span-2 shadow-sm transition hover:shadow-md'>
           <h2 className='text-sm uppercase text-dark-gray mb-3 flex justify-between items-center'>
-            User Comment
+            {t('report.userComment')}
             {!editingComment && (
               <button
                 className='text-secondary hover:text-dark-secondary transition'
@@ -121,7 +128,7 @@ const ReportDetailsInfo = ({
                   className='px-4 py-2 bg-secondary text-white rounded-md hover:bg-dark-secondary transition'
                   onClick={handleUpdateComment}
                 >
-                  Save
+                  {t('buttons.save')}
                 </button>
               </div>
             </div>
@@ -143,7 +150,7 @@ const ReportDetailsInfo = ({
             className='flex items-center justify-center gap-2 w-40 px-4 py-2 bg-secondary text-white rounded-md hover:bg-light-secondary transition shadow-sm'
           >
             <Download className='w-5 h-5' />
-            <span>Download</span>
+            <span>{t('buttons.download')}</span>
           </button>
 
           {/* Delete Button */}
@@ -152,7 +159,7 @@ const ReportDetailsInfo = ({
             className='flex items-center justify-center gap-2 w-40 px-4 py-2 bg-accent text-white rounded-md hover:bg-accent-hover transition shadow-sm'
           >
             <Trash2 className='w-5 h-5' />
-            <span>Delete</span>
+            <span>{t('buttons.delete')}</span>
           </button>
         </div>
 
@@ -172,7 +179,7 @@ const ReportDetailsInfo = ({
             >
               <path d='M15 18l-6-6 6-6' />
             </svg>
-            <span>Previous Report</span>
+            <span>{t('buttons.previous')}</span>
           </button>
 
           {/* Next Button */}
@@ -180,7 +187,7 @@ const ReportDetailsInfo = ({
             onClick={onNext}
             className='flex items-center justify-center gap-2 w-[48%] px-4 py-2 bg-white border border-light-gray rounded-md text-dark-gray hover:bg-very-light-gray transition shadow-sm'
           >
-            <span>Next Report</span>
+            <span>{t('buttons.next')}</span>
             <svg
               className='w-5 h-5'
               viewBox='0 0 24 24'

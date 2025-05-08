@@ -4,6 +4,7 @@ import { getReportHistory, deleteReport } from '../../api/reportService';
 import ReportCard from '../../components/ui/reportCard';
 import ConfirmDeleteModal from '../../components/ui/confirmDeleteModal'; // 👈 Import
 import { useAuth } from '../../context/AuthContext';
+import { useTranslation } from 'react-i18next';
 
 const Report = () => {
   const { isAuthenticated } = useAuth();
@@ -12,6 +13,7 @@ const Report = () => {
   const [reports, setReports] = useState([]);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [selectedReportId, setSelectedReportId] = useState(null);
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -44,9 +46,9 @@ const Report = () => {
     <div className='bg-gradient-to-br from-blue-100 to-blue-300 font-sans min-h-screen p-4 md:p-6 lg:p-8 transition-all duration-300'>
       <div className='max-w-7xl mx-auto rounded-2xl shadow-lg overflow-hidden transition-all duration-300 bg-white'>
         <header className='bg-very-dark-secondary p-6 text-white'>
-          <h1 className='text-3xl font-bold'>Reports History</h1>
+          <h1 className='text-3xl font-bold'>{t('report.historyTitle')}</h1>
           <p className='mt-1 text-light-primary text-lg'>
-            View and manage your previous medical reports
+            {t('report.historySubtitle')}
           </p>
         </header>
 
@@ -62,7 +64,7 @@ const Report = () => {
             ))
           ) : (
             <div className='col-span-full text-center text-gray font-medium'>
-              No reports available.
+              {t('report.empty')}
             </div>
           )}
         </div>
@@ -73,7 +75,7 @@ const Report = () => {
         show={showDeleteModal}
         onClose={() => setShowDeleteModal(false)}
         onConfirm={confirmDelete}
-        itemName='report'
+        itemName={t('report.name')}
       />
     </div>
   );

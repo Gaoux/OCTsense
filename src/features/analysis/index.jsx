@@ -63,8 +63,11 @@ const Analysis = () => {
     try {
       const formData = new FormData();
       formData.append('image_file', imageFile);
-      formData.append('predicted_diagnostic', predictionResult.prediction);
-
+      formData.append(
+        'predicted_diagnostic',
+        t(`diagnoses.${predictionResult.prediction}`)
+      );
+      
       const probabilitiesLabeled = {
         CNV: predictionResult.probabilities[0],
         DME: predictionResult.probabilities[1],
