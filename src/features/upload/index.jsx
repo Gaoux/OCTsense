@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { predictOCT } from '../../api/octService';
-import { UploadCloud, Image as ImageIcon } from 'lucide-react';
+import { UploadCloud, Image as ImageIcon, Scissors, Crop } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
+import CropModal from '../../components/ui/cropModal';
 
 const Upload = () => {
   const [imageFile, setImageFile] = useState(null);
@@ -14,12 +15,20 @@ const Upload = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
   const { user } = useAuth();
+  const [showCropModal, setShowCropModal] = useState(false);
 
   const handleFileChange = (e) => {
-    setImageFile(e.target.files[0]);
-    setError(null);
+    const file = e.target.files[0];
+    if (file) {
+      setImageFile(file);
+      setError(null);
+    }
   };
 
+  const updateImage = (croppedFile) => {
+    setImageFile(croppedFile);
+    setShowCropModal(false);
+  };
   const handleDragEnter = () => setIsDragging(true);
   const handleDragLeave = () => setIsDragging(false);
   const handleDrop = (e) => {
@@ -46,8 +55,7 @@ const Upload = () => {
       const result = await predictOCT(imageFile);
       setPredictionResult(result);
 
-      const destino =
-        user?.role === 'professional' ? '/analysis' : '/analysis';
+      const destino = user?.role === 'professional' ? '/analysis' : '/analysis';
 
       navigate(destino, {
         state: {
@@ -89,9 +97,7 @@ const Upload = () => {
             </div>
 
             <div className='mt-auto'>
-              {error && (
-                <p className='text-accent text-center mb-2'>{error}</p>
-              )}
+              {error && <p className='text-accent text-center mb-2'>{error}</p>}
               <button
                 onClick={() => document.getElementById('image')?.click()}
                 className='w-full relative bg-white border border-gray-300 text-dark-primary py-2 px-4 rounded-lg shadow-sm 
@@ -114,14 +120,27 @@ const Upload = () => {
                 onChange={handleFileChange}
               />
             </div>
-
+            <button
+              onClick={() => setShowCropModal(true)}
+              disabled={!imageFile}
+              className={`w-full flex items-center justify-center bg-white border border-gray-300 hover:border-gray-400 gap-2 = py-2 px-4 rounded-lg shadow-sm transition-all
+                  ${
+                    imageFile
+                      ? 'bg-gray-50 hover:bg-gray-100 text-dark-primary cursor-pointer'
+                      : 'bg-gray-200 text-gray-400 cursor-not-allowed'
+                  }`}
+            >
+              <Scissors size={18} />
+              Crop Image
+            </button>
             <button
               onClick={handleSubmit}
               disabled={loading}
               className={`w-full bg-dark-secondary text-white py-2 px-4 rounded-lg shadow-md hover:bg-accent-hover
-                transition-all duration-300 shadow-md hover:shadow-lg transform hover:scale-105 ${loading
-                  ? 'opacity-60 cursor-not-allowed'
-                  : 'hover:bg-accent-hover cursor-pointer'
+                transition-all duration-300 shadow-md hover:shadow-lg transform hover:scale-105 ${
+                  loading
+                    ? 'opacity-60 cursor-not-allowed'
+                    : 'hover:bg-accent-hover cursor-pointer'
                 }`}
             >
               {loading ? (
@@ -156,10 +175,11 @@ const Upload = () => {
 
           <div
             className={`flex-[1.5] min-h-[10rem] md:h-110 flex items-center justify-center rounded-lg border transition-all 
-    ${isDragging
-                ? 'border-blue-500 bg-blue-100'
-                : 'border-dashed border-gray-300 bg-white'
-              }`}
+    ${
+      isDragging
+        ? 'border-blue-500 bg-blue-100'
+        : 'border-dashed border-gray-300 bg-white'
+    }`}
             onDragEnter={handleDragEnter}
             onDragLeave={handleDragLeave}
             onDragOver={(e) => e.preventDefault()}
@@ -184,6 +204,15 @@ const Upload = () => {
           {t('upload.formats')}
         </div>
       </div>
+
+      {/* Crop Modal */}
+      {showCropModal && (
+        <CropModal
+          updateImage={updateImage}
+          closeModal={() => setShowCropModal(false)}
+          imageFile={imageFile}
+        />
+      )}
     </div>
   );
 };
