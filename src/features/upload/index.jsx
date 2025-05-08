@@ -137,7 +137,7 @@ const Upload = () => {
               onClick={handleSubmit}
               disabled={loading}
               className={`w-full bg-dark-secondary text-white py-2 px-4 rounded-lg shadow-md hover:bg-accent-hover
-                transition-all duration-300 shadow-md hover:shadow-lg transform hover:scale-105 ${
+                transition-all duration-300 hover:shadow-lg transform hover:scale-105 ${
                   loading
                     ? 'opacity-60 cursor-not-allowed'
                     : 'hover:bg-accent-hover cursor-pointer'

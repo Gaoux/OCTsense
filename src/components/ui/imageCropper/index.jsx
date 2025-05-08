@@ -36,18 +36,22 @@ const ImageCropper = ({ closeModal, updateImage, imageFile }) => {
 
   const onImageLoad = (e) => {
     const { width, height } = e.currentTarget;
-    const cropWidthInPercent = (MIN_DIMENSION / width) * 100;
 
-    const crop = makeAspectCrop(
-      {
-        unit: '%',
-        width: cropWidthInPercent,
-      },
-      ASPECT_RATIO,
-      width,
-      height
-    );
-    const centeredCrop = centerCrop(crop, width, height);
+    // Calculate minimum crop width and height as percentages of the image size
+    const minCropWidthPercent = (MIN_DIMENSION / width) * 100;
+    const minCropHeightPercent = (MIN_DIMENSION / height) * 100;
+
+    // Create the crop object
+    const initialCrop = {
+      unit: '%',
+      x: 25,
+      y: 25,
+      width: Math.max(minCropWidthPercent, 20),
+      height: Math.max(minCropHeightPercent, 20),
+    };
+
+    // No aspect ratio → skip makeAspectCrop
+    const centeredCrop = centerCrop(initialCrop, width, height);
     setCrop(centeredCrop);
   };
 
