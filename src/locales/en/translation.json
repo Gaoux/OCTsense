@@ -164,6 +164,22 @@
       "NORMAL": "Your results show no significant anomalies."
     }
   },
+  "report": {
+    "detailsTitle": "Report Details",
+    "id": "Report ID",
+    "createdAt": "Created At",
+    "predictedDiagnostic": "Predicted Diagnostic",
+    "probabilities": "Diagnostic Probabilities",
+    "userComment": "User Comment",
+    "noComment": "No comment provided.",
+    "loading": "Loading report...",
+    "notFound": "Report not found",
+    "pdfTitle": "OCT Report Details",
+    "name": "report",
+    "historyTitle": "Reports History",
+    "historySubtitle": "View and manage your previous medical reports",
+    "empty": "No reports available."
+  },
   "settings": {
     "title": "User Settings",
     "subtitle": "Manage your account information and security",
@@ -202,5 +218,18 @@
     "instructions": "Drag the corners to adjust the crop area. You can also move the crop area around.",
     "minSize": "Minimum crop size: {{size}}px",
     "button": "Crop image"
+  },
+  "deleteModal": {
+    "title": "Confirm Deletion",
+    "confirm": "Are you sure you want to delete this",
+    "warning": "This action is irreversible. Please confirm."
+  },
+  "buttons": {
+    "save": "Save",
+    "download": "Download",
+    "delete": "Delete",
+    "previous": "Previous Report",
+    "next": "Next Report",
+    "back": "Back"
   }
 }
