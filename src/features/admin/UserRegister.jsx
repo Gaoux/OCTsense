@@ -109,19 +109,6 @@ const UserRegister = () => {
             </select>
           </div>
 
-          {/* Checkbox para enviar correo */}
-          <div className="mb-4 flex items-center">
-            <input
-              type="checkbox"
-              name="sendEmail"
-              checked={formData.sendEmail}
-              className="mr-2"
-              onChange={handleChange}
-            />
-            <label className="text-sm text-gray-700">
-              Enviar notificación al correo Electrónico.
-            </label>
-          </div>
 
           {/* Botón de enviar */}
           <button
