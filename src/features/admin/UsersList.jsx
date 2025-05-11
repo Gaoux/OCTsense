@@ -106,11 +106,6 @@ const UsersList = () => {
                   {users.map((user) => (
                     <tr key={user.id} className='border-b border-gray-300'>
                       <td className='py-3 flex items-center'>
-                        <img
-                          src={`/avatars/${user.gender || 'default'}.png`}
-                          alt={user.name}
-                          className='h-8 w-8 rounded-full mr-2'
-                        />
                         {user.name}
                       </td>
                       <td className='py-3'>{user.email}</td>
@@ -163,7 +158,7 @@ const UsersList = () => {
                 </>
               ) : (
                 <tr>
-                  <td className='py-3 text-center text-gray-500' colSpan='4'>
+                  <td className='py-3 text-center text-gray-500' colSpan='3'>
                     No usuarios encontrados.
                   </td>
                 </tr>
