@@ -48,7 +48,7 @@ export const deleteReport = async (reportId, isAdmin = false) => {
   return await apiClient.delete(`api/reports/${reportId}/delete/`, { headers });
 };
 
-// Update report comments by ID
+// Update report by ID
 export const updateReportDetails = async (
   reportId,
   updatedData,

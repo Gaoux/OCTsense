@@ -29,6 +29,7 @@ const ReportDetails = () => {
   const [newVisualAcuity, setNewVisualAcuity] = useState('');
   const [newComment, setNewComment] = useState('');
   const [editingComment, setEditingComment] = useState(false);
+  const [editingPatientInfo, setEditingPatientInfo] = useState(false);
 
   // Fetch report info
   useEffect(() => {
@@ -101,6 +102,7 @@ const ReportDetails = () => {
       });
 
       setEditingComment(false);
+      setEditingPatientInfo(false);
     } catch (error) {
       console.error('Failed to update report', error);
     }
@@ -220,6 +222,8 @@ const ReportDetails = () => {
           newVisualAcuity={newVisualAcuity}
           setNewVisualAcuity={setNewVisualAcuity}
           handleUpdateReport={handleUpdateReport}
+          editingPatientInfo={editingPatientInfo}
+          setEditingPatientInfo={setEditingPatientInfo}
         />
       </div>
 

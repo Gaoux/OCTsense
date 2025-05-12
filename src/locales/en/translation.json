@@ -234,6 +234,7 @@
   },
   "buttons": {
     "save": "Save",
+    "edit": "Edit",
     "cancel": "Cancel",
     "download": "Download",
     "delete": "Delete",

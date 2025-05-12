@@ -234,6 +234,7 @@
   },
   "buttons": {
     "save": "Guardar",
+    "edit": "Editar",
     "cancel": "Cancelar",
     "download": "Descargar",
     "delete": "Eliminar",
