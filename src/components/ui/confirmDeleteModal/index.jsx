@@ -10,7 +10,7 @@ const ConfirmDeleteModal = ({ show, onClose, onConfirm, itemName }) => {
   return (
     <div className='fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50 p-4'>
       <div className='bg-white rounded-2xl shadow-2xl p-8 max-w-md w-full border border-dark-gray transform transition-all duration-300 scale-95 animate-fade-in'>
-        <h2 className='text-3xl font-bold text-accent text-center mb-6'>
+        <h2 className='text-3xl font-bold text-delete text-center mb-6'>
           {t('deleteModal.title')}
         </h2>
 
@@ -19,7 +19,7 @@ const ConfirmDeleteModal = ({ show, onClose, onConfirm, itemName }) => {
           <span className='text-black'>{itemName}</span>?
         </p>
 
-        <p className='text-center text-accent opacity-80 mb-8 text-[15px] leading-relaxed'>
+        <p className='text-center text-delete opacity-80 mb-8 text-[15px] leading-relaxed'>
           {t('deleteModal.warning')}
         </p>
 
@@ -27,7 +27,7 @@ const ConfirmDeleteModal = ({ show, onClose, onConfirm, itemName }) => {
           <CancelBtn onClick={onClose} />
           <button
             onClick={onConfirm}
-            className='px-5 py-2 text-sm font-semibold rounded-lg bg-accent hover:bg-accent-hover text-white transition-colors cursor-pointer'
+            className='px-5 py-2 text-sm font-semibold rounded-lg bg-delete hover:bg-delete-hover text-white transition-colors cursor-pointer'
           >
             {t('buttons.delete')}
           </button>

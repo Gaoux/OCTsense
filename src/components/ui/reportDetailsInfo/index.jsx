@@ -310,7 +310,7 @@ const ReportDetailsInfo = ({
           {/* Delete Button */}
           <button
             onClick={onDelete}
-            className='flex items-center justify-center gap-1 w-36 px-3 py-2 bg-accent text-white rounded-md hover:bg-accent-hover transition shadow-sm text-sm'
+            className='flex items-center justify-center gap-1 w-36 px-3 py-2 bg-delete text-white rounded-md hover:bg-delete-hover transition shadow-sm text-sm'
           >
             <Trash2 className='w-3 h-3' />
             <span className='font-medium'>{t('buttons.delete')}</span>

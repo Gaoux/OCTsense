@@ -453,7 +453,7 @@ const Analysis = () => {
             {isPatient() ? (
               <button
                 onClick={handleDownload}
-                className='px-8 py-3 bg-dark-secondary hover:bg-accent-hover 
+                className='px-8 py-3 bg-dark-secondary hover:bg-delete-hover 
             text-white rounded-lg transition-all duration-300 shadow-lg hover:shadow-xl 
             transform hover:scale-105 flex items-center gap-3 font-medium'
               >
