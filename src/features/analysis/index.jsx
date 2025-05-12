@@ -12,7 +12,7 @@ import { useTranslation } from 'react-i18next';
 import { createReport } from '../../api/reportService';
 import { useAuth } from '../../context/AuthContext';
 import { motion } from 'framer-motion';
-import jsPDF from 'jspdf';
+import { generateSimplePDFReport } from '../../utils/pdfUtils';
 
 const Analysis = () => {
   const { t } = useTranslation();
@@ -21,7 +21,7 @@ const Analysis = () => {
   const { imageFile, predictionResult } = location.state || {};
   const [progressAnimated, setProgressAnimated] = useState(false);
   const [comments, setComments] = useState('');
-  const { isPatient } = useAuth();
+  const { isPatient, user } = useAuth();
   const [patientName, setPatientName] = useState('');
   const [documentId, setDocumentId] = useState('');
   const [eyeSide, setEyeSide] = useState(''); // default
@@ -80,7 +80,7 @@ const Analysis = () => {
         CNV: predictionResult.probabilities[0],
         DME: predictionResult.probabilities[1],
         DRUSEN: predictionResult.probabilities[2],
-        Normal: predictionResult.probabilities[3],
+        NORMAL: predictionResult.probabilities[3],
       };
 
       formData.append(
@@ -119,98 +119,17 @@ const Analysis = () => {
   };
 
   const handleDownload = () => {
-    if (!imageFile || !predictionResult) {
-      console.error('Missing data to download report.');
-      return;
-    }
-
-    const reader = new FileReader();
-    reader.onload = function (e) {
-      const imageData = e.target.result;
-
-      const doc = new jsPDF();
-
-      // Title
-      doc.setFontSize(18);
-      doc.text(t('analysis.results') || 'OCT Report', 14, 20);
-
-      // Timestamp
-      const now = new Date();
-      const formattedDate = now.toLocaleString();
-      doc.setFontSize(11);
-      doc.setTextColor(100);
-      doc.text(
-        `${t('analysis.generated_on') || 'Generated on'}: ${formattedDate}`,
-        14,
-        28
-      );
-
-      // Primary diagnosis
-      doc.setFontSize(12);
-      doc.setTextColor(0);
-      doc.text(`${t('analysis.primary_diagnosis')}:`, 14, 40);
-      doc.setFont('Helvetica', 'bold');
-      doc.text(getTranslatedDiagnosis(predictionResult.prediction), 18, 48);
-      doc.setFont('Helvetica', 'normal');
-
-      // Image
-      doc.setFontSize(12);
-      doc.text(t('analysis.original_image') + ':', 14, 58);
-      doc.addImage(imageData, 'JPEG', 14, 62, 90, 60); // adjust size as needed
-
-      let y = 130; // new section after image
-
-      // Probabilities
-      doc.text(t('analysis.probabilities') + ':', 14, y);
-      y += 10;
-      const probabilities = [
-        {
-          label: t('analysis.category1') || 'CNV',
-          value: predictionResult.probabilities[0],
-        },
-        {
-          label: t('analysis.category2') || 'DME',
-          value: predictionResult.probabilities[1],
-        },
-        {
-          label: t('analysis.category3') || 'DRUSEN',
-          value: predictionResult.probabilities[2],
-        },
-        {
-          label: t('analysis.category4') || 'NORMAL',
-          value: predictionResult.probabilities[3],
-        },
-      ];
-
-      probabilities.forEach(({ label, value }) => {
-        doc.text(`- ${label}: ${(value * 100).toFixed(2)}%`, 18, y);
-        y += 10;
-      });
-
-      // Description or Comments
-      y += 10;
-      if (isPatient()) {
-        doc.text(`${t('analysis.description')}:`, 14, y);
-        y += 8;
-        const description = t(
-          `diagnoses.description.${predictionResult.prediction}`,
-          {
-            defaultValue: t('analysis.no_description_available'),
-          }
-        );
-        doc.text(description, 18, y, { maxWidth: 170 });
-      } else {
-        doc.text(`${t('analysis.observations')}:`, 14, y);
-        y += 8;
-        doc.text(comments || t('analysis.no_description_available'), 18, y, {
-          maxWidth: 170,
-        });
-      }
-
-      doc.save('oct_report.pdf');
-    };
-
-    reader.readAsDataURL(imageFile);
+    console.log('Analysis downloading', predictionResult);
+    generateSimplePDFReport({
+      userData: {
+        name: user.name,
+        email: user.email,
+      },
+      imageFile,
+      prediction: predictionResult.prediction,
+      probabilities: categories,
+      t,
+    });
   };
 
   if (!imageFile || !predictionResult) {
