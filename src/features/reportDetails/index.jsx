@@ -3,7 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import {
   getReportDetail,
   deleteReport,
-  updateReportComments,
+  updateReportDetails,
   getReportImage,
 } from '../../api/reportService';
 import FullImageModal from '../../components/ui/imageModal';
@@ -23,8 +23,13 @@ const ReportDetails = () => {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showImageModal, setShowImageModal] = useState(false);
   const [imageUrl, setImageUrl] = useState(null);
-  const [editingComment, setEditingComment] = useState(false);
+  const [newPatientName, setNewPatientName] = useState('');
+  const [newDocumentId, setNewDocumentId] = useState('');
+  const [newEyeSide, setNewEyeSide] = useState('');
+  const [newVisualAcuity, setNewVisualAcuity] = useState('');
   const [newComment, setNewComment] = useState('');
+  const [editingComment, setEditingComment] = useState(false);
+  const [editingPatientInfo, setEditingPatientInfo] = useState(false);
 
   // Fetch report info
   useEffect(() => {
@@ -32,6 +37,10 @@ const ReportDetails = () => {
       try {
         const fetchedReport = await getReportDetail(id);
         setReport(fetchedReport);
+        setNewPatientName(fetchedReport.patient_name || '');
+        setNewDocumentId(fetchedReport.document_id || '');
+        setNewEyeSide(fetchedReport.eye_side || '');
+        setNewVisualAcuity(fetchedReport.visual_acuity || '');
         setNewComment(fetchedReport.comments || '');
       } catch (error) {
         console.error('Error fetching report:', error);
@@ -75,13 +84,27 @@ const ReportDetails = () => {
   };
 
   // Update report comment
-  const handleUpdateComment = async () => {
+  const handleUpdateReport = async () => {
     try {
-      await updateReportComments(report.id, newComment);
-      setReport({ ...report, comments: newComment });
+      const updatedFields = {
+        comments: newComment,
+        patient_name: newPatientName,
+        document_id: newDocumentId,
+        eye_side: newEyeSide,
+        visual_acuity: newVisualAcuity,
+      };
+
+      await updateReportDetails(report.id, updatedFields);
+
+      setReport({
+        ...report,
+        ...updatedFields,
+      });
+
       setEditingComment(false);
+      setEditingPatientInfo(false);
     } catch (error) {
-      console.error('Failed to update comment', error);
+      console.error('Failed to update report', error);
     }
   };
 
@@ -110,8 +133,16 @@ const ReportDetails = () => {
     doc.setFontSize(12);
     doc.text(t('report.pdfTitle'), 14, 20);
     doc.text(`${t('report.id')}: ${report.id}`, 14, 40);
-    doc.text(`${t('report.createdAt')}: ${report.created_at?.split('T')[0]}`, 14, 50);
-    doc.text(`${t('report.predictedDiagnostic')}: ${report.predicted_diagnostic}`, 14, 60);
+    doc.text(
+      `${t('report.createdAt')}: ${report.created_at?.split('T')[0]}`,
+      14,
+      50
+    );
+    doc.text(
+      `${t('report.predictedDiagnostic')}: ${report.predicted_diagnostic}`,
+      14,
+      60
+    );
 
     doc.text(`${t('report.probabilities')}:`, 14, 80);
     let yPosition = 90;
@@ -130,7 +161,9 @@ const ReportDetails = () => {
 
     doc.text(`${t('report.userComment')}:`, 14, yPosition + 10);
     doc.setFontSize(11);
-    doc.text(report.comments || t('report.noComment'), 18, yPosition + 20, { maxWidth: 170 });
+    doc.text(report.comments || t('report.noComment'), 18, yPosition + 20, {
+      maxWidth: 170,
+    });
 
     doc.save(`report_${report.id}.pdf`);
   };
@@ -139,7 +172,7 @@ const ReportDetails = () => {
     return (
       <div className='min-h-screen flex items-center justify-center'>
         <div className='text-dark-primary text-lg font-semibold'>
-        {t('report.loading')}
+          {t('report.loading')}
         </div>
       </div>
     );
@@ -149,7 +182,7 @@ const ReportDetails = () => {
     return (
       <div className='min-h-screen flex items-center justify-center'>
         <div className='text-dark-secondary font-bold text-4xl'>
-        {t('report.notFound')}
+          {t('report.notFound')}
         </div>
       </div>
     );
@@ -174,13 +207,23 @@ const ReportDetails = () => {
           newComment={newComment}
           setNewComment={setNewComment}
           setEditingComment={setEditingComment}
-          handleUpdateComment={handleUpdateComment}
           imageUrl={imageUrl}
           onImageClick={() => setShowImageModal(true)}
           onPrevious={handlePrevious}
           onNext={handleNext}
           onDelete={() => setShowDeleteModal(true)}
           onDownload={handleDownload}
+          newPatientName={newPatientName}
+          setNewPatientName={setNewPatientName}
+          newDocumentId={newDocumentId}
+          setNewDocumentId={setNewDocumentId}
+          newEyeSide={newEyeSide}
+          setNewEyeSide={setNewEyeSide}
+          newVisualAcuity={newVisualAcuity}
+          setNewVisualAcuity={setNewVisualAcuity}
+          handleUpdateReport={handleUpdateReport}
+          editingPatientInfo={editingPatientInfo}
+          setEditingPatientInfo={setEditingPatientInfo}
         />
       </div>
 

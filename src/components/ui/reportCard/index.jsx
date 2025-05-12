@@ -34,7 +34,7 @@ const ReportCard = ({ report, onView, onDelete }) => {
 
         <div className='flex justify-end items-center'>
           <button
-            className='text-accent hover:text-accent-hover font-semibold text-base inline-flex items-center gap-2 transition-colors cursor-pointer'
+            className='text-delete hover:text-delete-hover font-semibold text-base inline-flex items-center gap-2 transition-colors cursor-pointer'
             onClick={(e) => {
               e.stopPropagation();
               onDelete(report.id);

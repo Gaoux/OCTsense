@@ -150,7 +150,15 @@
     "probabilities": "Diagnosis Probabilities",
     "observations": "Observations",
     "description": "Summary of your diagnosis",
-    "no_description_available": "Description not available for this diagnosis"
+    "no_description_available": "Description not available for this diagnosis",
+    "patient_information": "Patient Information",
+    "patient_name": "Full Name",
+    "document_id": "Document ID",
+    "eye_side": "Eye Side (OD/OS)",
+    "visual_acuity": "Visual Acuity",
+    "select_option": "Select an option",
+    "eye_od": "OD (Right Eye)",
+    "eye_os": "OS (Left Eye)"
   },
   "diagnoses": {
     "CNV": "Choroidal Neovascularization",
@@ -226,6 +234,8 @@
   },
   "buttons": {
     "save": "Save",
+    "edit": "Edit",
+    "cancel": "Cancel",
     "download": "Download",
     "delete": "Delete",
     "previous": "Previous Report",

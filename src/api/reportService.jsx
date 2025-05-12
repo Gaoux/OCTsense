@@ -48,10 +48,14 @@ export const deleteReport = async (reportId, isAdmin = false) => {
   return await apiClient.delete(`api/reports/${reportId}/delete/`, { headers });
 };
 
-// Update report comments by ID
-export const updateReportComments = async (reportId, updatedComment, isAdmin = false) => {
+// Update report by ID
+export const updateReportDetails = async (
+  reportId,
+  updatedData,
+  isAdmin = false
+) => {
   const headers = isAdmin
-    ? { 'Content-Type': 'application/json' } // Sin autorización si es admin
+    ? { 'Content-Type': 'application/json' } 
     : {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${Cookies.get('token')}`,
@@ -59,7 +63,7 @@ export const updateReportComments = async (reportId, updatedComment, isAdmin = f
 
   const response = await apiClient.patch(
     `api/reports/${reportId}/update/`,
-    { comments: updatedComment },
+    updatedData,
     { headers }
   );
 
