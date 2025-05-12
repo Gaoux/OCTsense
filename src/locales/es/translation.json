@@ -241,5 +241,10 @@
     "previous": "Reporte Anterior",
     "next": "Siguiente Reporte",
     "back": "Volver"
+  },
+  "pdf": {
+    "disclaimer": "Este documento es generado automáticamente por OCTsense y no constituye un diagnóstico médico certificado. Por favor, consulte a un oftalmólogo licenciado para su interpretación y seguimiento.",
+    "patient_name": "Nombre",
+    "email": "Correo electrónico"
   }
 }

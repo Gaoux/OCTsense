@@ -9,9 +9,9 @@ import {
 import FullImageModal from '../../components/ui/imageModal';
 import ReportDetailsInfo from '../../components/ui/reportDetailsInfo';
 import ConfirmDeleteModal from '../../components/ui/confirmDeleteModal';
-import { ArrowLeft, Trash2 } from 'lucide-react';
-import jsPDF from 'jspdf';
+import { ArrowLeft } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import { generateReportPDF } from '../../utils/pdfUtils';
 
 const ReportDetails = () => {
   const { id } = useParams();
@@ -121,51 +121,8 @@ const ReportDetails = () => {
   };
 
   // Print the report page
-
   const handleDownload = () => {
-    if (!report) return;
-
-    const doc = new jsPDF();
-
-    doc.setFontSize(18);
-    doc.text('OCT Report Details', 14, 20);
-
-    doc.setFontSize(12);
-    doc.text(t('report.pdfTitle'), 14, 20);
-    doc.text(`${t('report.id')}: ${report.id}`, 14, 40);
-    doc.text(
-      `${t('report.createdAt')}: ${report.created_at?.split('T')[0]}`,
-      14,
-      50
-    );
-    doc.text(
-      `${t('report.predictedDiagnostic')}: ${report.predicted_diagnostic}`,
-      14,
-      60
-    );
-
-    doc.text(`${t('report.probabilities')}:`, 14, 80);
-    let yPosition = 90;
-    if (report.diagnostic_probabilities) {
-      Object.entries(report.diagnostic_probabilities).forEach(
-        ([diagnosis, probability]) => {
-          doc.text(
-            `- ${diagnosis}: ${(probability * 100).toFixed(2)}%`,
-            18,
-            yPosition
-          );
-          yPosition += 10;
-        }
-      );
-    }
-
-    doc.text(`${t('report.userComment')}:`, 14, yPosition + 10);
-    doc.setFontSize(11);
-    doc.text(report.comments || t('report.noComment'), 18, yPosition + 20, {
-      maxWidth: 170,
-    });
-
-    doc.save(`report_${report.id}.pdf`);
+    generateReportPDF(report, imageUrl, t);
   };
 
   if (loading) {
