@@ -234,6 +234,7 @@
   },
   "buttons": {
     "save": "Save",
+    "cancel": "Cancel",
     "download": "Download",
     "delete": "Delete",
     "previous": "Previous Report",

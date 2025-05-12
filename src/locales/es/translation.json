@@ -234,6 +234,7 @@
   },
   "buttons": {
     "save": "Guardar",
+    "cancel": "Cancelar",
     "download": "Descargar",
     "delete": "Eliminar",
     "previous": "Reporte Anterior",

@@ -1,21 +1,29 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Maximize2, Pencil, Trash2, Download } from 'lucide-react';
 import CancelBtn from '../cancelBtn';
 import { useTranslation } from 'react-i18next';
 
 const ReportDetailsInfo = ({
   report,
-  editingComment,
   newComment,
   setNewComment,
-  setEditingComment,
-  handleUpdateComment,
+  handleUpdateReport,
   imageUrl,
   onImageClick,
   onPrevious,
   onNext,
   onDownload,
   onDelete,
+  newPatientName,
+  setNewPatientName,
+  newDocumentId,
+  setNewDocumentId,
+  newEyeSide,
+  setNewEyeSide,
+  newVisualAcuity,
+  setNewVisualAcuity,
+  editingComment,
+  setEditingComment,
 }) => {
   const { t } = useTranslation();
 
@@ -63,13 +71,108 @@ const ReportDetailsInfo = ({
           </p>
         </div>
 
+        {/* Patient Information Section */}
+        <div className='bg-white border border-light-gray p-4 rounded-md md:col-span-2 shadow-sm transition hover:shadow-md'>
+          <h2 className='text-sm uppercase text-dark-gray mb-3 flex justify-between items-center'>
+            {t('analysis.patient_information')}
+            {!editingComment && (
+              <button
+                className='text-secondary hover:text-dark-secondary transition'
+                onClick={() => setEditingComment(true)}
+              >
+                <Pencil className='w-5 h-5' />
+              </button>
+            )}
+          </h2>
+
+          {editingComment ? (
+            <div className='grid grid-cols-1 md:grid-cols-2 gap-4 mb-4'>
+              <input
+                type='text'
+                className='border border-light-gray p-2 rounded-md text-sm'
+                placeholder={t('analysis.patient_name')}
+                value={newPatientName}
+                onChange={(e) => setNewPatientName(e.target.value)}
+              />
+              <input
+                type='text'
+                className='border border-light-gray p-2 rounded-md text-sm'
+                placeholder={t('analysis.document_id')}
+                value={newDocumentId}
+                onChange={(e) => setNewDocumentId(e.target.value)}
+              />
+              <select
+                className='border border-light-gray p-2 rounded-md text-sm'
+                value={newEyeSide}
+                onChange={(e) => setNewEyeSide(e.target.value)}
+              >
+                <option value=''>{t('analysis.select_option')}</option>
+                <option value='OD'>{t('analysis.eye_od')}</option>
+                <option value='OS'>{t('analysis.eye_os')}</option>
+              </select>
+              <input
+                type='text'
+                className='border border-light-gray p-2 rounded-md text-sm'
+                placeholder={t('analysis.visual_acuity')}
+                value={newVisualAcuity}
+                onChange={(e) => setNewVisualAcuity(e.target.value)}
+              />
+            </div>
+          ) : (
+            <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
+              <div>
+                <h3 className='text-sm text-dark-gray'>
+                  {t('analysis.patient_name')}
+                </h3>
+                <p className='text-very-dark-gray'>
+                  {report.patient_name || '-'}
+                </p>
+              </div>
+              <div>
+                <h3 className='text-sm text-dark-gray'>
+                  {t('analysis.document_id')}
+                </h3>
+                <p className='text-very-dark-gray'>
+                  {report.document_id || '-'}
+                </p>
+              </div>
+              <div>
+                <h3 className='text-sm text-dark-gray'>
+                  {t('analysis.eye_side')}
+                </h3>
+                <p className='text-very-dark-gray'>{report.eye_side || '-'}</p>
+              </div>
+              <div>
+                <h3 className='text-sm text-dark-gray'>
+                  {t('analysis.visual_acuity')}
+                </h3>
+                <p className='text-very-dark-gray'>
+                  {report.visual_acuity || '-'}
+                </p>
+              </div>
+            </div>
+          )}
+
+          {editingComment && (
+            <div className='flex justify-end gap-4 mt-4'>
+              <CancelBtn onClick={() => setEditingComment(false)} />
+              <button
+                className='px-4 py-2 bg-secondary text-white rounded-md hover:bg-dark-secondary transition'
+                onClick={handleUpdateReport}
+              >
+                {t('buttons.save')}
+              </button>
+            </div>
+          )}
+        </div>
+
         {/* Predicted Diagnostic */}
         <div className='bg-background-secondary p-4 rounded-md border-l-4 border-secondary md:col-span-2 transition hover:bg-light-primary'>
           <h2 className='text-sm uppercase text-secondary mb-1'>
             {t('report.predictedDiagnostic')}
           </h2>
           <p className='text-dark-secondary font-semibold text-lg'>
-            {report.predicted_diagnostic}
+            {t(`diagnoses.${report.predicted_diagnostic}`)}
           </p>
         </div>
 
@@ -103,16 +206,8 @@ const ReportDetailsInfo = ({
 
         {/* User Comment Section */}
         <div className='bg-white border border-light-gray p-4 rounded-md md:col-span-2 shadow-sm transition hover:shadow-md'>
-          <h2 className='text-sm uppercase text-dark-gray mb-3 flex justify-between items-center'>
+          <h2 className='text-sm uppercase text-dark-gray mb-3'>
             {t('report.userComment')}
-            {!editingComment && (
-              <button
-                className='text-secondary hover:text-dark-secondary transition'
-                onClick={() => setEditingComment(true)}
-              >
-                <Pencil className='w-5 h-5' />
-              </button>
-            )}
           </h2>
 
           {editingComment ? (
@@ -122,19 +217,10 @@ const ReportDetailsInfo = ({
                 value={newComment}
                 onChange={(e) => setNewComment(e.target.value)}
               />
-              <div className='flex justify-end gap-4'>
-                <CancelBtn onClick={() => setEditingComment(false)} />
-                <button
-                  className='px-4 py-2 bg-secondary text-white rounded-md hover:bg-dark-secondary transition'
-                  onClick={handleUpdateComment}
-                >
-                  {t('buttons.save')}
-                </button>
-              </div>
             </div>
           ) : (
-            <p className='text-very-dark-gray'>
-              {report.comments || 'No comment provided.'}
+            <p className='text-very-dark-gray mb-2'>
+              {report.comments || t('report.noComment')}
             </p>
           )}
         </div>
