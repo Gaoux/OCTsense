@@ -341,6 +341,7 @@ const Analysis = () => {
                 onClick={handleGenerateReport}
                 className='px-4 md:px-6 gap-2 py-2 md:py-3 bg-dark-secondary hover:bg-accent-hover text-white rounded-lg transition-all duration-300 
             shadow-md hover:shadow-lg transform hover:scale-105 flex items-center text-sm md:text-base'
+                data-testid='save-report-button'
               >
                 <FilePlus2 className='w-4 h-4 md:w-6 md:h-6' />
                 {t('analysis.save_report')}

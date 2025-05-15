@@ -112,6 +112,7 @@ const Upload = () => {
                 accept='image/*'
                 className='hidden'
                 onChange={handleFileChange}
+                data-testid="file-input"
               />
             </div>
 
@@ -123,6 +124,7 @@ const Upload = () => {
                   ? 'opacity-60 cursor-not-allowed'
                   : 'hover:bg-accent-hover cursor-pointer'
                 }`}
+              data-testid="submit-button"
             >
               {loading ? (
                 <div className='flex items-center justify-center gap-2'>
