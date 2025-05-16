@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import {
   getReportDetail,
   deleteReport,
@@ -127,63 +128,90 @@ const ReportDetails = () => {
 
   if (loading) {
     return (
-      <div className='min-h-screen flex items-center justify-center'>
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, ease: 'easeOut' }}
+        className='min-h-screen flex items-center justify-center'
+      >
         <div className='text-dark-primary text-lg font-semibold'>
           {t('report.loading')}
         </div>
-      </div>
+      </motion.div>
     );
   }
 
   if (!report) {
     return (
-      <div className='min-h-screen flex items-center justify-center'>
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, ease: 'easeOut' }}
+        className='min-h-screen flex items-center justify-center'
+      >
         <div className='text-dark-secondary font-bold text-4xl'>
           {t('report.notFound')}
         </div>
-      </div>
+      </motion.div>
     );
   }
 
   return (
-    <div className='font-sans min-h-screen p-6'>
-      <div className='max-w-4xl mx-auto bg-white rounded-2xl shadow-lg p-8 relative'>
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.8, ease: 'easeOut' }}
+      className='font-sans min-h-screen py-12 px-4 sm:px-6 lg:px-8'
+    >
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, ease: 'easeOut', delay: 0.2 }}
+        className='max-w-4xl mx-auto bg-white rounded-2xl shadow-lg p-8 relative'
+      >
         {/* Back Button */}
-        <button
+        <motion.button
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.6, ease: 'easeOut', delay: 0.3 }}
           className='flex items-center gap-2 cursor-pointer text-black/60 hover:text-black/70 mb-8 transition-colors'
           onClick={() => navigate('/report')}
         >
           <ArrowLeft className='w-5 h-5' />
           <span className='text-base font-semibold'>Back</span>
-        </button>
-
+        </motion.button>
         {/* Report Info */}
-        <ReportDetailsInfo
-          report={report}
-          editingComment={editingComment}
-          newComment={newComment}
-          setNewComment={setNewComment}
-          setEditingComment={setEditingComment}
-          imageUrl={imageUrl}
-          onImageClick={() => setShowImageModal(true)}
-          onPrevious={handlePrevious}
-          onNext={handleNext}
-          onDelete={() => setShowDeleteModal(true)}
-          onDownload={handleDownload}
-          newPatientName={newPatientName}
-          setNewPatientName={setNewPatientName}
-          newDocumentId={newDocumentId}
-          setNewDocumentId={setNewDocumentId}
-          newEyeSide={newEyeSide}
-          setNewEyeSide={setNewEyeSide}
-          newVisualAcuity={newVisualAcuity}
-          setNewVisualAcuity={setNewVisualAcuity}
-          handleUpdateReport={handleUpdateReport}
-          editingPatientInfo={editingPatientInfo}
-          setEditingPatientInfo={setEditingPatientInfo}
-        />
-      </div>
-
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: 'easeOut', delay: 0.4 }}
+        >
+          <ReportDetailsInfo
+            report={report}
+            editingComment={editingComment}
+            newComment={newComment}
+            setNewComment={setNewComment}
+            setEditingComment={setEditingComment}
+            imageUrl={imageUrl}
+            onImageClick={() => setShowImageModal(true)}
+            onPrevious={handlePrevious}
+            onNext={handleNext}
+            onDelete={() => setShowDeleteModal(true)}
+            onDownload={handleDownload}
+            newPatientName={newPatientName}
+            setNewPatientName={setNewPatientName}
+            newDocumentId={newDocumentId}
+            setNewDocumentId={setNewDocumentId}
+            newEyeSide={newEyeSide}
+            setNewEyeSide={setNewEyeSide}
+            newVisualAcuity={newVisualAcuity}
+            setNewVisualAcuity={setNewVisualAcuity}
+            handleUpdateReport={handleUpdateReport}
+            editingPatientInfo={editingPatientInfo}
+            setEditingPatientInfo={setEditingPatientInfo}
+          />
+        </motion.div>
+      </motion.div>
       {/* Full Image Modal */}
       {showImageModal && (
         <FullImageModal
@@ -199,7 +227,6 @@ const ReportDetails = () => {
           }}
         />
       )}
-
       {/* Confirm Delete Modal */}
       <ConfirmDeleteModal
         show={showDeleteModal}
@@ -207,7 +234,7 @@ const ReportDetails = () => {
         onConfirm={handleDelete}
         itemName={t('report.name')}
       />
-    </div>
+    </motion.div>
   );
 };
 

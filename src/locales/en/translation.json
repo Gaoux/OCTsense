@@ -120,7 +120,7 @@
   "upload": {
     "title": "Upload Image",
     "subtitle": "Upload a tomography",
-    "subtitle2": "Upload here",
+    "subtitle2": "Upload your medical tomography (OCT) for analysis.",
     "uploadPrompt": "Drag the image here",
     "buttonUpload": "Upload Image",
     "buttonAnalyze": "Analyze",
@@ -249,7 +249,7 @@
   },
   "terms": {
     "checkboxLabel": "I have read and accept the ",
-    "link": "terms and conditions.",
+    "link": "terms and conditions",
     "checkboxLabel_short": "Terms and Conditions",
     "title": "Terms and Conditions",
     "content": "By registering and using OCTsense, you agree to comply with all applicable laws and regulations. The platform is intended for academic and research purposes only and is not a substitute for professional medical advice, diagnosis, or treatment. All data is handled according to our privacy policy. For more details, please contact support.",
