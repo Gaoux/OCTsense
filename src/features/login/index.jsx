@@ -74,7 +74,7 @@ const Login = () => {
             className='w-full px-4 py-2 border rounded-md focus:outline-none focus:ring focus:ring-cyan-100'
           />
 
-          <div className='flex justify-end items-center gap-2 text-sm'>
+          <div className='flex justify-center items-center gap-2 text-sm'>
             {/* {t('login.forgotPassword')}{' '} */}
             <Link
               to='/forgot-password'

@@ -246,5 +246,13 @@
     "disclaimer": "Este documento es generado automáticamente por OCTsense y no constituye un diagnóstico médico certificado. Por favor, consulte a un oftalmólogo licenciado para su interpretación y seguimiento.",
     "patient_name": "Nombre",
     "email": "Correo electrónico"
+  },
+  "terms": {
+    "checkboxLabel": "He leído y acepto los ",
+    "link": "términos y condiciones.",
+    "checkboxLabel_short": "Términos y condiciones",
+    "title": "Términos y Condiciones",
+    "content": "Al registrarte y utilizar OCTsense, aceptas cumplir con todas las leyes y regulaciones aplicables. La plataforma está destinada únicamente a fines académicos y de investigación y no sustituye el consejo, diagnóstico o tratamiento médico profesional. Todos los datos se manejan de acuerdo con nuestra política de privacidad. Para más detalles, contacta con soporte.",
+    "required": "Debes aceptar los términos y condiciones para registrarte."
   }
 }
