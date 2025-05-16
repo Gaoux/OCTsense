@@ -69,21 +69,26 @@ const Settings = () => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        className="max-w-3xl mx-auto bg-white rounded-2xl shadow-xl overflow-hidden"
+        className="max-w-7xl mx-auto bg-white rounded-2xl shadow-xl overflow-hidden"
       >
         {/* Header */}
-        <div className="bg-very-dark-secondary px-6 py-4">
-          <h2 className="text-2xl font-bold text-white flex items-center gap-2">
-            <FaUser className="text-very-light-secondary" />
-            {t('settings.title')}
-          </h2>
-          <p className="text-very-light-secondary mt-1">
-            {t('settings.subtitle')}
-          </p>
+        <div className='bg-very-dark-secondary px-6 py-6'>
+          <div className='flex items-center justify-center gap-3'>
+            <div className='bg-white p-2 rounded-full shadow-md'>
+              <FaUser className='h-6 w-6 text-very-dark-secondary' />
+            </div>
+            <h1 className='text-2xl md:text-3xl font-bold text-white'>
+              {t('settings.title')}
+            </h1>
+          </div>
         </div>
 
+        <p className='mt-8 ml-6 flex text-dark-primary text-lg'>
+          {t('settings.subtitle')}
+        </p>
+
         {/* Formulario */}
-        <form onSubmit={handleSubmit} className="px-6 text-secondary py-8 space-y-6">
+        <form onSubmit={handleSubmit} className="px-6 text-dark-secondary py-8 space-y-6">
           {errors.submit && (
             <div className="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 mb-4">
               {errors.submit}
@@ -98,8 +103,8 @@ const Settings = () => {
 
           {/* Sección Información Básica */}
           <div className="space-y-4">
-            <h3 className="text-lg font-semibold text-very-dark-secondary flex items-center gap-2">
-              <FaUser className="text--very-dark-secondary" />
+            <h3 className="text-lg font-semibold text-dark-secondary flex items-center gap-2">
+              <FaUser className="text-dark-secondary" />
               {t('settings.personal_info')}
             </h3>
 
@@ -113,7 +118,7 @@ const Settings = () => {
                 name="name"
                 value={formData.name}
                 onChange={handleChange}
-                className={`w-full px-4 py-2 rounded-lg border ${errors.name ? 'border-red-500' : 'border-gray-300'} focus:ring-2 focus:ring-blue-500 focus:border-transparent`}
+                className={`w-full text-dark-primary px-4 py-2 rounded-lg border ${errors.name ? 'border-red-500' : 'border-gray-300'} focus:ring-2 focus:ring-blue-500 focus:border-transparent`}
               />
               {errors.name && <p className="mt-1 text-sm text-red-600">{errors.name}</p>}
             </div>
@@ -128,7 +133,7 @@ const Settings = () => {
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
-                className={`w-full px-4 py-2 rounded-lg border ${errors.email ? 'border-red-500' : 'border-gray-300'} focus:ring-2 focus:ring-blue-500 focus:border-transparent`}
+                className={`w-full px-4 py-2 text-dark-primary rounded-lg border ${errors.email ? 'border-red-500' : 'border-gray-300'} focus:ring-2 focus:ring-blue-500 focus:border-transparent`}
               />
               {errors.email && <p className="mt-1 text-sm text-red-600">{errors.email}</p>}
             </div>
@@ -137,7 +142,7 @@ const Settings = () => {
           {/* Sección Cambio de Contraseña */}
           <div className="space-y-4 pt-6 border-t border-gray-200">
             <h3 className="text-lg font-semibold text--very-dark-secondary flex items-center gap-2">
-              <FaKey className="text-very-dark-secondary" />
+              <FaKey className="text-dark-secondary" />
               {t('settings.change_password')}
             </h3>
             <p className="text-sm text-primary">
