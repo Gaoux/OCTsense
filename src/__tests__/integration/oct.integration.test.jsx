@@ -263,11 +263,11 @@ describe('Componente Analysis', () => {
 
         // Esperar a que el componente cargue los datos
         await waitFor(() => {
-            expect(screen.getByRole('textbox')).toBeInTheDocument();
+            expect(screen.getByTestId('comments-textarea')).toBeInTheDocument();
         });
 
         // Simular comentarios
-        const textarea = screen.getByRole('textbox');
+        const textarea = screen.getByTestId('comments-textarea');
         fireEvent.change(textarea, { target: { value: 'Observaciones importantes' } });
 
         // Simular clic en guardar reporte

@@ -3,8 +3,8 @@ export default {
   setupFilesAfterEnv: ['@testing-library/jest-dom'],
   setupFiles: ['<rootDir>/jest.setup.js'],
   moduleNameMapper: {
-    '\\.(css|less|scss|sass)$': 'identity-obj-proxy',
-    '^@/(.*)$': '<rootDir>/src/$1'
+    '^@/(.*)$': '<rootDir>/src/$1',
+    '^.+\.(css|less|scss)$': 'identity-obj-proxy'
   },
   transform: {
     '^.+\\.(js|jsx|ts|tsx)$': 'babel-jest',

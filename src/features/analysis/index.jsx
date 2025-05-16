@@ -353,6 +353,7 @@ const Analysis = () => {
               </div>
             ) : (
               <textarea
+                data-testid="comments-textarea"
                 className='w-full p-4 border border-light-gray bg-white rounded-lg h-36 text-sm focus:ring-2 focus:ring-light-secondary 
                       focus:border-transparent outline-none transition-all duration-300'
                 placeholder={t('analysis.comments_placeholder')}

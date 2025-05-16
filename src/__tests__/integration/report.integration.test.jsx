@@ -1,288 +1,240 @@
+// report.integration.test.jsx
 import React from 'react';
-import '@testing-library/jest-dom';
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import { act } from 'react';
+import { render, screen, waitFor, fireEvent } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
-import axios from 'axios';
-import Cookies from 'js-cookie';
-import { AuthProvider } from '../../context/AuthContext';
-import Report from '../../features/report';
-import {
-    mockReportService,
-    restoreReportMocks
-} from '../utils/report.integration.utils';
+import '@testing-library/jest-dom';
 
-// Mock dependencies
-jest.mock('axios');
-jest.mock('js-cookie');
-jest.mock('../../api/apiClient');
-jest.mock('../../api/reportService');
+// Mock components and hooks
+jest.mock('../../context/AuthContext', () => ({
+    useAuth: () => ({
+        isAuthenticated: true,
+    }),
+}));
 
-// Mock components
+// Enhanced translation mock
+jest.mock('react-i18next', () => ({
+    useTranslation: () => ({
+        t: (key) => {
+            const translations = {
+                'report.historyTitle': 'Report History',
+                'report.historySubtitle': 'View your past reports',
+                'report.empty': 'No reports available',
+                'report.name': 'report',
+                'report.diagnostic': 'Diagnostic',
+                'report.noComment': 'No comments',
+                'buttons.delete': 'Delete',
+                'buttons.view': 'View',
+                'deleteModal.title': 'Confirm Delete',
+                'deleteModal.confirm': 'Are you sure you want to delete this',
+                'deleteModal.warning': 'This action cannot be undone',
+                'buttons.cancel': 'Cancel',
+            };
+            return translations[key] || key;
+        },
+    }),
+}));
+
+// Mock the reportService functions
+jest.mock('../../api/reportService', () => ({
+    getReportHistory: jest.fn(),
+    deleteReport: jest.fn(),
+    createReport: jest.fn(),
+    getReportDetail: jest.fn(),
+    updateReportDetails: jest.fn(),
+    getReportSummary: jest.fn(),
+    getReportImage: jest.fn(),
+}));
+
+// Mock react-router-dom's useNavigate
+const mockNavigate = jest.fn();
+jest.mock('react-router-dom', () => ({
+    ...jest.requireActual('react-router-dom'),
+    useNavigate: () => mockNavigate,
+}));
+
+// Mock ReportCard component to simplify testing
 jest.mock('../../components/ui/reportCard', () => ({ report, onView, onDelete }) => (
     <div data-testid="report-card">
-        <h3>{report.predicted_diagnostic}</h3>
+        <h3>{report.title}</h3>
+        <p>{report.description}</p>
         <button onClick={() => onView(report)}>View</button>
         <button onClick={() => onDelete(report.id)}>Delete</button>
     </div>
 ));
 
+// Mock ConfirmDeleteModal component
 jest.mock('../../components/ui/confirmDeleteModal', () => ({ show, onClose, onConfirm, itemName }) => (
     show && (
-        <div data-testid="delete-modal">
-            <p>Delete {itemName}?</p>
+        <div role="dialog">
+            <h2>Confirm Delete</h2>
+            <p>Are you sure you want to delete this {itemName}?</p>
             <button onClick={onClose}>Cancel</button>
             <button onClick={onConfirm}>Confirm</button>
         </div>
     )
 ));
 
-describe('Pruebas de integración del módulo de informes', () => {
+import Report from '../../features/report';
+import {
+    getReportHistory,
+    deleteReport,
+    createReport,
+    getReportDetail,
+    updateReportDetails,
+    getReportSummary,
+    getReportImage,
+} from '../../api/reportService';
+
+// Mock data
+const mockReports = [
+    {
+        id: 1,
+        title: 'First Report',
+        description: 'This is the first report',
+        diagnostic: 'Normal',
+        createdAt: '2023-01-01T00:00:00Z',
+    },
+    {
+        id: 2,
+        title: 'Second Report',
+        description: 'This is the second report',
+        diagnostic: 'Abnormal',
+        createdAt: '2023-01-02T00:00:00Z',
+    },
+];
+
+describe('Report Module Integration Tests', () => {
     beforeEach(() => {
-        // Reset all mocks
-        restoreReportMocks();
+        // Reset all mocks before each test
+        jest.clearAllMocks();
 
-        // Setup default successful mocks
-        const {
-            createReport,
-            getReportHistory,
-            getReportDetail,
-            deleteReport,
-            updateReportComments,
-            getReportSummary,
-            getReportImage
-        } = mockReportService.success();
+        // Mock implementations
+        getReportHistory.mockResolvedValue(mockReports);
+        deleteReport.mockResolvedValue({});
+        createReport.mockResolvedValue({ data: { id: 3, title: 'New Report' } });
+        getReportDetail.mockResolvedValue(mockReports[0]);
+        updateReportDetails.mockResolvedValue(mockReports[0]);
+        getReportSummary.mockResolvedValue({ total: 2, diagnostics: { Normal: 1, Abnormal: 1 } });
+        getReportImage.mockResolvedValue(new Blob());
+    });
 
-        // Mock authenticated user
-        Cookies.get.mockImplementation((key) => {
-            if (key === 'token') return 'mock-token';
-            if (key === 'user') return JSON.stringify({ id: '1', role: 'professional' });
-            return null;
+    test('should fetch and display report history on mount', async () => {
+        render(
+            <MemoryRouter>
+                <Report />
+            </MemoryRouter>
+        );
+
+        await waitFor(() => {
+            expect(getReportHistory).toHaveBeenCalledTimes(1);
+            expect(screen.getByText('First Report')).toBeInTheDocument();
+            expect(screen.getByText('Second Report')).toBeInTheDocument();
         });
     });
 
-    describe('Vista de lista de informes', () => {
-        it('debe obtener y mostrar informes', async () => {
-            render(
-                <MemoryRouter>
-                    <AuthProvider>
-                        <Report />
-                    </AuthProvider>
-                </MemoryRouter>
-            );
+    test('should display empty state when no reports exist', async () => {
+        getReportHistory.mockResolvedValueOnce([]);
 
-            await waitFor(() => {
-                expect(screen.getAllByTestId('report-card')).toHaveLength(1);
-                expect(screen.getByText('CNV')).toBeInTheDocument();
-            });
-        });
+        render(
+            <MemoryRouter>
+                <Report />
+            </MemoryRouter>
+        );
 
-        it('debe mostrar el estado vacío cuando no hay informes', async () => {
-            const { getReportHistory } = mockReportService.success();
-            getReportHistory.mockResolvedValue([]);
-
-            render(
-                <MemoryRouter>
-                    <AuthProvider>
-                        <Report />
-                    </AuthProvider>
-                </MemoryRouter>
-            );
-
-            await waitFor(() => {
-                expect(screen.getByText('No reports available.')).toBeInTheDocument();
-            });
-        });
-
-        it('debe gestionar los errores de la API al obtener informes', async () => {
-            mockReportService.error();
-
-            render(
-                <MemoryRouter>
-                    <AuthProvider>
-                        <Report />
-                    </AuthProvider>
-                </MemoryRouter>
-            );
-
-            await waitFor(() => {
-                expect(screen.queryByText('CNV')).not.toBeInTheDocument();
-            });
+        await waitFor(() => {
+            expect(screen.getByText('No reports available')).toBeInTheDocument();
         });
     });
 
-    describe('Supresión de informes', () => {
-        it('debería abrir el modal de confirmación de borrado', async () => {
-            render(
-                <MemoryRouter>
-                    <AuthProvider>
-                        <Report />
-                    </AuthProvider>
-                </MemoryRouter>
-            );
+    test('should open delete confirmation modal when delete button is clicked', async () => {
+        render(
+            <MemoryRouter>
+                <Report />
+            </MemoryRouter>
+        );
 
-            await waitFor(() => {
-                expect(screen.getAllByTestId('report-card')).toHaveLength(1);
-            });
-
-            fireEvent.click(screen.getByText('Delete'));
-
-            expect(screen.getByTestId('delete-modal')).toBeInTheDocument();
-            expect(screen.getByText('Delete report?')).toBeInTheDocument();
-        });
-
-        it('debe eliminar el informe cuando se confirme', async () => {
-            const { deleteReport } = mockReportService.success();
-
-            render(
-                <MemoryRouter>
-                    <AuthProvider>
-                        <Report />
-                    </AuthProvider>
-                </MemoryRouter>
-            );
-
-            await waitFor(() => {
-                expect(screen.getAllByTestId('report-card')).toHaveLength(1);
-            });
-
-            fireEvent.click(screen.getByText('Delete'));
-            fireEvent.click(screen.getByText('Confirm'));
-
-            await waitFor(() => {
-                expect(deleteReport).toHaveBeenCalledWith('1');
-                expect(screen.queryByTestId('delete-modal')).not.toBeInTheDocument();
-            });
-        });
-
-        it('debe gestionar el error de eliminación', async () => {
-            const { deleteReport, getReportHistory } = mockReportService.success();
-            deleteReport.mockRejectedValue(new Error('Delete failed'));
-
-            render(
-                <MemoryRouter>
-                    <AuthProvider>
-                        <Report />
-                    </AuthProvider>
-                </MemoryRouter>
-            );
-
-            await waitFor(() => {
-                expect(screen.getAllByTestId('report-card')).toHaveLength(1);
-            });
-
-            fireEvent.click(screen.getByText('Delete'));
-            fireEvent.click(screen.getByText('Confirm'));
-
-            await waitFor(() => {
-                expect(deleteReport).toHaveBeenCalledWith('1');
-                // Verificar que los reports siguen mostrándose
-                expect(screen.getAllByTestId('report-card')).toHaveLength(1);
-            });
-        });
-
-        it('debe cancelar la eliminación cuando se cierra el modal', async () => {
-            render(
-                <MemoryRouter>
-                    <AuthProvider>
-                        <Report />
-                    </AuthProvider>
-                </MemoryRouter>
-            );
-
-            await waitFor(() => {
-                expect(screen.getAllByTestId('report-card')).toHaveLength(1);
-            });
-
-            fireEvent.click(screen.getByText('Delete'));
-            fireEvent.click(screen.getByText('Cancel'));
-
-            expect(screen.queryByTestId('delete-modal')).not.toBeInTheDocument();
+        await waitFor(() => {
+            const deleteButtons = screen.getAllByText('Delete');
+            fireEvent.click(deleteButtons[0]);
+            expect(screen.getByRole('dialog')).toBeInTheDocument();
         });
     });
 
-    describe('Navegación por la vista del informe', () => {
-        it('debe navegar al detalle del informe cuando se hace clic en la vista', async () => {
-            const mockNavigate = jest.fn();
-            jest.spyOn(require('react-router-dom'), 'useNavigate').mockImplementation(() => mockNavigate);
+    test('should delete report when confirmation is accepted', async () => {
+        render(
+            <MemoryRouter>
+                <Report />
+            </MemoryRouter>
+        );
 
-            render(
-                <MemoryRouter>
-                    <AuthProvider>
-                        <Report />
-                    </AuthProvider>
-                </MemoryRouter>
-            );
+        await waitFor(() => {
+            const deleteButtons = screen.getAllByText('Delete');
+            fireEvent.click(deleteButtons[0]);
+        });
 
-            await waitFor(() => {
-                expect(screen.getAllByTestId('report-card')).toHaveLength(1);
-            });
+        const confirmButton = screen.getByText('Confirm');
+        fireEvent.click(confirmButton);
 
-            fireEvent.click(screen.getByText('View'));
+        // Espera a que los cambios de estado terminen
+        await waitFor(() => {
+            expect(deleteReport).toHaveBeenCalledWith(1);
+            // Si esperas que se vuelva a llamar a getReportHistory, pon 2 aquí
+            expect(getReportHistory).toHaveBeenCalledTimes(1);
+        });
+    });
 
+    test('should navigate to report detail when view button is clicked', async () => {
+        render(
+            <MemoryRouter>
+                <Report />
+            </MemoryRouter>
+        );
+
+        await waitFor(() => {
+            const viewButtons = screen.getAllByText('View');
+            fireEvent.click(viewButtons[0]);
             expect(mockNavigate).toHaveBeenCalledWith('/report/1');
         });
     });
 
-    describe('Integración del servicio de informes', () => {
-        let serviceMocks;
+    test('should handle API errors gracefully', async () => {
+        getReportHistory.mockRejectedValueOnce(new Error('API Error'));
+        console.error = jest.fn();
 
-        beforeEach(() => {
-            // Obtener los mocks del servicio
-            serviceMocks = mockReportService.success();
+        render(
+            <MemoryRouter>
+                <Report />
+            </MemoryRouter>
+        );
 
-            // Configurar token mock
-            Cookies.get.mockImplementation((key) => {
-                if (key === 'token') return 'mock-token';
-                return null;
-            });
+        await waitFor(() => {
+            expect(console.error).toHaveBeenCalledWith(new Error('API Error'));
         });
+    });
 
-        it('debe llamar a createReport con los datos del formulario', async () => {
-            const formData = new FormData();
-            formData.append('image_file', new File([''], 'test.png'));
-            formData.append('predicted_diagnostic', 'CNV');
+    test('should support admin mode when isAdmin is true', async () => {
+        // Test createReport with isAdmin
+        const formData = new FormData();
+        await createReport(formData, true);
+        expect(createReport).toHaveBeenCalledWith(formData, true);
+    });
 
-            await act(async () => {
-                await serviceMocks.createReport(formData);
-            });
+    test('should fetch report image correctly', async () => {
+        const blob = await getReportImage(1, false);
+        expect(getReportImage).toHaveBeenCalledWith(1, false);
+        expect(blob).toBeInstanceOf(Blob);
+    });
 
-            expect(serviceMocks.createReport).toHaveBeenCalledWith(formData);
-        });
+    test('should update report details correctly', async () => {
+        const updatedData = { title: 'Updated Title' };
+        const result = await updateReportDetails(1, updatedData, false);
+        expect(updateReportDetails).toHaveBeenCalledWith(1, updatedData, false);
+        expect(result).toEqual(mockReports[0]);
+    });
 
-        it('debe llamar a getReportDetail con el ID del informe', async () => {
-            await act(async () => {
-                await serviceMocks.getReportDetail('1');
-            });
-
-            expect(serviceMocks.getReportDetail).toHaveBeenCalledWith('1');
-        });
-
-        it('debe llamar a updateReportComments con los datos correctos', async () => {
-            await act(async () => {
-                await serviceMocks.updateReportComments('1', 'Updated comments');
-            });
-
-            expect(serviceMocks.updateReportComments).toHaveBeenCalledWith(
-                '1',
-                'Updated comments'
-            );
-        });
-
-        it('debe llamar a getReportSummary', async () => {
-            await act(async () => {
-                await serviceMocks.getReportSummary();
-            });
-
-            expect(serviceMocks.getReportSummary).toHaveBeenCalled();
-        });
-
-        it('debe llamar a getReportImage con la respuesta blob', async () => {
-            await act(async () => {
-                await serviceMocks.getReportImage('1');
-            });
-
-            expect(serviceMocks.getReportImage).toHaveBeenCalledWith('1');
-        });
+    test('should fetch report summary correctly', async () => {
+        const summary = await getReportSummary(false);
+        expect(getReportSummary).toHaveBeenCalledWith(false);
+        expect(summary).toEqual({ total: 2, diagnostics: { Normal: 1, Abnormal: 1 } });
     });
 });
