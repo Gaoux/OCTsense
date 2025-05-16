@@ -66,15 +66,20 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   }, []);
 
   const login = async (email: string, password: string): Promise<User> => {
-    const { user, accessToken, refreshToken } = await loginUser(
-      email,
-      password
-    );
-    setUser(user);
-    Cookies.set('token', accessToken, { expires: 7 });
-    Cookies.set('refreshToken', refreshToken, { expires: 7 });
-    Cookies.set('user', JSON.stringify(user), { expires: 7 });
-    return user;
+    try {
+      const { user, accessToken, refreshToken } = await loginUser(
+        email,
+        password
+      );
+      setUser(user);
+      Cookies.set('token', accessToken, { expires: 7 });
+      Cookies.set('refreshToken', refreshToken, { expires: 7 });
+      Cookies.set('user', JSON.stringify(user), { expires: 7 });
+      return user;
+    } catch (error) {
+      console.error("Error en login:", error);
+      return Promise.reject(error);
+    }
   };
 
   const register = async (form: any): Promise<void> => {

@@ -353,6 +353,7 @@ const Analysis = () => {
               </div>
             ) : (
               <textarea
+                data-testid="comments-textarea"
                 className='w-full p-4 border border-light-gray bg-white rounded-lg h-36 text-sm focus:ring-2 focus:ring-light-secondary 
                       focus:border-transparent outline-none transition-all duration-300'
                 placeholder={t('analysis.comments_placeholder')}
@@ -385,6 +386,7 @@ const Analysis = () => {
                 className='px-8 py-3 bg-dark-secondary hover:bg-accent-hover 
             text-white rounded-lg transition-all duration-300 shadow-lg hover:shadow-xl 
             transform hover:scale-105 flex items-center gap-3 font-medium'
+                data-testid='save-report-button'
               >
                 <FilePlus2 className='w-5 h-5' />
                 {t('analysis.save_report')}
