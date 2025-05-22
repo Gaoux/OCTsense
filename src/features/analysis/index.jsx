@@ -148,18 +148,18 @@ const Analysis = () => {
   }
 
   return (
-    <div className='min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8'>
+    <div className='min-h-screen py-12 px-4 sm:px-6 lg:px-8'>
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, ease: 'easeOut' }}
-        className='max-w-5xl mx-auto bg-white rounded-2xl shadow-xl overflow-hidden'
+        className='max-w-7xl mx-auto bg-white rounded-2xl shadow-xl overflow-hidden'
       >
-        {/* Header con los colores originales */}
+        {/* Header */}
         <div className='bg-very-dark-secondary px-6 py-6'>
           <div className='flex items-center justify-center gap-3'>
-            <div className='bg-green-200 p-2 rounded-full shadow-md'>
-              <CheckCircle className='h-6 w-6 text-green-800' />
+            <div className='bg-white p-2 rounded-full shadow-md'>
+              <CheckCircle className='h-6 w-6 text-very-dark-secondary' />
             </div>
             <h1 className='text-2xl md:text-3xl font-bold text-white'>
               {t('analysis.results')}
@@ -353,6 +353,7 @@ const Analysis = () => {
               </div>
             ) : (
               <textarea
+                data-testid="comments-textarea"
                 className='w-full p-4 border border-light-gray bg-white rounded-lg h-36 text-sm focus:ring-2 focus:ring-light-secondary 
                       focus:border-transparent outline-none transition-all duration-300'
                 placeholder={t('analysis.comments_placeholder')}
@@ -372,7 +373,7 @@ const Analysis = () => {
             {isPatient() ? (
               <button
                 onClick={handleDownload}
-                className='px-8 py-3 bg-dark-secondary hover:bg-delete-hover 
+                className='px-8 py-3 bg-dark-secondary hover:bg-accent-hover 
             text-white rounded-lg transition-all duration-300 shadow-lg hover:shadow-xl 
             transform hover:scale-105 flex items-center gap-3 font-medium'
               >
@@ -385,6 +386,7 @@ const Analysis = () => {
                 className='px-8 py-3 bg-dark-secondary hover:bg-accent-hover 
             text-white rounded-lg transition-all duration-300 shadow-lg hover:shadow-xl 
             transform hover:scale-105 flex items-center gap-3 font-medium'
+                data-testid='save-report-button'
               >
                 <FilePlus2 className='w-5 h-5' />
                 {t('analysis.save_report')}
