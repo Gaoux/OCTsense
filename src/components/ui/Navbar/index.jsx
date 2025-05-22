@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import {
-  Avatar,
   Dropdown,
   DropdownDivider,
   DropdownHeader,
@@ -23,6 +22,7 @@ import {
   UserPlus,
   LineChart,
   LogIn,
+  User,
 } from 'lucide-react';
 import { useAuth } from '../../../context/AuthContext';
 import { useTranslation } from 'react-i18next';
@@ -104,8 +104,7 @@ export function NavbarComponent() {
     },
   ];
 
-  const selectedLinks =
-    user?.role === 'admin' ? links_admin : links_common;
+  const selectedLinks = user?.role === 'admin' ? links_admin : links_common;
 
   return (
     <Navbar
@@ -145,11 +144,9 @@ export function NavbarComponent() {
             inline
             className='dropdown-style'
             label={
-              <Avatar
-                alt='User avatar'
-                img='https://flowbite.com/docs/images/people/profile-picture-5.jpg'
-                rounded
-              />
+              <div className='w-8 h-8 flex items-center justify-center bg-white rounded-full'>
+                <User className='text-gray-800 w-5 h-5' />
+              </div>
             }
           >
             <DropdownHeader>
