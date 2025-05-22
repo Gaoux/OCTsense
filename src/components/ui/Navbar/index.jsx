@@ -19,6 +19,9 @@ import {
   FileText,
   Globe,
   ChevronDown,
+  Users,
+  UserPlus,
+  LineChart,
   LogIn,
 } from 'lucide-react';
 import { useAuth } from '../../../context/AuthContext';
@@ -38,10 +41,71 @@ export function NavbarComponent() {
   };
 
   const isActive = (path) => location.pathname === path;
+  const changeLanguage = (lng) => i18n.changeLanguage(lng);
 
-  const changeLanguage = (lng) => {
-    i18n.changeLanguage(lng);
-  };
+  const links_common = [
+    {
+      path: '/',
+      icon: <Home className='icon-style' />,
+      label: t('navbar.home'),
+      protected: false,
+    },
+    {
+      path: '/upload',
+      icon: <Upload className='icon-style' />,
+      label: t('navbar.upload'),
+      protected: true,
+    },
+    {
+      path: '/analysis',
+      icon: <BarChart3 className='icon-style' />,
+      label: t('navbar.analysis'),
+      protected: true,
+    },
+    {
+      path: '/report',
+      icon: <FileText className='icon-style' />,
+      label: t('navbar.report'),
+      protected: true,
+      condition: () => !isPatient(), // visible solo si NO es paciente
+    },
+  ];
+
+  const links_admin = [
+    {
+      path: '/admin-dashboard',
+      icon: <Home className='icon-style' />,
+      label: t('Panel'),
+      protected: true,
+    },
+    {
+      path: '/usuarios',
+      icon: <Users className='icon-style' />,
+      label: t('Usuarios'),
+      protected: true,
+    },
+    {
+      path: '/registrar',
+      icon: <UserPlus className='icon-style' />,
+      label: t('Registrar'),
+      protected: true,
+    },
+    {
+      path: '/admin/kpis',
+      icon: <LineChart className='icon-style' />,
+      label: t('KPIs'),
+      protected: true,
+    },
+    {
+      path: '/admin/upload-model',
+      icon: <Upload className='icon-style' />,
+      label: 'Cargar Modelo',
+      protected: true,
+    },
+  ];
+
+  const selectedLinks =
+    user?.role === 'admin' ? links_admin : links_common;
 
   return (
     <Navbar
@@ -60,12 +124,10 @@ export function NavbarComponent() {
       </Link>
 
       <div className='flex md:order-2 py-2 gap-1 lg:gap-3 items-center'>
-        {/* Language Selector */}
-
         <Dropdown
           arrowIcon={false}
           inline
-          className='bg-very-dark-secondary dark:bg-very-dark-secondary shadow-lg rounded-lg !border-solid border-3 border-dark-secondary'
+          className='dropdown-style'
           label={
             <div className='flex items-center gap-1 text-white cursor-pointer hover:opacity-90'>
               <Globe className='w-5 h-5' />
@@ -81,7 +143,7 @@ export function NavbarComponent() {
           <Dropdown
             arrowIcon={false}
             inline
-            className='bg-very-dark-secondary dark:bg-very-dark-secondary shadow-lg rounded-lg !border-solid border-4 border-dark-secondary'
+            className='dropdown-style'
             label={
               <Avatar
                 alt='User avatar'
@@ -114,7 +176,7 @@ export function NavbarComponent() {
             className='text-base lg:text-lg flex gap-1 lg:gap-2 text-center sm:p-[20px] p-[15px] text-white'
           >
             <div className='flex text-center items-center gap-2 overflow-hidden'>
-              <LogIn className='flex sm:hidden sm:w-4 sm:h-4 lg:w-5 lg:h-5 max-w-full max-h-full sm:mx-0' />
+              <LogIn className='flex sm:hidden sm:w-4 sm:h-4 lg:w-5 lg:h-5' />
               <span className='sm:flex hidden'>{t('navbar.login')}</span>
             </div>
           </Button>
@@ -124,63 +186,30 @@ export function NavbarComponent() {
 
       <NavbarCollapse className='flex-grow items-center lg:max-w-[50%] md:max-w-[30%]'>
         <div className='md:flex md:gap-3 lg:gap-8 items-center py-4 text-base lg:text-lg md:flex-grow md:justify-between'>
-          <NavbarLink
-            as={Link}
-            to='/'
-            active={isActive('/')}
-            className={`flex items-center gap-2 relative ${
-              isActive('/') ? 'active bg-accent' : ''
-            }`}
-          >
-            <Home className='w-4 h-4 md:w-6 md:h-6 lg:w-5 lg:h-5 text-white' />
-            <span className='md:hidden lg:inline text-white'>
-              {t('navbar.home')}
-            </span>
-          </NavbarLink>
-
-          <NavbarLink
-            as={Link}
-            to={isAuthenticated ? '/upload' : '/login'}
-            active={isActive('/upload')}
-            className={`flex items-center gap-2 relative ${
-              isActive('/upload') ? 'active bg-accent' : ''
-            }`}
-          >
-            <Upload className='w-4 h-4 md:w-6 md:h-6 lg:w-5 lg:h-5 text-white' />
-            <span className='md:hidden lg:inline text-white'>
-              {t('navbar.upload')}
-            </span>
-          </NavbarLink>
-
-          <NavbarLink
-            as={Link}
-            to={isAuthenticated ? '/analysis' : '/login'}
-            active={isActive('/analysis')}
-            className={`flex items-center gap-2 relative ${
-              isActive('/analysis') ? 'active bg-accent' : ''
-            }`}
-          >
-            <BarChart3 className='w-4 h-4 md:w-6 md:h-6 lg:w-5 lg:h-5 text-white' />
-            <span className='md:hidden lg:inline text-white'>
-              {t('navbar.analysis')}
-            </span>
-          </NavbarLink>
-
-          {/* Report Link - Solo visible si NO es usuario paciente */}
-          {!isPatient() && (
-            <NavbarLink
-              as={Link}
-              to={isAuthenticated ? '/report' : '/login'}
-              active={isActive('/report')}
-              className={`flex items-center gap-2 relative ${
-                isActive('/report') ? 'active bg-accent' : ''
-              }`}
-            >
-              <FileText className='w-4 h-4 md:w-6 md:h-6 lg:w-5 lg:h-5 text-white' />
-              <span className='md:hidden lg:inline text-white'>
-                {t('navbar.report')}
-              </span>
-            </NavbarLink>
+          {selectedLinks.map(
+            ({ path, icon, label, protected: isProtected, condition }) => {
+              const shouldShow =
+                (!isProtected || isAuthenticated) &&
+                (condition ? condition() : true);
+              return (
+                shouldShow && (
+                  <NavbarLink
+                    key={path}
+                    as={Link}
+                    to={isProtected && !isAuthenticated ? '/login' : path}
+                    active={isActive(path)}
+                    className={`flex items-center gap-2 relative ${
+                      isActive(path) ? 'active bg-accent' : ''
+                    }`}
+                  >
+                    {icon}
+                    <span className='md:hidden lg:inline text-white'>
+                      {label}
+                    </span>
+                  </NavbarLink>
+                )
+              );
+            }
           )}
         </div>
       </NavbarCollapse>

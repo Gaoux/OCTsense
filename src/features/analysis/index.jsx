@@ -1,11 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { CheckCircle, FilePlus2 } from 'lucide-react';
+import {
+  CheckCircle,
+  FilePlus2,
+  BarChart3,
+  User,
+  ClipboardList,
+  Image,
+} from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { createReport } from '../../api/reportService';
 import { useAuth } from '../../context/AuthContext';
 import { motion } from 'framer-motion';
-import jsPDF from 'jspdf';
+import { generateSimplePDFReport } from '../../utils/pdfUtils';
 
 const Analysis = () => {
   const { t } = useTranslation();
@@ -14,7 +21,11 @@ const Analysis = () => {
   const { imageFile, predictionResult } = location.state || {};
   const [progressAnimated, setProgressAnimated] = useState(false);
   const [comments, setComments] = useState('');
-  const { isPatient } = useAuth();
+  const { isPatient, user } = useAuth();
+  const [patientName, setPatientName] = useState('');
+  const [documentId, setDocumentId] = useState('');
+  const [eyeSide, setEyeSide] = useState(''); // default
+  const [visualAcuity, setVisualAcuity] = useState('');
 
   const categories = [
     {
@@ -69,7 +80,7 @@ const Analysis = () => {
         CNV: predictionResult.probabilities[0],
         DME: predictionResult.probabilities[1],
         DRUSEN: predictionResult.probabilities[2],
-        Normal: predictionResult.probabilities[3],
+        NORMAL: predictionResult.probabilities[3],
       };
 
       formData.append(
@@ -85,6 +96,10 @@ const Analysis = () => {
             defaultValue: t('analysis.no_description_available'),
           }
         );
+        formData.append('patient_name', patientName);
+        formData.append('document_id', documentId);
+        formData.append('eye_side', eyeSide);
+        formData.append('visual_acuity', visualAcuity);
         formData.append('description', autoDescription);
       } else {
         // Añadir observaciones del profesional
@@ -104,98 +119,17 @@ const Analysis = () => {
   };
 
   const handleDownload = () => {
-    if (!imageFile || !predictionResult) {
-      console.error('Missing data to download report.');
-      return;
-    }
-
-    const reader = new FileReader();
-    reader.onload = function (e) {
-      const imageData = e.target.result;
-
-      const doc = new jsPDF();
-
-      // Title
-      doc.setFontSize(18);
-      doc.text(t('analysis.results') || 'OCT Report', 14, 20);
-
-      // Timestamp
-      const now = new Date();
-      const formattedDate = now.toLocaleString();
-      doc.setFontSize(11);
-      doc.setTextColor(100);
-      doc.text(
-        `${t('analysis.generated_on') || 'Generated on'}: ${formattedDate}`,
-        14,
-        28
-      );
-
-      // Primary diagnosis
-      doc.setFontSize(12);
-      doc.setTextColor(0);
-      doc.text(`${t('analysis.primary_diagnosis')}:`, 14, 40);
-      doc.setFont('Helvetica', 'bold');
-      doc.text(getTranslatedDiagnosis(predictionResult.prediction), 18, 48);
-      doc.setFont('Helvetica', 'normal');
-
-      // Image
-      doc.setFontSize(12);
-      doc.text(t('analysis.original_image') + ':', 14, 58);
-      doc.addImage(imageData, 'JPEG', 14, 62, 90, 60); // adjust size as needed
-
-      let y = 130; // new section after image
-
-      // Probabilities
-      doc.text(t('analysis.probabilities') + ':', 14, y);
-      y += 10;
-      const probabilities = [
-        {
-          label: t('analysis.category1') || 'CNV',
-          value: predictionResult.probabilities[0],
-        },
-        {
-          label: t('analysis.category2') || 'DME',
-          value: predictionResult.probabilities[1],
-        },
-        {
-          label: t('analysis.category3') || 'DRUSEN',
-          value: predictionResult.probabilities[2],
-        },
-        {
-          label: t('analysis.category4') || 'NORMAL',
-          value: predictionResult.probabilities[3],
-        },
-      ];
-
-      probabilities.forEach(({ label, value }) => {
-        doc.text(`- ${label}: ${(value * 100).toFixed(2)}%`, 18, y);
-        y += 10;
-      });
-
-      // Description or Comments
-      y += 10;
-      if (isPatient()) {
-        doc.text(`${t('analysis.description')}:`, 14, y);
-        y += 8;
-        const description = t(
-          `diagnoses.description.${predictionResult.prediction}`,
-          {
-            defaultValue: t('analysis.no_description_available'),
-          }
-        );
-        doc.text(description, 18, y, { maxWidth: 170 });
-      } else {
-        doc.text(`${t('analysis.observations')}:`, 14, y);
-        y += 8;
-        doc.text(comments || t('analysis.no_description_available'), 18, y, {
-          maxWidth: 170,
-        });
-      }
-
-      doc.save('oct_report.pdf');
-    };
-
-    reader.readAsDataURL(imageFile);
+    console.log('Analysis downloading', predictionResult);
+    generateSimplePDFReport({
+      userData: {
+        name: user.name,
+        email: user.email,
+      },
+      imageFile,
+      prediction: predictionResult.prediction,
+      probabilities: categories,
+      t,
+    });
   };
 
   if (!imageFile || !predictionResult) {
@@ -214,47 +148,53 @@ const Analysis = () => {
   }
 
   return (
-    <div className='min-h-screen py-8 px-4 sm:px-6 lg:px-8'>
+    <div className='min-h-screen py-12 px-4 sm:px-6 lg:px-8'>
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1, ease: 'easeInOut' }}
-        className='max-w-6xl mx-auto bg-white rounded-2xl shadow-xl overflow-hidden'
+        transition={{ duration: 0.8, ease: 'easeOut' }}
+        className='max-w-7xl mx-auto bg-white rounded-2xl shadow-xl overflow-hidden'
       >
         {/* Header */}
-        <div className='bg-very-dark-secondary px-6 py-4'>
+        <div className='bg-very-dark-secondary px-6 py-6'>
           <div className='flex items-center justify-center gap-3'>
-            <div className='bg-green-200 p-2 rounded-full'>
-              <CheckCircle className='h-5 w-5 text-green-800' />
+            <div className='bg-white p-2 rounded-full shadow-md'>
+              <CheckCircle className='h-6 w-6 text-very-dark-secondary' />
             </div>
-            <h1 className='text-2xl md:text-4xl font-bold text-white'>
+            <h1 className='text-2xl md:text-3xl font-bold text-white'>
               {t('analysis.results')}
             </h1>
           </div>
         </div>
 
         {/* Contenido Principal */}
-        <div className='p-4 md:p-8 space-y-6'>
+        <div className='p-6 md:p-10 space-y-8'>
           {/* Diagnosis Header */}
-          <div className='text-center'>
-            <p className='text-light-primary mb-2 text-sm md:text-base'>
+          <div className='text-center bg-very-light-gray py-5 px-4 rounded-xl border border-light-gray shadow-sm'>
+            <p className='text-light-primary mb-2 font-medium'>
               {t('analysis.primary_diagnosis')}
             </p>
-            <h2 className='text-xl md:text-3xl font-bold text-primary'>
+            <h2 className='text-2xl md:text-3xl font-bold text-primary'>
               {getTranslatedDiagnosis(predictionResult.prediction) ||
                 t('analysis.unknown')}
             </h2>
           </div>
 
-          {/* Grid: Image and Probabilities - Cambiado a columna en móvil */}
-          <div className='grid grid-cols-1 lg:grid-cols-2 gap-6'>
+          {/* Grid: Image and Probabilities */}
+          <div className='grid grid-cols-1 lg:grid-cols-2 gap-8'>
             {/* Uploaded Image */}
-            <div className='opacity-100'>
-              <div className='bg-very-light-gray p-4 rounded-xl border border-light-gray shadow-sm h-full'>
-                <h3 className='font-bold mb-4 text-dark-primary text-sm md:text-base'>
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.3, duration: 0.6 }}
+              className='h-full'
+            >
+              <div className='bg-very-light-gray p-5 rounded-xl border border-light-gray shadow-md h-full'>
+                <h3 className='font-bold mb-4 text-dark-primary flex items-center gap-2'>
+                  <Image className='w-5 h-5 text-secondary' />
                   {t('analysis.original_image')}
                 </h3>
-                <div className='overflow-hidden rounded-xl shadow-md hover:shadow-lg transition-transform'>
+                <div className='overflow-hidden rounded-xl shadow-md hover:shadow-lg transition-all duration-300'>
                   <img
                     src={URL.createObjectURL(imageFile)}
                     alt='Medical OCT Scan'
@@ -262,91 +202,197 @@ const Analysis = () => {
                   />
                 </div>
               </div>
-            </div>
+            </motion.div>
 
             {/* Probabilities */}
-            <div className='opacity-100'>
-              <div className='bg-very-light-gray p-4 rounded-xl border border-light-gray shadow-sm h-full'>
-                <h3 className='font-bold mb-4 md:mb-6 text-dark-primary text-sm md:text-base'>
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.3, duration: 0.6 }}
+              className='h-full'
+            >
+              <div className='bg-very-light-gray p-5 rounded-xl border border-light-gray shadow-md h-full'>
+                <h3 className='font-bold mb-6 text-dark-primary flex items-center gap-2'>
+                  <BarChart3 className='w-5 h-5 text-secondary' />
                   {t('analysis.probabilities')}
                 </h3>
-                <div className='space-y-3 md:space-y-5'>
+                <div className='space-y-5'>
                   {categories.map((category, index) => (
                     <div key={index}>
-                      <div className='flex justify-between mb-1 text-xs md:text-sm'>
-                        <span>{category.name}</span>
+                      <div className='flex justify-between mb-2 text-sm'>
+                        <span className='font-medium text-dark-primary'>
+                          {category.name}
+                        </span>
                         <span className='font-semibold text-secondary'>
                           {category.value}%
                         </span>
                       </div>
-                      <div className='h-3 md:h-4 w-full bg-light-gray rounded-full overflow-hidden'>
-                        <div
-                          className='h-full bg-secondary rounded-full transition-all duration-1000 ease-out'
-                          style={{
+                      <div className='h-4 w-full bg-light-gray rounded-full overflow-hidden'>
+                        <motion.div
+                          initial={{ width: '0%' }}
+                          animate={{
                             width: progressAnimated
                               ? `${category.value}%`
                               : '0%',
                           }}
-                        ></div>
+                          transition={{
+                            duration: 1.2,
+                            ease: 'easeOut',
+                            delay: 0.5 + index * 0.1,
+                          }}
+                          className='h-full bg-secondary rounded-full'
+                        ></motion.div>
                       </div>
                     </div>
                   ))}
                 </div>
               </div>
-            </div>
+            </motion.div>
           </div>
+
+          {/* Datos del paciente - Solo visible para médicos */}
+          {!isPatient() && (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.5, duration: 0.6 }}
+              className='bg-white rounded-xl border border-light-gray shadow-md overflow-hidden'
+            >
+              <div className='bg-very-light-gray px-6 py-4 border-b border-light-gray'>
+                <h3 className='font-bold text-dark-primary flex items-center gap-2'>
+                  <User className='w-5 h-5 text-secondary' />
+                  {t('analysis.patient_information')}
+                </h3>
+              </div>
+
+              <div className='p-6'>
+                <div className='grid grid-cols-1 md:grid-cols-2 gap-6'>
+                  <div>
+                    <label className='block text-sm font-medium text-dark-primary mb-2'>
+                      {t('analysis.patient_name')}
+                    </label>
+                    <input
+                      type='text'
+                      className='border border-light-gray p-3 rounded-lg text-sm w-full focus:ring-2 focus:ring-light-secondary 
+                  focus:border-transparent outline-none transition-all duration-300'
+                      placeholder={t('analysis.patient_name')}
+                      value={patientName}
+                      onChange={(e) => setPatientName(e.target.value)}
+                    />
+                  </div>
+
+                  <div>
+                    <label className='block text-sm font-medium text-dark-primary mb-2'>
+                      {t('analysis.document_id')}
+                    </label>
+                    <input
+                      type='text'
+                      className='border border-light-gray p-3 rounded-lg text-sm w-full focus:ring-2 focus:ring-light-secondary 
+                  focus:border-transparent outline-none transition-all duration-300'
+                      placeholder={t('analysis.document_id')}
+                      value={documentId}
+                      onChange={(e) => setDocumentId(e.target.value)}
+                    />
+                  </div>
+
+                  <div>
+                    <label className='block text-sm font-medium text-dark-primary mb-2'>
+                      {t('analysis.eye_side')}
+                    </label>
+                    <select
+                      className='border border-light-gray p-3 rounded-lg text-sm w-full focus:ring-2 focus:ring-light-secondary 
+  focus:border-transparent outline-none transition-all duration-300 bg-white'
+                      value={eyeSide}
+                      onChange={(e) => setEyeSide(e.target.value)}
+                    >
+                      <option value=''>{t('analysis.select_option')}</option>
+                      <option value='OD'>{t('analysis.eye_od')}</option>
+                      <option value='OS'>{t('analysis.eye_os')}</option>
+                    </select>
+                  </div>
+
+                  <div>
+                    <label className='block text-sm font-medium text-dark-primary mb-2'>
+                      {t('analysis.visual_acuity')}
+                    </label>
+                    <input
+                      type='text'
+                      className='border border-light-gray p-3 rounded-lg text-sm w-full focus:ring-2 focus:ring-light-secondary 
+                  focus:border-transparent outline-none transition-all duration-300'
+                      placeholder={t('analysis.visual_acuity')}
+                      value={visualAcuity}
+                      onChange={(e) => setVisualAcuity(e.target.value)}
+                    />
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          )}
 
           {/* Clinical Description/Observations */}
-          <div className='opacity-100'>
-            <div className='bg-very-light-gray p-4 md:p-6 rounded-xl border border-light-gray shadow-sm'>
-              <h3 className='font-bold mb-3 md:mb-4 text-dark-primary text-sm md:text-base'>
-                {isPatient()
-                  ? t('analysis.description')
-                  : t('analysis.observations')}
-              </h3>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.6, duration: 0.6 }}
+            className='bg-white p-6 rounded-xl border border-light-gray shadow-md'
+          >
+            <h3 className='font-bold mb-4 text-dark-primary flex items-center gap-2'>
+              <ClipboardList className='w-5 h-5 text-secondary' />
+              {isPatient()
+                ? t('analysis.description')
+                : t('analysis.observations')}
+            </h3>
 
-              {isPatient() ? (
-                <div className='bg-white p-3 md:p-4 rounded-lg border border-light-gray'>
-                  <p className='text-dark-primary text-justify text-xs md:text-sm'>
-                    {t(`diagnoses.description.${predictionResult.prediction}`, {
-                      defaultValue: t('analysis.no_description_available'),
-                    })}
-                  </p>
-                </div>
-              ) : (
-                <textarea
-                  className='w-full p-3 md:p-4 border bg-white border-light-gray rounded-lg h-24 md:h-32 text-xs md:text-sm focus:ring-2 focus:ring-light-secondary 
-                        focus:border-transparent outline-none transition-all duration-300'
-                  placeholder={t('analysis.comments_placeholder')}
-                  value={comments}
-                  onChange={(e) => setComments(e.target.value)}
-                ></textarea>
-              )}
-            </div>
-          </div>
+            {isPatient() ? (
+              <div className='bg-very-light-gray p-4 rounded-lg border border-light-gray'>
+                <p className='text-dark-primary text-justify'>
+                  {t(`diagnoses.description.${predictionResult.prediction}`, {
+                    defaultValue: t('analysis.no_description_available'),
+                  })}
+                </p>
+              </div>
+            ) : (
+              <textarea
+                data-testid="comments-textarea"
+                className='w-full p-4 border border-light-gray bg-white rounded-lg h-36 text-sm focus:ring-2 focus:ring-light-secondary 
+                      focus:border-transparent outline-none transition-all duration-300'
+                placeholder={t('analysis.comments_placeholder')}
+                value={comments}
+                onChange={(e) => setComments(e.target.value)}
+              ></textarea>
+            )}
+          </motion.div>
 
           {/* Generate Report Button */}
-          <div className='flex justify-center opacity-100'>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.7, duration: 0.6 }}
+            className='flex justify-center pt-4'
+          >
             {isPatient() ? (
               <button
                 onClick={handleDownload}
-                className='px-4 md:px-6 gap-2 py-2 md:py-3 bg-dark-secondary hover:bg-accent-hover text-white rounded-lg transition-all duration-300 
-            shadow-md hover:shadow-lg transform hover:scale-105 flex items-center text-sm md:text-base'
+                className='px-8 py-3 bg-dark-secondary hover:bg-accent-hover 
+            text-white rounded-lg transition-all duration-300 shadow-lg hover:shadow-xl 
+            transform hover:scale-105 flex items-center gap-3 font-medium'
               >
-                <FilePlus2 className='w-4 h-4 md:w-6 md:h-6' />
+                <FilePlus2 className='w-5 h-5' />
                 {t('analysis.download_report')}
               </button>
             ) : (
               <button
                 onClick={handleGenerateReport}
-                className='px-4 md:px-6 gap-2 py-2 md:py-3 bg-dark-secondary hover:bg-accent-hover text-white rounded-lg transition-all duration-300 
-            shadow-md hover:shadow-lg transform hover:scale-105 flex items-center text-sm md:text-base'
+                className='px-8 py-3 bg-dark-secondary hover:bg-accent-hover 
+            text-white rounded-lg transition-all duration-300 shadow-lg hover:shadow-xl 
+            transform hover:scale-105 flex items-center gap-3 font-medium'
+                data-testid='save-report-button'
               >
-                <FilePlus2 className='w-4 h-4 md:w-6 md:h-6' />
+                <FilePlus2 className='w-5 h-5' />
                 {t('analysis.save_report')}
               </button>
             )}
-          </div>
+          </motion.div>
         </div>
       </motion.div>
     </div>

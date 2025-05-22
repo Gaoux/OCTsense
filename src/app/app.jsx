@@ -8,22 +8,17 @@ import ThemeWrapper from '../components/ui/ThemeWrapper';
 
 const AppWrapper = () => {
   const location = useLocation();
-  const hideOnRoutes = [
-    '/login',
-    '/register',
-    '/registrar',
-    '/usuarios',
-    '/admin-dashboard',
-  ];
-  const shouldHide = hideOnRoutes.includes(location.pathname);
+  const hideNavbarOnRoutes = ['/login', '/register'];
+  const shouldHideNavbar =
+  hideNavbarOnRoutes.includes(location.pathname);
 
   return (
     <div className='flex flex-col min-h-screen'>
-      {!shouldHide && <NavbarComponent />}
+      {!shouldHideNavbar && <NavbarComponent />}
       <main className='flex-grow'>
         <AppRoutes />
       </main>
-      {!shouldHide && <Footer />}
+      {!shouldHideNavbar && <Footer />}
     </div>
   );
 };

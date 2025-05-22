@@ -1,28 +1,36 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import {
   getReportDetail,
   deleteReport,
-  updateReportComments,
+  updateReportDetails,
   getReportImage,
 } from '../../api/reportService';
 import FullImageModal from '../../components/ui/imageModal';
 import ReportDetailsInfo from '../../components/ui/reportDetailsInfo';
 import ConfirmDeleteModal from '../../components/ui/confirmDeleteModal';
-import { ArrowLeft, Trash2 } from 'lucide-react';
-import jsPDF from 'jspdf';
+import { ArrowLeft } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
+import { generateReportPDF } from '../../utils/pdfUtils';
 
 const ReportDetails = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const [report, setReport] = useState(null);
   const [loading, setLoading] = useState(true);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showImageModal, setShowImageModal] = useState(false);
   const [imageUrl, setImageUrl] = useState(null);
-  const [editingComment, setEditingComment] = useState(false);
+  const [newPatientName, setNewPatientName] = useState('');
+  const [newDocumentId, setNewDocumentId] = useState('');
+  const [newEyeSide, setNewEyeSide] = useState('');
+  const [newVisualAcuity, setNewVisualAcuity] = useState('');
   const [newComment, setNewComment] = useState('');
+  const [editingComment, setEditingComment] = useState(false);
+  const [editingPatientInfo, setEditingPatientInfo] = useState(false);
 
   // Fetch report info
   useEffect(() => {
@@ -30,6 +38,10 @@ const ReportDetails = () => {
       try {
         const fetchedReport = await getReportDetail(id);
         setReport(fetchedReport);
+        setNewPatientName(fetchedReport.patient_name || '');
+        setNewDocumentId(fetchedReport.document_id || '');
+        setNewEyeSide(fetchedReport.eye_side || '');
+        setNewVisualAcuity(fetchedReport.visual_acuity || '');
         setNewComment(fetchedReport.comments || '');
       } catch (error) {
         console.error('Error fetching report:', error);
@@ -73,13 +85,27 @@ const ReportDetails = () => {
   };
 
   // Update report comment
-  const handleUpdateComment = async () => {
+  const handleUpdateReport = async () => {
     try {
-      await updateReportComments(report.id, newComment);
-      setReport({ ...report, comments: newComment });
+      const updatedFields = {
+        comments: newComment,
+        patient_name: newPatientName,
+        document_id: newDocumentId,
+        eye_side: newEyeSide,
+        visual_acuity: newVisualAcuity,
+      };
+
+      await updateReportDetails(report.id, updatedFields);
+
+      setReport({
+        ...report,
+        ...updatedFields,
+      });
+
       setEditingComment(false);
+      setEditingPatientInfo(false);
     } catch (error) {
-      console.error('Failed to update comment', error);
+      console.error('Failed to update report', error);
     }
   };
 
@@ -96,93 +122,96 @@ const ReportDetails = () => {
   };
 
   // Print the report page
-
   const handleDownload = () => {
-    if (!report) return;
-
-    const doc = new jsPDF();
-
-    doc.setFontSize(18);
-    doc.text('OCT Report Details', 14, 20);
-
-    doc.setFontSize(12);
-    doc.text(`Report ID: ${report.id}`, 14, 40);
-    doc.text(`Created At: ${report.created_at?.split('T')[0]}`, 14, 50);
-    doc.text(`Predicted Diagnostic: ${report.predicted_diagnostic}`, 14, 60);
-
-    doc.text('Diagnostic Probabilities:', 14, 80);
-    let yPosition = 90;
-    if (report.diagnostic_probabilities) {
-      Object.entries(report.diagnostic_probabilities).forEach(
-        ([diagnosis, probability]) => {
-          doc.text(
-            `- ${diagnosis}: ${(probability * 100).toFixed(2)}%`,
-            18,
-            yPosition
-          );
-          yPosition += 10;
-        }
-      );
-    }
-
-    doc.text('User Comment:', 14, yPosition + 10);
-    doc.setFontSize(11);
-    doc.text(report.comments || 'No comment provided.', 18, yPosition + 20, {
-      maxWidth: 170,
-    });
-
-    doc.save(`report_${report.id}.pdf`);
+    generateReportPDF(report, imageUrl, t);
   };
 
   if (loading) {
     return (
-      <div className='min-h-screen flex items-center justify-center'>
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, ease: 'easeOut' }}
+        className='min-h-screen flex items-center justify-center'
+      >
         <div className='text-dark-primary text-lg font-semibold'>
-          Loading report...
+          {t('report.loading')}
         </div>
-      </div>
+      </motion.div>
     );
   }
 
   if (!report) {
     return (
-      <div className='min-h-screen flex items-center justify-center'>
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, ease: 'easeOut' }}
+        className='min-h-screen flex items-center justify-center'
+      >
         <div className='text-dark-secondary font-bold text-4xl'>
-          Report not found
+          {t('report.notFound')}
         </div>
-      </div>
+      </motion.div>
     );
   }
 
   return (
-    <div className='font-sans min-h-screen p-6'>
-      <div className='max-w-4xl mx-auto bg-white rounded-2xl shadow-lg p-8 relative'>
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.8, ease: 'easeOut' }}
+      className='font-sans min-h-screen py-12 px-4 sm:px-6 lg:px-8'
+    >
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, ease: 'easeOut', delay: 0.2 }}
+        className='max-w-4xl mx-auto bg-white rounded-2xl shadow-lg p-8 relative'
+      >
         {/* Back Button */}
-        <button
+        <motion.button
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.6, ease: 'easeOut', delay: 0.3 }}
           className='flex items-center gap-2 cursor-pointer text-black/60 hover:text-black/70 mb-8 transition-colors'
           onClick={() => navigate('/report')}
         >
           <ArrowLeft className='w-5 h-5' />
           <span className='text-base font-semibold'>Back</span>
-        </button>
-
+        </motion.button>
         {/* Report Info */}
-        <ReportDetailsInfo
-          report={report}
-          editingComment={editingComment}
-          newComment={newComment}
-          setNewComment={setNewComment}
-          setEditingComment={setEditingComment}
-          handleUpdateComment={handleUpdateComment}
-          imageUrl={imageUrl}
-          onImageClick={() => setShowImageModal(true)}
-          onPrevious={handlePrevious}
-          onNext={handleNext}
-          onDelete={() => setShowDeleteModal(true)}
-          onDownload={handleDownload}
-        />
-      </div>
-
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: 'easeOut', delay: 0.4 }}
+        >
+          <ReportDetailsInfo
+            report={report}
+            editingComment={editingComment}
+            newComment={newComment}
+            setNewComment={setNewComment}
+            setEditingComment={setEditingComment}
+            imageUrl={imageUrl}
+            onImageClick={() => setShowImageModal(true)}
+            onPrevious={handlePrevious}
+            onNext={handleNext}
+            onDelete={() => setShowDeleteModal(true)}
+            onDownload={handleDownload}
+            newPatientName={newPatientName}
+            setNewPatientName={setNewPatientName}
+            newDocumentId={newDocumentId}
+            setNewDocumentId={setNewDocumentId}
+            newEyeSide={newEyeSide}
+            setNewEyeSide={setNewEyeSide}
+            newVisualAcuity={newVisualAcuity}
+            setNewVisualAcuity={setNewVisualAcuity}
+            handleUpdateReport={handleUpdateReport}
+            editingPatientInfo={editingPatientInfo}
+            setEditingPatientInfo={setEditingPatientInfo}
+          />
+        </motion.div>
+      </motion.div>
       {/* Full Image Modal */}
       {showImageModal && (
         <FullImageModal
@@ -198,15 +227,14 @@ const ReportDetails = () => {
           }}
         />
       )}
-
       {/* Confirm Delete Modal */}
       <ConfirmDeleteModal
         show={showDeleteModal}
         onClose={() => setShowDeleteModal(false)}
         onConfirm={handleDelete}
-        itemName='report'
+        itemName={t('report.name')}
       />
-    </div>
+    </motion.div>
   );
 };
 

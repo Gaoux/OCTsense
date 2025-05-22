@@ -20,19 +20,21 @@
   --color-very-dark-gray: #1f2937;
   --color-accent: #ff7477;
   --color-accent-hover: #ff484b;
-  --color-background-begin: #E1EFFE;
-  --color-background-end: #A4CAFE;
+  --color-delete: #e54343;
+  --color-delete-hover: #b62525;
+  --color-background-begin: #e1effe;
+  --color-background-end: #a4cafe;
 }
 
 .theme-patient {
   --color-light-primary: #497255;
-  --color-primary: #1E2F23;
+  --color-primary: #1e2f23;
   --color-dark-primary: #032e10;
   --color-very-light-secondary: #cbe391;
   --color-light-secondary: #90a758;
   --color-secondary: #768948;
   --color-dark-secondary: #607744;
-  --color-very-dark-secondary: #34623F;
+  --color-very-dark-secondary: #34623f;
   --color-white: #ffffff;
   --color-very-light-gray: #ebeaea;
   --color-very-light-gray-hover: #e0e0e0;
@@ -41,6 +43,8 @@
   --color-dark-gray: #6a727d;
   --color-very-dark-gray: #1f2937;
   --color-accent: #f8bc4d;
+  --color-delete: #e54343;
+  --color-delete-hover: #b62525;
   --color-accent-hover: #ef9a00;
   --color-background-begin: #f7ffe4;
   --color-background-end: #f0ffcd;
@@ -48,7 +52,11 @@
 
 body.theme-patient,
 .theme-patient {
-  background: linear-gradient(to bottom, var(--color-background-begin), var(--color-background-end));
+  background: linear-gradient(
+    to bottom,
+    var(--color-background-begin),
+    var(--color-background-end)
+  );
 }
 
 .theme-professional {
@@ -67,17 +75,21 @@ body.theme-patient,
   --color-gray: #908e8e;
   --color-dark-gray: #6a727d;
   --color-very-dark-gray: #1f2937;
-  --color-accent: #C2CAE8;
-  --color-accent-hover: #990D35;
+  --color-accent: #c2cae8;
+  --color-delete: #e54343;
+  --color-delete-hover: #b62525;
   --color-background-begin: #e8f3ff;
   --color-background-end: #cce2ff;
 }
 
 body.theme-profesional,
 .theme-professional {
-  background: linear-gradient(to bottom, var(--color-background-begin), var(--color-background-end));
+  background: linear-gradient(
+    to bottom,
+    var(--color-background-begin),
+    var(--color-background-end)
+  );
 }
-
 
 button {
   cursor: pointer;

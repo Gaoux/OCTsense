@@ -1,81 +1,55 @@
-import {Link} from 'react-router-dom';
-import React, {useEffect, useState} from 'react';
-import {getAdminStats} from "../../api/dashboardService.js";
-/*import React, { useEffect, useState } from 'react';
-import axios from '../../api/apiClient'; // Asegúrate de que apiClient esté configurado correctamente
+import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { getAdminStats, getRecentUsers } from "../../api/dashboardService.js"; // Importa el servicio
 
 const Dashboard = () => {
-  const [stats, setStats] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-
-  useEffect(() => {
-    const fetchStats = async () => {
-      try {
-        const response = await axios.get('/api/users/admin/dashboard-stats/');
-        setStats(response.data); // Asume que el backend devuelve un objeto con las estadísticas
-      } catch (err) {
-        console.error('Error al obtener estadísticas del Dashboard:', err);
-        setError('No se pudieron cargar las estadísticas.');
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchStats();
-  }, []);
-*/
-
-const Dashboard = () => {
-
     const [stats, setStats] = useState(null);
-    const [loading, setLoading] = useState(false);
-
-
-    // Datos de estadísticas quemados
-    // const stats = {
-    //   totalUsers: 13,
-    //   totalPatients: 8,
-    //   totalOphthalmologists: 3,
-    //   totalAdmins: 2,
-    // };
-
-    // Usuarios recientes quemados
-    const recentUsers = [
-        {id: '1', name: 'Juan Mendez', profession: 'Profesional', email: 'JuanM@gmail.com'},
-        {id: '2', name: 'Laura Mojica', profession: 'Profesional', email: 'LauM@gmail.com'},
-        {id: '3', name: 'Carlos Pérez', profession: 'Profesional', email: 'CarlosP@gmail.com'},
-    ];
+    const [recentUsers, setRecentUsers] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
     useEffect(() => {
-        const fetchStats = async () => {
-            setLoading(true);
-            const stats = await getAdminStats()
-            setStats(stats)
-            setLoading(false);
-        }
-        fetchStats();
+        const fetchData = async () => {
+            try {
+                setLoading(true);
 
-    }, [])
+                // Obtén estadísticas del dashboard
+                const statsData = await getAdminStats();
+                setStats(statsData);
+
+                // Obtén usuarios recientes
+                const usersData = await getRecentUsers();
+                setRecentUsers(usersData);
+
+            } catch (err) {
+                console.error('Error al cargar datos del Dashboard:', err);
+                setError('No se pudieron cargar los datos del Dashboard.');
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchData();
+    }, []);
+
+    if (loading) {
+        return (
+            <div className="flex justify-center items-center min-h-screen">
+                <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-blue-500"></div>
+            </div>
+        );
+    }
+
+    if (error) {
+        return (
+            <div className="flex justify-center items-center min-h-screen">
+                <p className="text-red-500 font-bold">{error}</p>
+            </div>
+        );
+    }
 
     return (
         <div className="bg-gradient-to-br from-blue-100 to-blue-300 min-h-screen relative overflow-hidden">
-            {/* Navbar */}
-            <header
-                className="py-2 bg-very-dark-secondary dark:bg-very-dark-secondary fixed top-0 left-0 right-0 z-50 p-4 shadow-md flex justify-between items-center">
-                <div className="flex items-center">
-                    <img src="/microscope-icon.png" alt="OCTsense" className="h-8 mr-2"/>
-                    <h1 className="text-white text-2xl font-bold">OCTsense</h1>
-                </div>
-                <nav className="flex space-x-4">
-                    <Link to="/" className="text-white hover:underline">Inicio</Link>
-                    <Link to="/usuarios" className="text-white hover:underline">Usuarios</Link>
-                    <Link to="/registrar" className="text-white hover:underline">Registrar</Link>
-                    <Link to="/editar" className="text-white hover:underline">Editar</Link>
-                    <Link to="/profile" className="text-white hover:underline">Perfil</Link>
-                </nav>
-            </header>
-
             {/* Contenido principal */}
             <div className="max-w-7xl mx-auto px-6 py-20 relative z-10">
                 {/* Título del Dashboard */}
@@ -86,45 +60,25 @@ const Dashboard = () => {
                     <div className="bg-white rounded-2xl shadow-lg p-6 text-center">
                         <p className="text-gray-600 text-sm">Total Usuarios</p>
                         <div className="text-3xl font-bold text-blue-800">
-                            {stats?.total_users ?? (
-                                <div className="flex items-center justify-center">
-                                    <div
-                                        className="animate-spin rounded-full h-16 w-16 border-t-4 border-blue-500"></div>
-                                </div>
-                            )}
+                            {stats?.total_users ?? 0}
                         </div>
                     </div>
                     <div className="bg-white rounded-2xl shadow-lg p-6 text-center">
                         <p className="text-gray-600 text-sm">Total Pacientes</p>
                         <div className="text-3xl font-bold text-blue-800">
-                            {stats?.total_patients ?? (
-                                <div className="flex items-center justify-center">
-                                    <div
-                                        className="animate-spin rounded-full h-16 w-16 border-t-4 border-blue-500"></div>
-                                </div>
-                            )}
+                            {stats?.total_patients ?? 0}
                         </div>
                     </div>
                     <div className="bg-white rounded-2xl shadow-lg p-6 text-center">
                         <p className="text-gray-600 text-sm">Total Profesionales</p>
                         <div className="text-3xl font-bold text-blue-800">
-                            {stats?.total_ophthalmologists ?? (
-                                <div className="flex items-center justify-center">
-                                    <div
-                                        className="animate-spin rounded-full h-16 w-16 border-t-4 border-blue-500"></div>
-                                </div>
-                            )}
+                            {stats?.total_ophthalmologists ?? 0}
                         </div>
                     </div>
                     <div className="bg-white rounded-2xl shadow-lg p-6 text-center">
                         <p className="text-gray-600 text-sm">Total Administradores</p>
                         <div className="text-3xl font-bold text-blue-800">
-                            {stats?.total_admins ?? (
-                                <div className="flex items-center justify-center">
-                                    <div
-                                        className="animate-spin rounded-full h-16 w-16 border-t-4 border-blue-500"></div>
-                                </div>
-                            )}
+                            {stats?.total_admins ?? 0}
                         </div>
                     </div>
                 </div>
@@ -140,9 +94,11 @@ const Dashboard = () => {
                             >
                                 <div>
                                     <p className="text-blue-800 font-semibold">{user.name}</p>
-                                    <p className="text-gray-600 text-sm">{user.profession}</p>
+                                    <p className="text-gray-600 text-sm">{user.email}</p>
                                 </div>
-                                <p className="text-gray-500 text-sm">{user.email}</p>
+                                <p className="text-gray-500 text-sm">
+                                    {new Date(user.date_joined).toLocaleDateString()}
+                                </p>
                             </li>
                         ))}
                     </ul>

@@ -20,3 +20,12 @@ export const predictOCT = async (imageFile) => {
     throw error;
   }
 };
+
+export const uploadModel = async (formData) => {
+  const response = await apiClient.post('/api/oct/upload-model/', formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  });
+  return response.data;
+};

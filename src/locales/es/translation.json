@@ -100,9 +100,9 @@
       "password": "Contraseña",
       "confirmPassword": "Confirmar contraseña"
     },
-  "role": {
-    "patient": "Paciente",
-    "professional": "Profesional"
+    "role": {
+      "patient": "Paciente",
+      "professional": "Profesional"
     },
     "button": "Registrarse",
     "alreadyHaveAccount": "¿Ya tienes cuenta?",
@@ -120,7 +120,7 @@
   "upload": {
     "title": "Carga de imagen",
     "subtitle": "Sube una tomografía",
-    "subtitle2": "Sube aquí",
+    "subtitle2": "Sube tu tomografía médica (OCT) para análisis.",
     "uploadPrompt": "Arrastra la imagen aquí",
     "buttonUpload": "Cargar imagen",
     "buttonAnalyze": "Analizar",
@@ -150,7 +150,15 @@
     "category3": "DRUSEN",
     "category4": "NORMAL",
     "description": "Resumen de tu diagnóstico",
-    "no_description_available": "Descripción no disponible para este diagnóstico"
+    "no_description_available": "Descripción no disponible para este diagnóstico",
+    "patient_information": "Información del Paciente",
+    "patient_name": "Nombre completo",
+    "document_id": "Número de documento",
+    "eye_side": "Lado del ojo (OD/OS)",
+    "visual_acuity": "Agudeza visual",
+    "select_option": "Seleccione una opción",
+    "eye_od": "OD (Ojo derecho)",
+    "eye_os": "OS (Ojo izquierdo)"
   },
   "diagnoses": {
     "CNV": "Neovascularización Coroidea",
@@ -163,6 +171,22 @@
       "DRUSEN": "Las drusas retinianas son depósitos amarillentos que se acumulan debajo de la retina, a menudo en la mácula, la zona central de la retina encargada de la visión detallada.",
       "NORMAL": "Tus resultados no muestran anomalías significativas."
     }
+  },
+  "report": {
+    "detailsTitle": "Detalles del Reporte",
+    "id": "ID del Reporte",
+    "createdAt": "Fecha de Creación",
+    "predictedDiagnostic": "Diagnóstico Previsto",
+    "probabilities": "Probabilidades de Diagnóstico",
+    "userComment": "Comentario del Usuario",
+    "noComment": "No se proporcionó comentario.",
+    "loading": "Cargando reporte...",
+    "notFound": "Reporte no encontrado",
+    "pdfTitle": "Detalles del Reporte OCT",
+    "name": "reporte",
+    "historyTitle": "Historial de Reportes",
+    "historySubtitle": "Consulta y gestiona tus reportes médicos anteriores",
+    "empty": "No hay reportes disponibles."
   },
   "settings": {
     "title": "Configuración de Usuario",
@@ -196,5 +220,39 @@
     "view_code": "Ver código del proyecto",
     "all_rights": "Todos los derechos reservados",
     "disclaimer": "Este es un proyecto académico. No para uso clínico."
+  },
+  "crop": {
+    "alt": "Para recortar",
+    "instructions": "Arrastra las esquinas para ajustar el área de recorte. También puedes mover el área.",
+    "minSize": "Tamaño mínimo de recorte: {{size}}px",
+    "button": "Recortar imagen"
+  },
+  "deleteModal": {
+    "title": "Confirmar Eliminación",
+    "confirm": "¿Estás seguro de que deseas eliminar este",
+    "warning": "Esta acción es irreversible. Por favor confirma."
+  },
+  "buttons": {
+    "save": "Guardar",
+    "edit": "Editar",
+    "cancel": "Cancelar",
+    "download": "Descargar",
+    "delete": "Eliminar",
+    "previous": "Reporte Anterior",
+    "next": "Siguiente Reporte",
+    "back": "Volver"
+  },
+  "pdf": {
+    "disclaimer": "Este documento es generado automáticamente por OCTsense y no constituye un diagnóstico médico certificado. Por favor, consulte a un oftalmólogo licenciado para su interpretación y seguimiento.",
+    "patient_name": "Nombre",
+    "email": "Correo electrónico"
+  },
+  "terms": {
+    "checkboxLabel": "He leído y acepto los ",
+    "link": "términos y condiciones",
+    "checkboxLabel_short": "Términos y condiciones",
+    "title": "Términos y Condiciones",
+    "content": "Al registrarte y utilizar OCTsense, aceptas cumplir con todas las leyes y regulaciones aplicables. La plataforma está destinada únicamente a fines académicos y de investigación y no sustituye el consejo, diagnóstico o tratamiento médico profesional. Todos los datos se manejan de acuerdo con nuestra política de privacidad. Para más detalles, contacta con soporte.",
+    "required": "Debes aceptar los términos y condiciones para registrarte."
   }
 }

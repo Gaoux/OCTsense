@@ -2,91 +2,96 @@ import apiClient from './apiClient';
 import Cookies from 'js-cookie';
 
 // Create a new report
-export const createReport = async (formData) => {
-  const token = Cookies.get('token');
+export const createReport = async (formData, isAdmin = false) => {
+  const headers = isAdmin
+    ? { 'Content-Type': 'multipart/form-data' } // Sin autorización si es admin
+    : {
+        'Content-Type': 'multipart/form-data',
+        Authorization: `Bearer ${Cookies.get('token')}`,
+      };
 
-  return await apiClient.post('api/reports/create/', formData, {
-    headers: {
-      'Content-Type': 'multipart/form-data',
-      Authorization: `Bearer ${token}`,
-    },
-  });
+  return await apiClient.post('api/reports/create/', formData, { headers });
 };
 
 // Get report history (for the logged-in user)
-export const getReportHistory = async () => {
-  const token = Cookies.get('token');
+export const getReportHistory = async (isAdmin = false) => {
+  const headers = isAdmin
+    ? {} // Sin autorización si es admin
+    : {
+        Authorization: `Bearer ${Cookies.get('token')}`,
+      };
 
-  const response = await apiClient.get('api/reports/history/', {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
-
+  const response = await apiClient.get('api/reports/history/', { headers });
   return response.data;
 };
 
 // Get a single report by ID
-export const getReportDetail = async (reportId) => {
-  const token = Cookies.get('token');
+export const getReportDetail = async (reportId, isAdmin = false) => {
+  const headers = isAdmin
+    ? {} // Sin autorización si es admin
+    : {
+        Authorization: `Bearer ${Cookies.get('token')}`,
+      };
 
-  const response = await apiClient.get(`api/reports/${reportId}/`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
-
+  const response = await apiClient.get(`api/reports/${reportId}/`, { headers });
   return response.data;
 };
 
 // Delete a report by ID
-export const deleteReport = async (reportId) => {
-  const token = Cookies.get('token');
+export const deleteReport = async (reportId, isAdmin = false) => {
+  const headers = isAdmin
+    ? {} // Sin autorización si es admin
+    : {
+        Authorization: `Bearer ${Cookies.get('token')}`,
+      };
 
-  return await apiClient.delete(`api/reports/${reportId}/delete/`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
+  return await apiClient.delete(`api/reports/${reportId}/delete/`, { headers });
 };
 
-// Update report comments by ID
-export const updateReportComments = async (reportId, updatedComment) => {
-  const token = Cookies.get('token');
+// Update report by ID
+export const updateReportDetails = async (
+  reportId,
+  updatedData,
+  isAdmin = false
+) => {
+  const headers = isAdmin
+    ? { 'Content-Type': 'application/json' } 
+    : {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${Cookies.get('token')}`,
+      };
 
   const response = await apiClient.patch(
     `api/reports/${reportId}/update/`,
-    { comments: updatedComment },
-    {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    }
+    updatedData,
+    { headers }
   );
 
   return response.data;
 };
 
 // Get report summary (most common diagnostics, total reports)
-export const getReportSummary = async () => {
-  const token = Cookies.get('token');
+export const getReportSummary = async (isAdmin = false) => {
+  const headers = isAdmin
+    ? {} // Sin autorización si es admin
+    : {
+        Authorization: `Bearer ${Cookies.get('token')}`,
+      };
 
-  const response = await apiClient.get('api/reports/summary/', {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
-
+  const response = await apiClient.get('api/reports/summary/', { headers });
   return response.data;
 };
 
-export const getReportImage = async (reportId) => {
-  const token = Cookies.get('token');
+// Get report image
+export const getReportImage = async (reportId, isAdmin = false) => {
+  const headers = isAdmin
+    ? {} // Sin autorización si es admin
+    : {
+        Authorization: `Bearer ${Cookies.get('token')}`,
+      };
 
   const response = await apiClient.get(`api/reports/image/${reportId}/`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
+    headers,
     responseType: 'blob',
   });
 
