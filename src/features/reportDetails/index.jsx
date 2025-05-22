@@ -146,7 +146,7 @@ const ReportDetails = () => {
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, ease: 'easeOut' }}
+        transition={{ duration: 0.2, ease: 'easeOut' }}
         className='min-h-screen flex items-center justify-center'
       >
         <div className='text-dark-secondary font-bold text-4xl'>
@@ -160,20 +160,20 @@ const ReportDetails = () => {
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.8, ease: 'easeOut' }}
+      transition={{ duration: 0.3, ease: 'easeOut' }}
       className='font-sans min-h-screen py-12 px-4 sm:px-6 lg:px-8'
     >
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, ease: 'easeOut', delay: 0.2 }}
+        transition={{ duration: 0.3, ease: 'easeOut', delay: 0.1 }}
         className='max-w-4xl mx-auto bg-white rounded-2xl shadow-lg p-8 relative'
       >
         {/* Back Button */}
         <motion.button
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.6, ease: 'easeOut', delay: 0.3 }}
+          transition={{ duration: 0.3, ease: 'easeOut', delay: 0.1 }}
           className='flex items-center gap-2 cursor-pointer text-black/60 hover:text-black/70 mb-8 transition-colors'
           onClick={() => navigate('/report')}
         >
@@ -184,7 +184,7 @@ const ReportDetails = () => {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: 'easeOut', delay: 0.4 }}
+          transition={{ duration: 0.3, ease: 'easeOut', delay: 0.3 }}
         >
           <ReportDetailsInfo
             report={report}

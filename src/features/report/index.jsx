@@ -43,18 +43,26 @@ const Report = () => {
   const handleView = (report) => {
     navigate(`/report/${report.id}`);
   };
+  const [searchQuery, setSearchQuery] = useState('');
+
+  const filteredReports = reports.filter(
+    (report) =>
+      report.patient_name?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      report.document_id?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      report.id?.toString().includes(searchQuery)
+  );
 
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.8, ease: 'easeOut' }}
+      transition={{ duration: 0.3, ease: 'easeOut' }}
       className='font-sans min-h-screen py-12 px-4 sm:px-6 lg:px-8 transition-all duration-300'
     >
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, ease: 'easeOut', delay: 0.2 }}
+        transition={{ duration: 0.3, ease: 'easeOut', delay: 0.1 }}
         className='max-w-7xl mx-auto rounded-2xl shadow-lg overflow-hidden transition-all duration-300 bg-white'
       >
         {/* Header */}
@@ -72,20 +80,35 @@ const Report = () => {
         <p className='mt-8 ml-8 flex text-dark-primary text-lg'>
           {t('report.historySubtitle')}
         </p>
+        <div className='mt-4 mb-2 px-8'>
+          <input
+            type='text'
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            placeholder={
+              t('report.searchPlaceholder') || 'Search by title or ID...'
+            }
+            className='w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 transition'
+          />
+        </div>
 
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: 'easeOut', delay: 0.4 }}
+          transition={{ duration: 0.2, ease: 'easeOut', delay: 0.1 }}
           className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-8'
         >
-          {reports.length > 0 ? (
-            reports.map((report, idx) => (
+          {filteredReports.length > 0 ? (
+            filteredReports.map((report, idx) => (
               <motion.div
                 key={report.id}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, ease: 'easeOut', delay: 0.5 + idx * 0.1 }}
+                transition={{
+                  duration: 0.3,
+                  ease: 'easeOut',
+                  delay: 0.2 + idx * 0.1,
+                }}
               >
                 <ReportCard
                   report={report}
@@ -98,7 +121,7 @@ const Report = () => {
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, ease: 'easeOut', delay: 0.5 }}
+              transition={{ duration: 0.2, ease: 'easeOut', delay: 0.1 }}
               className='col-span-full text-center text-gray font-medium'
             >
               {t('report.empty')}

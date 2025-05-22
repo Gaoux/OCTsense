@@ -2,7 +2,12 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { predictOCT } from '../../api/octService';
-import { UploadCloud, Upload as UploadIcon, Image as ImageIcon, Scissors } from 'lucide-react';
+import {
+  UploadCloud,
+  Upload as UploadIcon,
+  Image as ImageIcon,
+  Scissors,
+} from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import CropModal from '../../components/ui/cropModal';
 import { motion } from 'framer-motion';
@@ -82,7 +87,7 @@ const Upload = () => {
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, ease: 'easeOut', delay: 0.2 }}
+        transition={{ duration: 0.2, ease: 'easeOut', delay: 0.2 }}
         className='max-w-7xl mx-auto bg-white rounded-2xl shadow-xl overflow-hidden'
       >
         {/* Header */}
@@ -102,7 +107,7 @@ const Upload = () => {
             <motion.div
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.3, duration: 0.6 }}
+              transition={{ delay: 0.2, duration: 0.6 }}
               className='flex basis-[33%] flex-col justify-center gap-4 md:mb-0 mb-5'
             >
               <div className='flex flex-col items-center gap-3 md:mb-0 mb-20'>
@@ -116,7 +121,9 @@ const Upload = () => {
                 )}
               </div>
               <div className='mt-auto'>
-                {error && <p className='text-accent text-center mb-2'>{error}</p>}
+                {error && (
+                  <p className='text-accent text-center mb-2'>{error}</p>
+                )}
                 <button
                   onClick={() => document.getElementById('image')?.click()}
                   className='w-full flex items-center justify-center bg-white border border-gray-300 text-dark-secondary gap-2 py-2 px-4 rounded-lg shadow-sm \
@@ -131,17 +138,18 @@ const Upload = () => {
                   accept='image/*'
                   className='hidden'
                   onChange={handleFileChange}
-                  data-testid="file-input"
+                  data-testid='file-input'
                 />
               </div>
               <button
                 onClick={() => setShowCropModal(true)}
                 disabled={!imageFile}
                 className={`w-full flex items-center justify-center bg-white border border-gray-300 hover:border-gray-400 gap-2 py-2 px-4 rounded-lg shadow-sm transition-all font-medium
-                    ${imageFile
-                    ? 'bg-gray-50 hover:bg-gray-100 text-dark-secondary cursor-pointer'
-                    : 'bg-gray-200 text-gray-400 cursor-not-allowed'
-                  }`}
+                    ${
+                      imageFile
+                        ? 'bg-gray-50 hover:bg-gray-100 text-dark-secondary cursor-pointer'
+                        : 'bg-gray-200 text-gray-400 cursor-not-allowed'
+                    }`}
               >
                 <Scissors size={18} />
                 {t('crop.button')}
@@ -150,11 +158,12 @@ const Upload = () => {
                 onClick={handleSubmit}
                 disabled={loading}
                 className={`w-full bg-dark-secondary text-white py-2 px-4 rounded-lg shadow-md hover:bg-accent-hover
-                  transition-all duration-300 hover:shadow-lg transform hover:scale-105 font-semibold mt-2 ${loading
-                    ? 'opacity-60 cursor-not-allowed'
-                    : 'hover:bg-accent-hover cursor-pointer'
+                  transition-all duration-300 hover:shadow-lg transform hover:scale-105 font-semibold mt-2 ${
+                    loading
+                      ? 'opacity-60 cursor-not-allowed'
+                      : 'hover:bg-accent-hover cursor-pointer'
                   }`}
-                data-testid="submit-button"
+                data-testid='submit-button'
               >
                 {loading ? (
                   <div className='flex items-center justify-center gap-2'>
@@ -188,7 +197,7 @@ const Upload = () => {
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, ease: 'easeOut' }}
+              transition={{ duration: 0.3, ease: 'easeOut' }}
               className='flex-[1.5] min-h-[10rem] md:h-110 flex items-center justify-center rounded-lg border transition-all \
               border-dashed border-gray-300 bg-white'
               onDragEnter={handleDragEnter}

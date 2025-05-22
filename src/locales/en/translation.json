@@ -176,6 +176,7 @@
     "detailsTitle": "Report Details",
     "id": "Report ID",
     "createdAt": "Created At",
+    "diagnostic": "Diagnostic",
     "predictedDiagnostic": "Predicted Diagnostic",
     "probabilities": "Diagnostic Probabilities",
     "userComment": "User Comment",
@@ -186,6 +187,7 @@
     "name": "report",
     "historyTitle": "Reports History",
     "historySubtitle": "View and manage your previous medical reports",
+    "searchPlaceholder": "Search by patient name, document ID, or report ID...",
     "empty": "No reports available."
   },
   "settings": {

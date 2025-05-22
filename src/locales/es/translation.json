@@ -176,6 +176,7 @@
     "detailsTitle": "Detalles del Reporte",
     "id": "ID del Reporte",
     "createdAt": "Fecha de Creación",
+    "Ddagnostic": "Diagnóstico",
     "predictedDiagnostic": "Diagnóstico Previsto",
     "probabilities": "Probabilidades de Diagnóstico",
     "userComment": "Comentario del Usuario",
@@ -186,6 +187,7 @@
     "name": "reporte",
     "historyTitle": "Historial de Reportes",
     "historySubtitle": "Consulta y gestiona tus reportes médicos anteriores",
+    "searchPlaceholder": "Buscar por nombre del paciente, documento o ID del reporte...",
     "empty": "No hay reportes disponibles."
   },
   "settings": {

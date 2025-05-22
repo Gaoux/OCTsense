@@ -152,7 +152,7 @@ const Analysis = () => {
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, ease: 'easeOut' }}
+        transition={{ duration: 0.3 }}
         className='max-w-7xl mx-auto bg-white rounded-2xl shadow-xl overflow-hidden'
       >
         {/* Header */}
@@ -186,7 +186,7 @@ const Analysis = () => {
             <motion.div
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.3, duration: 0.6 }}
+              transition={{ delay: 0.3, duration: 0.3 }}
               className='h-full'
             >
               <div className='bg-very-light-gray p-5 rounded-xl border border-light-gray shadow-md h-full'>
@@ -208,7 +208,7 @@ const Analysis = () => {
             <motion.div
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.3, duration: 0.6 }}
+              transition={{ delay: 0.3, duration: 0.3 }}
               className='h-full'
             >
               <div className='bg-very-light-gray p-5 rounded-xl border border-light-gray shadow-md h-full'>
@@ -255,7 +255,7 @@ const Analysis = () => {
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.5, duration: 0.6 }}
+              transition={{ delay: 0.3, duration: 0.3 }}
               className='bg-white rounded-xl border border-light-gray shadow-md overflow-hidden'
             >
               <div className='bg-very-light-gray px-6 py-4 border-b border-light-gray'>
@@ -333,7 +333,7 @@ const Analysis = () => {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.6, duration: 0.6 }}
+            transition={{ delay: 0.3, duration: 0.3 }}
             className='bg-white p-6 rounded-xl border border-light-gray shadow-md'
           >
             <h3 className='font-bold mb-4 text-dark-primary flex items-center gap-2'>
@@ -353,7 +353,7 @@ const Analysis = () => {
               </div>
             ) : (
               <textarea
-                data-testid="comments-textarea"
+                data-testid='comments-textarea'
                 className='w-full p-4 border border-light-gray bg-white rounded-lg h-36 text-sm focus:ring-2 focus:ring-light-secondary 
                       focus:border-transparent outline-none transition-all duration-300'
                 placeholder={t('analysis.comments_placeholder')}
@@ -367,7 +367,7 @@ const Analysis = () => {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.7, duration: 0.6 }}
+            transition={{ delay: 0.3, duration: 0.3 }}
             className='flex justify-center pt-4'
           >
             {isPatient() ? (
