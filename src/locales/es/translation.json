@@ -197,7 +197,9 @@
     "eyeRight": "OD",
     "eyeLeft": "OS",
     "predictedDiagnosis": "Diagnóstico Predictivo",
-    "comments": "Comentarios"
+    "comments": "Comentarios",
+    "filterAllDiagnostics": "Todos los diagnósticos",
+    "filterAllEyes": "Ambos ojos"
   },
   "settings": {
     "title": "Configuración de Usuario",
