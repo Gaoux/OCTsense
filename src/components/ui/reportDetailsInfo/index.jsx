@@ -7,6 +7,7 @@ import {
   ChevronLeft,
   ChevronRight,
   Save,
+  Calendar,
 } from 'lucide-react';
 import CancelBtn from '../cancelBtn';
 import { useTranslation } from 'react-i18next';
@@ -40,13 +41,26 @@ const ReportDetailsInfo = ({
   return (
     <div className='rounded-lg bg-white lg:px-4 py-3 transition-all duration-300 shadow-sm'>
       {/* Title + Scan Image */}
-      <div className='flex justify-between items-start mb-4 border-b border-light-gray pb-3'>
-        <h1 className='text-3xl font-bold text-dark-secondary flex flex-col'>
-          {t('report.detailsTitle')}
-          <span className='ml-  py-0.5 bg-background-secondary text-gray text-sm rounded-full font-medium'>
-            {report.id.slice(0)}
-          </span>
-        </h1>
+      <div className='flex flex-col md:flex-row justify-between items-start md:items-center mb-6 border-b border-light-gray pb-4 gap-4'>
+        {/* Left side: Title and metadata */}
+        <div className='flex flex-col space-y-2'>
+          <h1 className='text-2xl md:text-3xl font-bold text-dark-secondary'>
+            {t('report.detailsTitle')}
+          </h1>
+
+          <div className='flex flex-wrap items-center gap-2'>
+            <span className='px-3 py-0.5 bg-background-secondary text-gray text-sm rounded-full font-medium'>
+              ID: {report.id}
+            </span>
+
+            <span className='inline-flex items-center gap-1 px-3 py-0.5 bg-background-secondary text-gray text-sm rounded-full font-medium'>
+              <Calendar className='w-4 h-4' />
+              {report.created_at?.split('T')[0]}
+            </span>
+          </div>
+        </div>
+
+        {/* Right side: Image Preview */}
         {imageUrl && (
           <div
             className='relative w-36 h-20 rounded-lg overflow-hidden shadow-md cursor-pointer hover:shadow-lg group hover:scale-105 transition-transform duration-300'
@@ -66,24 +80,6 @@ const ReportDetailsInfo = ({
 
       {/* Main Grid */}
       <div className='grid grid-cols-1 md:grid-cols-2 gap-3'>
-        {/* Report Details Row */}
-        <div className='bg-very-light-gray p-3 rounded-lg transition hover:bg-very-light-gray-hover'>
-          <h2 className='text-sm uppercase tracking-wider font-semibold text-dark-gray mb-1'>
-            {t('report.id')}
-          </h2>
-          <p className='font-mono text-very-dark-gray text-sm'>{report.id}</p>
-        </div>
-
-        {/* Created At */}
-        <div className='bg-very-light-gray p-3 rounded-lg transition hover:bg-very-light-gray-hover'>
-          <h2 className='text-sm uppercase tracking-wider font-semibold text-dark-gray mb-1'>
-            {t('report.createdAt')}
-          </h2>
-          <p className='text-very-dark-gray text-sm'>
-            {report.created_at?.split('T')[0]}
-          </p>
-        </div>
-
         {/* Patient Information Section */}
         <div className='bg-white border border-light-gray p-3 rounded-lg md:col-span-2 shadow-sm transition hover:shadow-md'>
           <h2 className='text-sm uppercase font-medium tracking-wider text-dark-gray mb-2 flex justify-between items-center border-b border-light-gray pb-2'>
