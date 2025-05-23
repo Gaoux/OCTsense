@@ -175,7 +175,7 @@ const ReportDetails = () => {
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.3, ease: 'easeOut', delay: 0.1 }}
           className='flex items-center gap-2 cursor-pointer text-black/60 hover:text-black/70 mb-8 transition-colors'
-          onClick={() => navigate('/report')}
+          onClick={() => navigate(-1)}
         >
           <ArrowLeft className='w-5 h-5' />
           <span className='text-base font-semibold'>Back</span>
