@@ -373,9 +373,9 @@ const Analysis = () => {
             {isPatient() ? (
               <button
                 onClick={handleDownload}
-                className='px-8 py-3 bg-dark-secondary hover:bg-accent-hover 
+                className='px-8 py-3 bg-dark-secondary hover:bg-secondary
             text-white rounded-lg transition-all duration-300 shadow-lg hover:shadow-xl 
-            transform hover:scale-105 flex items-center gap-3 font-medium'
+            transform  flex items-center gap-3 font-medium'
               >
                 <FilePlus2 className='w-5 h-5' />
                 {t('analysis.download_report')}
@@ -383,9 +383,9 @@ const Analysis = () => {
             ) : (
               <button
                 onClick={handleGenerateReport}
-                className='px-8 py-3 bg-dark-secondary hover:bg-accent-hover 
+                className='px-8 py-3 bg-dark-secondary hover:bg-secondary
             text-white rounded-lg transition-all duration-300 shadow-lg hover:shadow-xl 
-            transform hover:scale-105 flex items-center gap-3 font-medium'
+            transform flex items-center gap-3 font-medium'
                 data-testid='save-report-button'
               >
                 <FilePlus2 className='w-5 h-5' />

@@ -77,6 +77,9 @@
     "user": "Usuario",
     "email": "correo@ejemplo.com"
   },
+  "auth": {
+    "emailNotVerified": "Tu correo aún no ha sido verificado. Revisa tu bandeja de entrada."
+  },
   "login": {
     "title": "OCTsense",
     "subtitle": "Inicia sesión con tu cuenta",
@@ -188,7 +191,13 @@
     "historyTitle": "Historial de Reportes",
     "historySubtitle": "Consulta y gestiona tus reportes médicos anteriores",
     "searchPlaceholder": "Buscar por nombre del paciente, documento o ID del reporte...",
-    "empty": "No hay reportes disponibles."
+    "empty": "No hay reportes disponibles.",
+    "unknownPatient": "Paciente desconocido",
+    "noDocument": "Sin documento",
+    "eyeRight": "OD",
+    "eyeLeft": "OS",
+    "predictedDiagnosis": "Diagnóstico Predictivo",
+    "comments": "Comentarios"
   },
   "settings": {
     "title": "Configuración de Usuario",
@@ -242,7 +251,8 @@
     "delete": "Eliminar",
     "previous": "Reporte Anterior",
     "next": "Siguiente Reporte",
-    "back": "Volver"
+    "back": "Volver",
+    "viewDetails": "Ver detalles"
   },
   "pdf": {
     "disclaimer": "Este documento es generado automáticamente por OCTsense y no constituye un diagnóstico médico certificado. Por favor, consulte a un oftalmólogo licenciado para su interpretación y seguimiento.",

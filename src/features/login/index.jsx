@@ -34,8 +34,10 @@ const Login = () => {
       }
     } catch (err) {
       const backendError = err?.response?.data?.error;
-      if (backendError === 'Debes confirmar tu correo antes de iniciar sesión.') {
-        setError("Tu correo aún no ha sido verificado. Revisa tu bandeja de entrada.");
+      if (
+        backendError === 'Debes confirmar tu correo antes de iniciar sesión.'
+      ) {
+        setError(t('auth.emailNotVerified'));
       } else {
         setError(t('login.error'));
       }
@@ -57,7 +59,7 @@ const Login = () => {
         <p className='text-center text-gray-500 text-sm'>
           {t('login.subtitle')}
         </p>
-        {error && <p className='text-sm text-accent'>{error}</p>}
+        {error && <p className='text-sm text-delete'>{error}</p>}
         <div className='space-y-4'>
           <input
             type='text'
