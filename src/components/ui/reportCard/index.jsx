@@ -15,12 +15,12 @@ const ReportCard = ({ report, onView, onDelete }) => {
 
   return (
     <div
-      className='w-[380px] bg-white rounded-lg shadow-md hover:shadow-lg transition-all duration-300 cursor-pointer overflow-hidden border border-gray-200 group'
+      className='w-full sm:w-full md:max-w-sm bg-white rounded-lg shadow-md hover:shadow-lg transition-all duration-300 cursor-pointer overflow-hidden border border-gray-200 group'
       onClick={() => onView(report)}
     >
       <div className='relative'>
-        {/* Botón de eliminar */}
-        <div className='absolute top-3 right-3 flex items-center gap-2'>
+        {/* Top-right controls */}
+        <div className='absolute top-3 right-3 flex items-center gap-2 z-10'>
           <div className='bg-primary-100 text-primary-800 px-3 py-1 rounded-full font-medium text-sm'>
             {eye_side === 'OD' ? t('report.eyeRight') : t('report.eyeLeft')}
           </div>
@@ -35,20 +35,18 @@ const ReportCard = ({ report, onView, onDelete }) => {
           </button>
         </div>
 
-        {/* Contenido principal */}
+        {/* Main Content */}
         <div className='p-5'>
-          <div className='flex items-start justify-between mb-4'>
-            <div>
-              <h3 className='text-xl font-semibold text-primary-700 mb-1 group-hover:text-primary-800 transition-colors'>
-                {patient_name || t('report.unknownPatient')}
-              </h3>
-              <p className='text-sm text-gray-600 flex items-center gap-1'>
-                <span className='material-symbols-outlined text-sm'>
-                  <IdCard className='w-4 h-4' />
-                </span>
+          <div className='mb-4'>
+            <h3 className='text-xl font-semibold text-primary-700 mb-1 group-hover:text-primary-800 transition-colors line-clamp-1 pr-20'>
+              {patient_name || t('report.unknownPatient')}
+            </h3>
+            <p className='text-sm text-gray-600 flex items-center gap-1 truncate pr-20'>
+              <IdCard className='w-4 h-4 shrink-0' />
+              <span className='truncate'>
                 {document_id || t('report.noDocument')}
-              </p>
-            </div>
+              </span>
+            </p>
           </div>
 
           <div className='space-y-3'>
@@ -65,7 +63,7 @@ const ReportCard = ({ report, onView, onDelete }) => {
               <h4 className='text-xs uppercase text-gray-500 font-medium'>
                 {t('report.comments')}
               </h4>
-              <p className='text-gray-700 text-sm line-clamp-2'>
+              <p className='text-gray-700 text-sm line-clamp-1 truncate '>
                 {comments || t('report.noComment')}
               </p>
             </div>
@@ -73,11 +71,9 @@ const ReportCard = ({ report, onView, onDelete }) => {
         </div>
 
         {/* Footer */}
-        <div className='bg-gray-50 px-5 py-3 flex justify-between items-center'>
+        <div className='bg-gray-50 px-5 py-3 flex flex-wrap justify-between items-center gap-2'>
           <p className='text-xs text-gray-500 flex items-center gap-1'>
-            <span className='material-symbols-outlined text-sm'>
-              <Calendar className='w-4 h-4' />
-            </span>
+            <Calendar className='w-4 h-4' />
             {new Date(created_at).toLocaleDateString('es-ES', {
               year: 'numeric',
               month: 'short',
@@ -86,9 +82,7 @@ const ReportCard = ({ report, onView, onDelete }) => {
           </p>
           <button className='text-primary-600 hover:text-primary-800 text-sm font-medium transition-colors flex items-center gap-1'>
             {t('buttons.viewDetails')}
-            <span className='material-symbols-outlined text-sm transform group-hover:translate-x-1 transition-transform'>
-              <ArrowRight className='w-4 h-4' />
-            </span>
+            <ArrowRight className='w-4 h-4 transform group-hover:translate-x-1 transition-transform' />
           </button>
         </div>
       </div>
