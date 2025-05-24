@@ -7,7 +7,7 @@ const apiClient = axios.create({
   baseURL: API_BASE_URL,
   headers: {
     'Content-Type': 'application/json',
-  }
+  },
 });
 
 // Interceptor to handle token expiration
@@ -31,7 +31,7 @@ apiClient.interceptors.response.use(
           `${API_BASE_URL}/api/token/refresh/`,
           { refresh: refreshToken },
           {
-            headers: { 'Content-Type': 'application/json' }
+            headers: { 'Content-Type': 'application/json' },
           }
         );
 
