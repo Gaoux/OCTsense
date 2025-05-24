@@ -122,7 +122,7 @@ const Upload = () => {
               </div>
               <div className='mt-auto'>
                 {error && (
-                  <p className='text-accent text-center mb-2'>{error}</p>
+                  <p className='text-delete text-center mb-2'>{error}</p>
                 )}
                 <button
                   onClick={() => document.getElementById('image')?.click()}
@@ -157,8 +157,8 @@ const Upload = () => {
               <button
                 onClick={handleSubmit}
                 disabled={loading}
-                className={`w-full bg-dark-secondary text-white py-2 px-4 rounded-lg shadow-md hover:bg-accent-hover
-                  transition-all duration-300 hover:shadow-lg transform hover:scale-105 font-semibold mt-2 ${
+                className={`w-full bg-dark-secondary text-white py-2 px-4 rounded-lg shadow-md hover:bg-secondary
+                  transition-all duration-300 hover:shadow-lg transform font-semibold mt-2 ${
                     loading
                       ? 'opacity-60 cursor-not-allowed'
                       : 'hover:bg-accent-hover cursor-pointer'

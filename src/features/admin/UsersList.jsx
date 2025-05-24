@@ -2,12 +2,20 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { getUsers } from '../../api/userService.jsx';
 import { deleteUser } from '../../api/dashboardService.js';
+import ConfirmDeleteModal from '../../components/ui/confirmDeleteModal';
+import { useTranslation } from 'react-i18next';
+import { Pencil, Trash2, CircleCheck, Clock } from 'lucide-react';
 
 const UsersList = () => {
   const [users, setUsers] = useState([]);
   const [role, setRole] = useState('Todos');
   const [searchQuery, setSearchQuery] = useState('');
+  const [verifiedFilter, setVerifiedFilter] = useState('Todos');
+  const [sortOrder, setSortOrder] = useState('Newest');
   const [loading, setLoading] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [selectedUserId, setSelectedUserId] = useState(null);
+  const { t } = useTranslation();
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -19,56 +27,55 @@ const UsersList = () => {
     fetchUsers();
   }, [role, searchQuery]);
 
-  const handleDelete = async (id) => {
-    const confirm = window.confirm(
-      '¿Estás seguro de que deseas eliminar este usuario?'
-    );
-    if (confirm) {
-      try {
-        await deleteUser(id); // Llama al servicio para eliminar el usuario
-        setUsers(users.filter((user) => user.id !== id)); // Actualiza la lista de usuarios
-        alert('Usuario eliminado correctamente.');
-      } catch (error) {
-        console.error('Error al eliminar el usuario:', error);
-        alert('No se pudo eliminar el usuario.');
-      }
+  const openDeleteModal = (userId) => {
+    setSelectedUserId(userId);
+    setShowDeleteModal(true);
+  };
+
+  const confirmDelete = async () => {
+    if (!selectedUserId) return;
+    try {
+      await deleteUser(selectedUserId);
+      setUsers(users.filter((user) => user.id !== selectedUserId));
+      setShowDeleteModal(false);
+      setSelectedUserId(null);
+      alert(t('user.deletedSuccess'));
+    } catch (error) {
+      console.error('Error al eliminar el usuario:', error);
+      alert(t('user.deleteError'));
     }
   };
 
+  const filteredUsers = users
+    .filter((user) => {
+      if (verifiedFilter === 'true') return user.is_verified;
+      if (verifiedFilter === 'false') return !user.is_verified;
+      return true;
+    })
+    .sort((a, b) => {
+      const dateA = new Date(a.date_joined);
+      const dateB = new Date(b.date_joined);
+      return sortOrder === 'Newest' ? dateB - dateA : dateA - dateB;
+    });
+
   return (
     <div className='bg-gradient-to-br from-blue-100 to-blue-300 min-h-screen relative overflow-hidden'>
-      {/* Contenido principal */}
       <div className='max-w-7xl mx-auto px-6 py-20 relative z-10'>
-        {/* Título */}
         <h2 className='text-4xl font-bold text-blue-800 mb-6'>
-          Lista de Usuarios
+          {t('user.listTitle')}
         </h2>
 
-        {/* Filtros y búsqueda */}
-        <div className='flex justify-between items-center mb-6'>
-          <div>
-            <label className='text-gray-700 font-semibold mr-2'>Filtro:</label>
-            <select
-              className='p-2 rounded border'
-              value={role}
-              onChange={(e) => setRole(e.target.value)}
-            >
-              <option value='Todos'>Todos</option>
-              <option value='patient'>Paciente</option>
-              <option value='professional'>Profesional</option>
-              <option value='admin'>Admin</option>
-            </select>
-          </div>
-          <div className='relative'>
+        <div className='w-full mb-6 bg-white p-4 rounded-xl shadow-md flex flex-col md:flex-row md:items-center md:justify-between gap-4'>
+          <div className='relative w-full md:w-1/2'>
             <input
               type='text'
-              placeholder='Buscar por nombre o correo...'
-              className='pl-10 pr-4 py-2 rounded-md w-64 border'
+              placeholder={t('user.searchPlaceholder')}
+              className='w-full border border-gray-300 text-sm rounded-md pl-10 pr-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500'
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
             />
             <svg
-              className='w-4 h-4 absolute left-3 top-3 text-gray-400'
+              className='absolute left-3 top-2.5 w-4 h-4 text-gray-400'
               fill='currentColor'
               viewBox='0 0 20 20'
             >
@@ -79,94 +86,138 @@ const UsersList = () => {
               />
             </svg>
           </div>
+
+          <select
+            className='w-full md:w-1/4 border border-gray-300 text-sm rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500'
+            value={role}
+            onChange={(e) => setRole(e.target.value)}
+          >
+            <option value='Todos'>{t('user.allRoles')}</option>
+            <option value='patient'>{t('user.roles.patient')}</option>
+            <option value='professional'>{t('user.roles.professional')}</option>
+            <option value='admin'>{t('user.roles.admin')}</option>
+          </select>
+
+          <select
+            className='w-full md:w-1/4 border border-gray-300 text-sm rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500'
+            value={verifiedFilter}
+            onChange={(e) => setVerifiedFilter(e.target.value)}
+          >
+            <option value='Todos'>{t('user.allVerification')}</option>
+            <option value='true'>{t('user.verified')}</option>
+            <option value='false'>{t('user.unverified')}</option>
+          </select>
+
+          <select
+            className='w-full md:w-1/4 border border-gray-300 text-sm rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500'
+            value={sortOrder}
+            onChange={(e) => setSortOrder(e.target.value)}
+          >
+            <option value='Newest'>{t('user.sortNewest')}</option>
+            <option value='Oldest'>{t('user.sortOldest')}</option>
+          </select>
         </div>
 
-        {/* Tabla de usuarios */}
-        <div className='bg-white rounded-2xl shadow-lg p-6'>
-          <table className='w-full'>
-            <thead>
-              <tr>
-                <th className='text-left py-3 text-gray-600'>Nombre</th>
-                <th className='text-left py-3 text-gray-600'>Correo</th>
-                <th className='text-left py-3 text-gray-600'>Rol</th>
-                <th className='text-left py-3 text-gray-600'>Acciones</th>
-              </tr>
-            </thead>
-            <tbody>
-              {loading ? (
-                <tr>
-                  <td colSpan='4' className='py-10 text-center'>
-                    <div className='flex justify-center items-center'>
-                      <div className='animate-spin rounded-full h-16 w-16 border-t-4 border-blue-500'></div>
+        <div className='bg-white rounded-2xl shadow-lg overflow-hidden'>
+          <div className='divide-y divide-gray-200'>
+            <div className='px-6 py-4 hidden md:flex text-sm text-gray-500 font-semibold'>
+              <div className='w-1/5'>{t('user.name')}</div>
+              <div className='w-1/5'>{t('user.email')}</div>
+              <div className='w-1/5'>{t('user.role')}</div>
+              <div className='w-1/5'>{t('user.verified')}</div>
+              <div className='w-1/5 text-right'>{t('user.actions')}</div>
+            </div>
+            {loading ? (
+              <div className='text-center p-10'>{t('user.loading')}</div>
+            ) : filteredUsers.length === 0 ? (
+              <div className='text-center p-10 text-gray-500'>
+                {t('user.noResults')}
+              </div>
+            ) : (
+              filteredUsers.map((user) => (
+                <details key={user.id} className='group cursor-pointer'>
+                  <summary className='flex flex-col md:flex-row items-start md:items-center gap-2 md:gap-0 p-4 md:px-6 hover:bg-gray-50'>
+                    <div className='flex items-center gap-3 w-1/5'>
+                      <div className='w-10 h-10 rounded-full bg-blue-100 text-blue-600 font-semibold flex items-center justify-center'>
+                        {user.name?.charAt(0).toUpperCase() || '?'}
+                      </div>
+                      <div className='font-medium'>{user.name}</div>
                     </div>
-                  </td>
-                </tr>
-              ) : users.length !== 0 ? (
-                <>
-                  {users.map((user) => (
-                    <tr key={user.id} className='border-b border-gray-300'>
-                      <td className='py-3 flex items-center'>
-                        {user.name}
-                      </td>
-                      <td className='py-3'>{user.email}</td>
-                      <td className='py-3'>{user.role}</td>
-                      <td className='py-3 flex gap-4'>
-                        {/* Botón de editar */}
-                        <Link
-                          to={`/editar-usuario/${user.id}`}
-                          className='text-blue-500 hover:text-blue-700'
-                        >
-                          <svg
-                            xmlns='http://www.w3.org/2000/svg'
-                            className='h-6 w-6 inline-block'
-                            fill='none'
-                            viewBox='0 0 24 24'
-                            stroke='currentColor'
-                            strokeWidth={2}
-                          >
-                            <path
-                              strokeLinecap='round'
-                              strokeLinejoin='round'
-                              d='M15.232 5.232l3.536 3.536M9 11l6.536-6.536a2 2 0 112.828 2.828L11.828 13.828a2 2 0 01-.828.536l-3 1a1 1 0 01-1.264-1.264l1-3a2 2 0 01.536-.828z'
-                            />
-                          </svg>
-                        </Link>
-
-                        {/* Botón de eliminar */}
-                        <button
-                          onClick={() => handleDelete(user.id)}
-                          className='text-red-500 hover:text-red-700'
-                        >
-                          <svg
-                            xmlns='http://www.w3.org/2000/svg'
-                            className='h-6 w-6 inline-block'
-                            fill='none'
-                            viewBox='0 0 24 24'
-                            stroke='currentColor'
-                            strokeWidth={2}
-                          >
-                            <path
-                              strokeLinecap='round'
-                              strokeLinejoin='round'
-                              d="M9 3h6a1 1 0 011 1v1h3a1 1 0 110 2h-1v12a2 2 0 01-2 2H8a2 2 0 01-2-2V7H5a1 1 0 110-2h3V4a1 1 0 011-1zm1 4a1 1 0 00-1 1v9a1 1 0 002 0V8a1 1 0 00-1-1zm4 0a1 1 0 00-1 1v9a1 1 0 002 0V8a1 1 0 00-1-1z" 
-                            />
-                          </svg>
-                        </button>
-                      </td>
-                    </tr>
-                  ))}
-                </>
-              ) : (
-                <tr>
-                  <td className='py-3 text-center text-gray-500' colSpan='3'>
-                    No usuarios encontrados.
-                  </td>
-                </tr>
-              )}
-            </tbody>
-          </table>
+                    <div className='w-1/5 text-sm text-gray-700'>
+                      {user.email}
+                    </div>
+                    <div className='w-1/5'>
+                      <span
+                        className={`px-2 py-1 text-xs rounded-full font-medium ${
+                          user.role === 'patient'
+                            ? 'bg-yellow-50 text-yellow-500'
+                            : user.role === 'admin'
+                            ? 'bg-red-50 text-red-700'
+                            : 'bg-blue-50 text-blue-700'
+                        }`}
+                      >
+                        {t(`user.roles.${user.role}`)}
+                      </span>
+                    </div>
+                    <div className='w-1/5 flex items-center'>
+                      {user.is_verified ? (
+                        <span className='flex items-center gap-1 px-2 py-1 text-xs bg-green-50 text-green-600 font-medium rounded-full'>
+                          <CircleCheck className='w-4 h-4' />
+                          {t('user.verified')}
+                        </span>
+                      ) : (
+                        <span className='flex items-center gap-1 px-2 py-1 text-xs rounded-full bg-blue-50 text-gray-700'>
+                          <Clock className='w-4 h-4' />
+                          {t('user.unverified')}
+                        </span>
+                      )}
+                    </div>
+                    <div className='w-1/5 flex justify-end gap-2'>
+                      <Link
+                        to={`/editar-usuario/${user.id}`}
+                        className='text-blue-600 hover:text-blue-800'
+                      >
+                        <Pencil className='w-4 h-4' />
+                      </Link>
+                      <button
+                        className='text-red-600 hover:text-red-800'
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          openDeleteModal(user.id);
+                        }}
+                      >
+                        <Trash2 className='w-4 h-4' />
+                      </button>
+                    </div>
+                  </summary>
+                  <div className='bg-gray-50 p-4 md:px-6 text-sm text-gray-700 space-y-2'>
+                    <div>
+                      <strong>{t('user.loginCount')}:</strong>{' '}
+                      {user.login_count}
+                    </div>
+                    <div>
+                      <strong>{t('user.joined')}:</strong>{' '}
+                      {new Date(user.date_joined).toLocaleDateString()}
+                    </div>
+                    <div>
+                      <strong>{t('user.lastLogin')}:</strong>{' '}
+                      {user.last_login
+                        ? new Date(user.last_login).toLocaleDateString()
+                        : t('user.never')}
+                    </div>
+                  </div>
+                </details>
+              ))
+            )}
+          </div>
         </div>
       </div>
+      <ConfirmDeleteModal
+        show={showDeleteModal}
+        onClose={() => setShowDeleteModal(false)}
+        onConfirm={confirmDelete}
+        itemName={t('user.user')}
+      />
     </div>
   );
 };

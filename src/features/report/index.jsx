@@ -16,6 +16,9 @@ const Report = () => {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [selectedReportId, setSelectedReportId] = useState(null);
   const { t } = useTranslation();
+  const [searchQuery, setSearchQuery] = useState('');
+  const [diagnosticFilter, setDiagnosticFilter] = useState('');
+  const [eyeFilter, setEyeFilter] = useState('');
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -43,14 +46,24 @@ const Report = () => {
   const handleView = (report) => {
     navigate(`/report/${report.id}`);
   };
-  const [searchQuery, setSearchQuery] = useState('');
 
-  const filteredReports = reports.filter(
-    (report) =>
+  const filteredReports = reports.filter((report) => {
+    const matchesSearch =
       report.patient_name?.toLowerCase().includes(searchQuery.toLowerCase()) ||
       report.document_id?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      report.id?.toString().includes(searchQuery)
-  );
+      report.id?.toString().includes(searchQuery);
+
+    const matchesDiagnostic = diagnosticFilter
+      ? report.predicted_diagnostic === diagnosticFilter
+      : true;
+    const matchesEye = eyeFilter ? report.eye_side === eyeFilter : true;
+
+    return matchesSearch && matchesDiagnostic && matchesEye;
+  });
+
+  const uniqueDiagnostics = [
+    ...new Set(reports.map((r) => r.predicted_diagnostic)),
+  ].filter(Boolean);
 
   return (
     <motion.div
@@ -76,26 +89,56 @@ const Report = () => {
             </h1>
           </div>
         </div>
-
         <p className='mt-8 ml-8 flex text-dark-primary text-lg'>
           {t('report.historySubtitle')}
         </p>
-        <div className='mt-4 mb-2 px-8'>
+        {/* Search + Filters */}
+        <div className='px-8 mt-4 mb-4 flex flex-col md:flex-row gap-3 items-start md:items-center'>
+          {/* Search */}
           <input
             type='text'
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder={
-              t('report.searchPlaceholder') || 'Search by title or ID...'
+              t('report.searchPlaceholder') ||
+              'Search by patient, ID, or report...'
             }
-            className='w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 transition'
+            className='border border-gray-300 rounded-md px-3 py-1.5 text-sm w-full md:w-1/2 focus:outline-none focus:ring-2 focus:ring-blue-500 transition'
           />
+
+          {/* Diagnostic Filter */}
+          <select
+            value={diagnosticFilter}
+            onChange={(e) => setDiagnosticFilter(e.target.value)}
+            className='border border-gray-300 rounded-md px-3 py-1.5 text-sm w-full md:w-[180px] focus:outline-none focus:ring-2 focus:ring-blue-500 transition'
+          >
+            <option value=''>
+              {t('report.filterAllDiagnostics') || 'All Diagnoses'}
+            </option>
+            {uniqueDiagnostics.map((diagnostic, idx) => (
+              <option key={idx} value={diagnostic}>
+                {diagnostic}
+              </option>
+            ))}
+          </select>
+
+          {/* Eye Filter */}
+          <select
+            value={eyeFilter}
+            onChange={(e) => setEyeFilter(e.target.value)}
+            className='border border-gray-300 rounded-md px-3 py-1.5 text-sm w-full md:w-[140px] focus:outline-none focus:ring-2 focus:ring-blue-500 transition'
+          >
+            <option value=''>{t('report.filterAllEyes') || 'All Eyes'}</option>
+            <option value='OD'>{t('report.eyeRight')}</option>
+            <option value='OS'>{t('report.eyeLeft')}</option>
+          </select>
         </div>
 
+        {/* REPORT CARDS */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.2, ease: 'easeOut', delay: 0.1 }}
+          transition={{ duration: 0.2, ease: 'easeOut' }}
           className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-8'
         >
           {filteredReports.length > 0 ? (
@@ -105,9 +148,9 @@ const Report = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{
-                  duration: 0.3,
+                  duration: 0.2,
                   ease: 'easeOut',
-                  delay: 0.2 + idx * 0.1,
+                  delay: 0.1 + idx * 0.1,
                 }}
               >
                 <ReportCard
@@ -121,7 +164,7 @@ const Report = () => {
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.2, ease: 'easeOut', delay: 0.1 }}
+              transition={{ duration: 0.2, ease: 'easeOut' }}
               className='col-span-full text-center text-gray font-medium'
             >
               {t('report.empty')}
