@@ -5,12 +5,12 @@ import { AuthProvider } from '../context/AuthContext';
 import { NavbarComponent } from '../components/ui/Navbar';
 import { Footer } from '../components/ui/Footer';
 import ThemeWrapper from '../components/ui/ThemeWrapper';
+import { ROUTES } from '../constants/routes';
 
 const AppWrapper = () => {
   const location = useLocation();
-  const hideNavbarOnRoutes = ['/login', '/register'];
-  const shouldHideNavbar =
-  hideNavbarOnRoutes.includes(location.pathname);
+  const hideNavbarOnRoutes = [ROUTES.LOGIN, ROUTES.REGISTER];
+  const shouldHideNavbar = hideNavbarOnRoutes.includes(location.pathname);
 
   return (
     <div className='flex flex-col min-h-screen'>

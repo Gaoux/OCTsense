@@ -21,12 +21,8 @@ import VerifyEmailPage from '../features/verify-email/index.jsx';
 import { ROUTES } from '../constants/routes';
 
 const PrivateRoute = ({ element }) => {
-  const { isAuthenticated, user } = useAuth();
-  return isAuthenticated && user?.role !== 'admin' ? (
-    element
-  ) : (
-    <Navigate to={ROUTES.LOGIN} />
-  );
+  const { isAuthenticated } = useAuth();
+  return isAuthenticated ? element : <Navigate to={ROUTES.LOGIN} />;
 };
 
 const AdminRoute = ({ element }) => {

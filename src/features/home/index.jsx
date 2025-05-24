@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { Upload, BarChart3, FileText, ScanLine } from 'lucide-react';
 import HomePageFAQ from '../../components/ui/homePageFAQ';
 import redFondo from '../../assets/fondo-red.png';
+import { ROUTES } from '../../constants/routes';
 
 const LandingPage = () => {
   const { t } = useTranslation();
@@ -33,7 +34,7 @@ const LandingPage = () => {
             </p>
             <div className='flex justify-center lg:justify-start'>
               <button
-                onClick={() => navigate('/upload')}
+                onClick={() => navigate(ROUTES.UPLOAD)}
                 className='bg-dark-secondary hover:bg-accent-hover text-white font-semibold py-3 px-6 md:px-8 rounded-lg shadow-lg transform transition-all duration-300 hover:scale-105 hover:shadow-xl flex items-center'
               >
                 <span>{t('home.getStarted')}</span>

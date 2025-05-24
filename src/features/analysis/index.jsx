@@ -109,7 +109,7 @@ const Analysis = () => {
       const response = await createReport(formData);
 
       if (response && response.data.id) {
-        navigate(`/reports/${response.data.id}`);
+        navigate(`${ROUTES.REPORTS}/${response.data.id}`);
       } else {
         console.error('No report ID returned from server.');
       }

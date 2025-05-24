@@ -12,6 +12,7 @@ import {
   XCircle,
 } from 'lucide-react';
 import { getUserById, adminUpdateUser } from '../../api/userService';
+import { ROUTES } from '../../constants/routes';
 
 const EditUser = () => {
   const { id } = useParams();
@@ -64,7 +65,7 @@ const EditUser = () => {
       if (!payload.password) delete payload.password;
 
       await adminUpdateUser(id, payload);
-      navigate('/usuarios');
+      navigate(ROUTES.ADMIN_USERS);
     } catch (error) {
       setError(t('user.errorUpdateUser'));
     }

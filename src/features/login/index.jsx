@@ -28,9 +28,9 @@ const Login = () => {
     try {
       const user = await login(email, password);
       if (user.is_admin) {
-        navigate('/admin-dashboard'); // futuro
+        navigate(ROUTES.ADMIN_DASHBOARD); // futuro
       } else {
-        navigate('/'); // landing page para paciente y oftalmólogo
+        navigate(ROUTES.HOME); // landing page para paciente y oftalmólogo
       }
     } catch (err) {
       const backendError = err?.response?.data?.error;

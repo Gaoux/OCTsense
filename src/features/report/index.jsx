@@ -57,7 +57,7 @@ const Report = () => {
   };
 
   const handleView = (report) => {
-    navigate(`/reports/${report.id}`);
+    navigate(`${ROUTES.REPORTS}/${report.id}`);
   };
 
   const filteredReports = reports.filter((report) => {

@@ -38,7 +38,7 @@ export function NavbarComponent() {
 
   const handleLogout = () => {
     logout();
-    navigate('/login');
+    navigate(ROUTES.LOGIN);
   };
 
   const isActive = (path) => location.pathname === path;
@@ -90,6 +90,13 @@ export function NavbarComponent() {
       icon: <LineChart className='icon-style' />,
       label: t('navbar.kpis'),
       protected: true,
+    },
+    {
+      path: ROUTES.REPORTS,
+      icon: <FileText className='icon-style' />,
+      label: t('navbar.report'),
+      protected: true,
+      condition: () => !isPatient(),
     },
   ];
 
@@ -157,7 +164,7 @@ export function NavbarComponent() {
         ) : (
           <Button
             as={Link}
-            to='/login'
+            to={ROUTES.LOGIN}
             style={{ backgroundColor: 'var(--color-secondary)' }}
             className='text-base lg:text-lg flex gap-1 lg:gap-2 text-center sm:p-[20px] p-[15px] text-white'
           >
@@ -182,7 +189,7 @@ export function NavbarComponent() {
                   <NavbarLink
                     key={path}
                     as={Link}
-                    to={isProtected && !isAuthenticated ? '/login' : path}
+                    to={isProtected && !isAuthenticated ? ROUTES.LOGIN : path}
                     active={isActive(path)}
                     className={`flex items-center gap-2 relative ${
                       isActive(path) ? 'active bg-accent' : ''
