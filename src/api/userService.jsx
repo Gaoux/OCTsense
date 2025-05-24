@@ -2,11 +2,10 @@ import apiClient from './apiClient';
 import Cookies from 'js-cookie';
 
 export const loginUser = async (email, password) => {
-  const response = await apiClient.post(
-    '/api/users/login/',
-    { email, password },
-    { withCredentials: true }
-  );
+  const response = await apiClient.post('/api/users/login/', {
+    email,
+    password,
+  });
 
   const { user, access, refresh } = response.data;
 
@@ -14,16 +13,12 @@ export const loginUser = async (email, password) => {
 };
 
 export const registerUser = async (form) => {
-  const response = await apiClient.post(
-    '/api/users/register/',
-    {
-      email: form.email,
-      password: form.password,
-      name: form.name,
-      role: form.role,
-    },
-    { withCredentials: true }
-  );
+  const response = await apiClient.post('/api/users/register/', {
+    email: form.email,
+    password: form.password,
+    name: form.name,
+    role: form.role,
+  });
 
   return response.data;
 };
