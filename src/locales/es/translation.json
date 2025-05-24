@@ -268,5 +268,49 @@
     "title": "Términos y Condiciones",
     "content": "Al registrarte y utilizar OCTsense, aceptas cumplir con todas las leyes y regulaciones aplicables. La plataforma está destinada únicamente a fines académicos y de investigación y no sustituye el consejo, diagnóstico o tratamiento médico profesional. Todos los datos se manejan de acuerdo con nuestra política de privacidad. Para más detalles, contacta con soporte.",
     "required": "Debes aceptar los términos y condiciones para registrarte."
+  },
+  "user": {
+    "user": "usuario",
+    "listTitle": "Lista de Usuarios",
+    "searchPlaceholder": "Buscar por nombre o correo...",
+    "allRoles": "Todos los roles",
+    "editDescription": "Actualiza los datos del usuario como nombre, rol, contraseña y estado de verificación.",
+    "roles": {
+      "patient": "Paciente",
+      "professional": "Profesional",
+      "admin": "Administrador"
+    },
+    "allVerification": "Todos",
+    "verified": "Verificado",
+    "unverified": "Pendiente",
+    "sortNewest": "Fecha de registro (más reciente)",
+    "sortOldest": "Fecha de registro (más antigua)",
+    "name": "Nombre",
+    "email": "Correo",
+    "role": "Rol",
+    "actions": "Acciones",
+    "loading": "Cargando...",
+    "noResults": "No usuarios encontrados.",
+    "loginCount": "Cantidad de ingresos",
+    "joined": "Fecha de registro",
+    "lastLogin": "Último acceso",
+    "never": "Nunca",
+    "deletedSuccess": "Usuario eliminado correctamente.",
+    "deleteError": "No se pudo eliminar el usuario.",
+    "editTitle": "Editar Usuario",
+    "fieldName": "Nombre",
+    "fieldEmail": "Correo Electrónico",
+    "fieldPassword": "Contraseña (dejar en blanco para mantener la actual)",
+    "fieldRole": "Rol",
+    "fieldVerified": "Cuenta Verificada",
+    "saveChanges": "Guardar Cambios",
+    "loadingUser": "Cargando datos del usuario...",
+    "errorLoadUser": "Error al cargar los datos del usuario.",
+    "errorUpdateUser": "Error al actualizar el usuario.",
+    "updateSuccess": "Usuario actualizado correctamente."
+  },
+  "common": {
+    "yes": "Sí",
+    "no": "No"
   }
 }
