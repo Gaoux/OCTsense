@@ -274,6 +274,7 @@
     "listTitle": "Lista de Usuarios",
     "searchPlaceholder": "Buscar por nombre o correo...",
     "allRoles": "Todos los roles",
+    "editDescription": "Actualiza los datos del usuario como nombre, rol, contraseña y estado de verificación.",
     "roles": {
       "patient": "Paciente",
       "professional": "Profesional",
@@ -295,7 +296,18 @@
     "lastLogin": "Último acceso",
     "never": "Nunca",
     "deletedSuccess": "Usuario eliminado correctamente.",
-    "deleteError": "No se pudo eliminar el usuario."
+    "deleteError": "No se pudo eliminar el usuario.",
+    "editTitle": "Editar Usuario",
+    "fieldName": "Nombre",
+    "fieldEmail": "Correo Electrónico",
+    "fieldPassword": "Contraseña (dejar en blanco para mantener la actual)",
+    "fieldRole": "Rol",
+    "fieldVerified": "Cuenta Verificada",
+    "saveChanges": "Guardar Cambios",
+    "loadingUser": "Cargando datos del usuario...",
+    "errorLoadUser": "Error al cargar los datos del usuario.",
+    "errorUpdateUser": "Error al actualizar el usuario.",
+    "updateSuccess": "Usuario actualizado correctamente."
   },
   "common": {
     "yes": "Sí",
