@@ -270,6 +270,35 @@
     "required": "Debes aceptar los términos y condiciones para registrarte."
   },
   "user": {
-    "name": "usuario"
+    "user": "usuario",
+    "listTitle": "Lista de Usuarios",
+    "searchPlaceholder": "Buscar por nombre o correo...",
+    "allRoles": "Todos los roles",
+    "roles": {
+      "patient": "Paciente",
+      "professional": "Profesional",
+      "admin": "Administrador"
+    },
+    "allVerification": "Todos",
+    "verified": "Verificado",
+    "unverified": "Pendiente",
+    "sortNewest": "Fecha de registro (más reciente)",
+    "sortOldest": "Fecha de registro (más antigua)",
+    "name": "Nombre",
+    "email": "Correo",
+    "role": "Rol",
+    "actions": "Acciones",
+    "loading": "Cargando...",
+    "noResults": "No usuarios encontrados.",
+    "loginCount": "Cantidad de ingresos",
+    "joined": "Fecha de registro",
+    "lastLogin": "Último acceso",
+    "never": "Nunca",
+    "deletedSuccess": "Usuario eliminado correctamente.",
+    "deleteError": "No se pudo eliminar el usuario."
+  },
+  "common": {
+    "yes": "Sí",
+    "no": "No"
   }
 }

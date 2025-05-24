@@ -270,6 +270,35 @@
     "required": "You must accept the terms and conditions to register."
   },
   "user": {
-    "name": "user"
+    "user": "user",
+    "listTitle": "User List",
+    "searchPlaceholder": "Search by name or email...",
+    "allRoles": "All roles",
+    "roles": {
+      "patient": "Patient",
+      "professional": "Professional",
+      "admin": "Administrator"
+    },
+    "allVerification": "All",
+    "verified": "Verified",
+    "unverified": "Pending",
+    "sortNewest": "Date joined (Newest)",
+    "sortOldest": "Date joined (Oldest)",
+    "name": "Name",
+    "email": "Email",
+    "role": "Role",
+    "actions": "Actions",
+    "loading": "Loading...",
+    "noResults": "No users found.",
+    "loginCount": "Login count",
+    "joined": "Date joined",
+    "lastLogin": "Last login",
+    "never": "Never",
+    "deletedSuccess": "User successfully deleted.",
+    "deleteError": "Could not delete user."
+  },
+  "common": {
+    "yes": "Yes",
+    "no": "No"
   }
 }
