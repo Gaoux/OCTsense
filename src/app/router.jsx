@@ -11,7 +11,6 @@ import { useAuth } from '../context/AuthContext.jsx';
 import UserRegister from '../features/admin/UserRegister';
 import UsersList from '../features/admin/UsersList.jsx';
 import Dashboard from '../features/admin/Dashboard.jsx';
-import UploadModel from './../features/admin/UploadModel/index.jsx';
 import Kpis from '../features/admin/kpis/index.jsx';
 import EditUser from '../features/admin/EditUser.jsx';
 import Report from '../features/report';
@@ -19,27 +18,35 @@ import ReportDetails from '../features/reportDetails';
 import ForgotPassword from '../features/ForgotPassword/index.jsx';
 import ResetPassword from '../features/ResetPassword/index.jsx';
 import VerifyEmailPage from '../features/verify-email/index.jsx';
-
+import { ROUTES } from '../constants/routes';
 
 const PrivateRoute = ({ element }) => {
-  const { isAuthenticated, user } = useAuth(); 
-  return isAuthenticated && user?.role !== 'admin' ? element : <Navigate to='/login' />;
+  const { isAuthenticated, user } = useAuth();
+  return isAuthenticated && user?.role !== 'admin' ? (
+    element
+  ) : (
+    <Navigate to={ROUTES.LOGIN} />
+  );
 };
 
 const AdminRoute = ({ element }) => {
   const { isAuthenticated, user } = useAuth();
-  return isAuthenticated && user?.role === 'admin' ? element : <Navigate to='/login' />;
+  return isAuthenticated && user?.role === 'admin' ? (
+    element
+  ) : (
+    <Navigate to={ROUTES.LOGIN} />
+  );
 };
 
 const PublicRoute = ({ element }) => {
   const { isAuthenticated, user } = useAuth();
 
   if (isAuthenticated && user?.role === 'admin') {
-    return <Navigate to='/admin-dashboard' />;
+    return <Navigate to={ROUTES.ADMIN_DASHBOARD} />;
   }
 
   if (isAuthenticated) {
-    return <Navigate to='/' />;
+    return <Navigate to={ROUTES.HOME} />;
   }
 
   return element;
@@ -47,32 +54,61 @@ const PublicRoute = ({ element }) => {
 
 const AppRoutes = () => (
   <Routes>
-    <Route path='/' element={<Home />} />
-    <Route path='/login' element={<PublicRoute element={<Login />} />} />
-    <Route path='/register' element={<PublicRoute element={<Register />} />} />
-    <Route path='/upload' element={<PrivateRoute element={<Upload />} />} />
-    <Route path='/analysis' element={<PrivateRoute element={<Analysis />} />} />
-    <Route path='/settings' element={<PrivateRoute element={<Settings />} />} />
-    <Route path='/admin-dashboard' element={<AdminRoute element={<Dashboard />} />} />
-    <Route path='/registrar' element={<AdminRoute element={<UserRegister />} />} />
-    <Route path='/usuarios' element={<AdminRoute element={<UsersList />} />} />
-    <Route path='/admin/kpis' element={<AdminRoute element={<Kpis />} />} />
-    <Route path='/editar-usuario/:id' element={<AdminRoute element={<EditUser />} />} />
-    <Route path='/report' element={<Report />} />
-    <Route path='/report/:id' element={<ReportDetails />} />
-    <Route path="/admin/upload-model" element={<UploadModel />} />
-    {/* <Route
-      path='/report'
-      element={<PrivateRoute element={<Report />} allowedRoles={['oftalmologo', 'admin']} />}
+    {/* Public Pages */}
+    <Route path={ROUTES.HOME} element={<Home />} />
+
+    {/* Auth */}
+    <Route path={ROUTES.LOGIN} element={<PublicRoute element={<Login />} />} />
+    <Route
+      path={ROUTES.REGISTER}
+      element={<PublicRoute element={<Register />} />}
+    />
+    <Route path={ROUTES.FORGOT_PASSWORD} element={<ForgotPassword />} />
+    <Route path={ROUTES.RESET_PASSWORD} element={<ResetPassword />} />
+    <Route path={ROUTES.VERIFY_EMAIL} element={<VerifyEmailPage />} />
+
+    {/* Authenticated User Panel */}
+    <Route
+      path={ROUTES.UPLOAD}
+      element={<PrivateRoute element={<Upload />} />}
     />
     <Route
-      path='/report/:id'
-      element={<PrivateRoute element={<ReportDetails />} allowedRoles={['oftalmologo', 'admin']} />}
-    /> */}
+      path={ROUTES.ANALYSIS}
+      element={<PrivateRoute element={<Analysis />} />}
+    />
+    <Route
+      path={ROUTES.SETTINGS}
+      element={<PrivateRoute element={<Settings />} />}
+    />
+
+    {/* Admin Panel */}
+    <Route
+      path={ROUTES.ADMIN_DASHBOARD}
+      element={<AdminRoute element={<Dashboard />} />}
+    />
+    <Route
+      path={ROUTES.ADMIN_USERS}
+      element={<AdminRoute element={<UsersList />} />}
+    />
+    <Route
+      path={ROUTES.ADMIN_USER_CREATE}
+      element={<AdminRoute element={<UserRegister />} />}
+    />
+    <Route
+      path={ROUTES.ADMIN_USER_EDIT()}
+      element={<AdminRoute element={<EditUser />} />}
+    />
+    <Route
+      path={ROUTES.ADMIN_KPIS}
+      element={<AdminRoute element={<Kpis />} />}
+    />
+
+    {/* Reports */}
+    <Route path={ROUTES.REPORTS} element={<Report />} />
+    <Route path={ROUTES.REPORT_DETAILS()} element={<ReportDetails />} />
+
+    {/* 404 Fallback */}
     <Route path='*' element={<NotFound />} />
-    <Route path="/forgot-password" element={<ForgotPassword />} />
-    <Route path="/reset-password" element={<ResetPassword />} />
-    <Route path="/verify-email" element={<VerifyEmailPage />} />
   </Routes>
 );
 

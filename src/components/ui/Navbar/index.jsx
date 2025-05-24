@@ -28,6 +28,7 @@ import { useAuth } from '../../../context/AuthContext';
 import { useTranslation } from 'react-i18next';
 import i18n from '../../../i18n';
 import './styles.css';
+import { ROUTES } from '../../../constants/routes';
 
 export function NavbarComponent() {
   const navigate = useNavigate();
@@ -45,61 +46,55 @@ export function NavbarComponent() {
 
   const links_common = [
     {
-      path: '/',
+      path: ROUTES.HOME,
       icon: <Home className='icon-style' />,
       label: t('navbar.home'),
       protected: false,
     },
     {
-      path: '/upload',
+      path: ROUTES.UPLOAD,
       icon: <Upload className='icon-style' />,
       label: t('navbar.upload'),
       protected: true,
     },
     {
-      path: '/analysis',
+      path: ROUTES.ANALYSIS,
       icon: <BarChart3 className='icon-style' />,
       label: t('navbar.analysis'),
       protected: true,
     },
     {
-      path: '/report',
+      path: ROUTES.REPORTS,
       icon: <FileText className='icon-style' />,
       label: t('navbar.report'),
       protected: true,
-      condition: () => !isPatient(), // visible solo si NO es paciente
+      condition: () => !isPatient(),
     },
   ];
 
   const links_admin = [
     {
-      path: '/admin-dashboard',
+      path: ROUTES.ADMIN_DASHBOARD,
       icon: <Home className='icon-style' />,
-      label: t('Panel'),
+      label: t('navbar.dashboard'),
       protected: true,
     },
     {
-      path: '/usuarios',
+      path: ROUTES.ADMIN_USERS,
       icon: <Users className='icon-style' />,
-      label: t('Usuarios'),
+      label: t('navbar.users'),
       protected: true,
     },
     {
-      path: '/registrar',
+      path: ROUTES.ADMIN_USER_CREATE,
       icon: <UserPlus className='icon-style' />,
-      label: t('Registrar'),
+      label: t('navbar.register'),
       protected: true,
     },
     {
-      path: '/admin/kpis',
+      path: ROUTES.ADMIN_KPIS,
       icon: <LineChart className='icon-style' />,
-      label: t('KPIs'),
-      protected: true,
-    },
-    {
-      path: '/admin/upload-model',
-      icon: <Upload className='icon-style' />,
-      label: 'Cargar Modelo',
+      label: t('navbar.kpis'),
       protected: true,
     },
   ];
