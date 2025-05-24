@@ -37,7 +37,7 @@ const ReportDetailsInfo = ({
   setEditingPatientInfo,
 }) => {
   const { t } = useTranslation();
-
+  const [user] = useState({ role: 'admin' }); // Simulating user role, replace with actual user context
   return (
     <div className='rounded-lg bg-white lg:px-4 py-3 transition-all duration-300 shadow-sm'>
       {/* Title + Scan Image */}
@@ -58,6 +58,16 @@ const ReportDetailsInfo = ({
               {report.created_at?.split('T')[0]}
             </span>
           </div>
+
+          {user?.role === 'admin' && report.created_by && (
+            <div className='flex flex-col gap-1 mt-2 text-sm text-gray-700'>
+              <p className='font-medium'>
+                <span className='text-gray-500'>{t('report.createdBy')}:</span>{' '}
+                {report.created_by.name}
+              </p>
+              <p className='text-gray-500'>{report.created_by.email}</p>
+            </div>
+          )}
         </div>
 
         {/* Right side: Image Preview */}
@@ -314,8 +324,7 @@ const ReportDetailsInfo = ({
         </div>
 
         {/* Previous and Next aligned horizontally */}
-        <div className='flex justify-between w-full mt-1'>
-          {/* Previous Button */}
+        {/* <div className='flex justify-between w-full mt-1'>
           <button
             onClick={onPrevious}
             className='flex items-center justify-center gap-1 w-[48%] px-3 py-2 bg-white border border-light-gray rounded-md text-dark-gray hover:bg-very-light-gray transition shadow-sm text-sm'
@@ -323,8 +332,6 @@ const ReportDetailsInfo = ({
             <ChevronLeft className='w-3 h-3' />
             <span className='font-medium'>{t('buttons.previous')}</span>
           </button>
-
-          {/* Next Button */}
           <button
             onClick={onNext}
             className='flex items-center justify-center gap-1 w-[48%] px-3 py-2 bg-white border border-light-gray rounded-md text-dark-gray hover:bg-very-light-gray transition shadow-sm text-sm'
@@ -332,7 +339,7 @@ const ReportDetailsInfo = ({
             <span className='font-medium'>{t('buttons.next')}</span>
             <ChevronRight className='w-3 h-3' />
           </button>
-        </div>
+        </div> */}
       </div>
     </div>
   );

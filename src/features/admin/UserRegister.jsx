@@ -1,12 +1,16 @@
 import React, { useState } from 'react';
-import { registerUser } from '../../api/dashboardService'; // Importa el servicio
+import { useTranslation } from 'react-i18next';
+import { User, Mail, Lock, ShieldCheck, Save } from 'lucide-react';
+import { registerUser } from '../../api/dashboardService';
 
 const UserRegister = () => {
+  const { t } = useTranslation();
+
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     role: '',
-    password: '', // Campo para la contraseña
+    password: '',
     sendEmail: true,
   });
 
@@ -20,12 +24,9 @@ const UserRegister = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('handleSubmit ejecutado'); // Depuración
-  
     try {
-      console.log('Datos enviados al backend:', formData); // Depuración
-      const response = await registerUser(formData); // Llama al servicio
-      alert(response.message || 'Usuario registrado exitosamente'); // Notificación de éxito
+      const response = await registerUser(formData);
+      alert(response.message || t('userRegister.success'));
       setFormData({
         name: '',
         email: '',
@@ -34,88 +35,99 @@ const UserRegister = () => {
         sendEmail: true,
       });
     } catch (error) {
-      console.error('Error al registrar el usuario:', error.response?.data || error.message); // Depuración
-      alert('Error al registrar el usuario. Verifica los datos e intenta nuevamente.');
+      console.error(error);
+      alert(t('userRegister.error'));
     }
   };
 
   return (
-    <div className="bg-gradient-to-br from-blue-100 to-blue-300 min-h-screen relative overflow-hidden">
-      {/* Contenido principal */}
-      <div className="max-w-7xl mx-auto px-6 py-20 relative z-10">
-        {/* Título */}
-        <h2 className="text-4xl font-bold text-blue-800 mb-6 text-center">Registrar Usuario</h2>
+    <div className='bg-gradient-to-br from-blue-100 to-blue-300 min-h-screen relative overflow-hidden'>
+      <div className='max-w-7xl mx-auto px-6 py-20 relative z-10'>
+        <h2 className='text-4xl font-bold text-blue-800 mb-6 text-center'>
+          {t('userRegister.title')}
+        </h2>
 
-        {/* Formulario de registro */}
-        <form onSubmit={handleSubmit} className="bg-white rounded-2xl shadow-lg p-6 max-w-3xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-            {/* Campo de nombre */}
+        <form
+          onSubmit={handleSubmit}
+          className='bg-white rounded-2xl shadow-lg p-6 max-w-3xl mx-auto space-y-4'
+        >
+          <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
             <div>
-              <label className="block text-gray-700 mb-2">Nombre</label>
+              <label className=' text-gray-700 mb-1 flex items-center gap-2'>
+                <User className='w-4 h-4' />
+                {t('userRegister.name')}
+              </label>
               <input
-                type="text"
-                name="name"
+                type='text'
+                name='name'
                 value={formData.name}
-                className="w-full p-2 rounded border"
-                placeholder="Nombre completo"
+                className='w-full p-2 rounded border'
+                placeholder={t('userRegister.namePlaceholder')}
                 onChange={handleChange}
                 required
               />
             </div>
 
-            {/* Campo de correo */}
             <div>
-              <label className="block text-gray-700 mb-2">Correo</label>
+              <label className='text-gray-700 mb-1 flex items-center gap-2'>
+                <Mail className='w-4 h-4' />
+                {t('userRegister.email')}
+              </label>
               <input
-                type="email"
-                name="email"
+                type='email'
+                name='email'
                 value={formData.email}
-                className="w-full p-2 rounded border"
-                placeholder="correo@ejemplo.com"
+                className='w-full p-2 rounded border'
+                placeholder={t('userRegister.emailPlaceholder')}
                 onChange={handleChange}
                 required
               />
             </div>
           </div>
 
-          {/* Campo de contraseña */}
-          <div className="mb-4">
-            <label className="block text-gray-700 mb-2">Contraseña</label>
+          <div>
+            <label className=' text-gray-700 mb-1 flex items-center gap-2'>
+              <Lock className='w-4 h-4' />
+              {t('userRegister.password')}
+            </label>
             <input
-              type="password"
-              name="password"
+              type='password'
+              name='password'
               value={formData.password}
-              className="w-full p-2 rounded border"
-              placeholder="Contraseña"
+              className='w-full p-2 rounded border'
+              placeholder={t('userRegister.passwordPlaceholder')}
               onChange={handleChange}
               required
             />
           </div>
 
-          {/* Campo de rol */}
-          <div className="mb-4">
-            <label className="block text-gray-700 mb-2">Rol</label>
+          <div>
+            <label className=' text-gray-700 mb-1 flex items-center gap-2'>
+              <ShieldCheck className='w-4 h-4' />
+              {t('userRegister.role')}
+            </label>
             <select
-              name="role"
+              name='role'
               value={formData.role}
-              className="w-full p-2 rounded border"
+              className='w-full p-2 rounded border'
               onChange={handleChange}
               required
             >
-              <option value="">Seleccionar rol</option>
-              <option value="admin">Administrador</option>
-              <option value="patient">Paciente</option>
-              <option value="professional">Profesional</option>
+              <option value=''>{t('userRegister.rolePlaceholder')}</option>
+              <option value='admin'>{t('user.roles.admin')}</option>
+              <option value='patient'>{t('user.roles.patient')}</option>
+              <option value='professional'>
+                {t('user.roles.professional')}
+              </option>
             </select>
           </div>
 
-
-          {/* Botón de enviar */}
           <button
-            type="submit"
-            className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg transition-all"
+            type='submit'
+            className='bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg transition-all flex items-center gap-2'
           >
-            Registrar
+            <Save className='w-4 h-4' />
+            {t('buttons.register')}
           </button>
         </form>
       </div>

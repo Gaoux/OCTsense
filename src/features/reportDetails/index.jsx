@@ -78,7 +78,7 @@ const ReportDetails = () => {
   const handleDelete = async () => {
     try {
       await deleteReport(report.id);
-      navigate('/report');
+      navigate(ROUTES.REPORTS);
     } catch (error) {
       console.error('Failed to delete report', error);
     }

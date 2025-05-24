@@ -4,7 +4,8 @@ import { getUsers } from '../../api/userService.jsx';
 import { deleteUser } from '../../api/dashboardService.js';
 import ConfirmDeleteModal from '../../components/ui/confirmDeleteModal';
 import { useTranslation } from 'react-i18next';
-import { Pencil, Trash2, CircleCheck, Clock } from 'lucide-react';
+import { Pencil, Trash2, CircleCheck, Clock, UserPlus2 } from 'lucide-react';
+import { ROUTES } from '../../constants/routes';
 
 const UsersList = () => {
   const [users, setUsers] = useState([]);
@@ -64,6 +65,15 @@ const UsersList = () => {
         <h2 className='text-4xl font-bold text-blue-800 mb-6'>
           {t('user.listTitle')}
         </h2>
+        <div className='flex justify-end mb-4'>
+          <Link
+            to={ROUTES.ADMIN_USER_CREATE}
+            className='bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-lg font-medium transition duration-200'
+          >
+            <UserPlus2 className='inline-block mr-2 w-4 h-4' />
+            {t('user.addUser')}
+          </Link>
+        </div>
 
         <div className='w-full mb-6 bg-white p-4 rounded-xl shadow-md flex flex-col md:flex-row md:items-center md:justify-between gap-4'>
           <div className='relative w-full md:w-1/2'>
@@ -135,18 +145,21 @@ const UsersList = () => {
               </div>
             ) : (
               filteredUsers.map((user) => (
-                <details key={user.id} className='group cursor-pointer'>
-                  <summary className='flex flex-col md:flex-row items-start md:items-center gap-2 md:gap-0 p-4 md:px-6 hover:bg-gray-50'>
-                    <div className='flex items-center gap-3 w-1/5'>
+                <details
+                  key={user.id}
+                  className='group cursor-pointer border-b border-gray-200'
+                >
+                  <summary className='grid grid-cols-1 sm:grid-cols-5 items-center gap-2 p-4 md:px-6 hover:bg-gray-50'>
+                    <div className='flex items-center gap-3 min-w-0'>
                       <div className='w-10 h-10 rounded-full bg-blue-100 text-blue-600 font-semibold flex items-center justify-center'>
                         {user.name?.charAt(0).toUpperCase() || '?'}
                       </div>
-                      <div className='font-medium'>{user.name}</div>
+                      <div className='font-medium truncate'>{user.name}</div>
                     </div>
-                    <div className='w-1/5 text-sm text-gray-700'>
+                    <div className='text-sm text-gray-700 truncate'>
                       {user.email}
                     </div>
-                    <div className='w-1/5'>
+                    <div>
                       <span
                         className={`px-2 py-1 text-xs rounded-full font-medium ${
                           user.role === 'patient'
@@ -159,7 +172,7 @@ const UsersList = () => {
                         {t(`user.roles.${user.role}`)}
                       </span>
                     </div>
-                    <div className='w-1/5 flex items-center'>
+                    <div className='flex items-center'>
                       {user.is_verified ? (
                         <span className='flex items-center gap-1 px-2 py-1 text-xs bg-green-50 text-green-600 font-medium rounded-full'>
                           <CircleCheck className='w-4 h-4' />
@@ -172,9 +185,9 @@ const UsersList = () => {
                         </span>
                       )}
                     </div>
-                    <div className='w-1/5 flex justify-end gap-2'>
+                    <div className='flex justify-end gap-2'>
                       <Link
-                        to={`/editar-usuario/${user.id}`}
+                        to={`${ROUTES.ADMIN_USER_EDIT(user.id)}`}
                         className='text-blue-600 hover:text-blue-800'
                       >
                         <Pencil className='w-4 h-4' />
@@ -190,7 +203,11 @@ const UsersList = () => {
                       </button>
                     </div>
                   </summary>
+
                   <div className='bg-gray-50 p-4 md:px-6 text-sm text-gray-700 space-y-2'>
+                    <div>
+                      <strong>ID: </strong> {user.id}
+                    </div>
                     <div>
                       <strong>{t('user.loginCount')}:</strong>{' '}
                       {user.login_count}

@@ -8,7 +8,6 @@ const apiClient = axios.create({
   headers: {
     'Content-Type': 'application/json',
   },
-  withCredentials: true, // Required for sending cookies in requests
 });
 
 // Interceptor to handle token expiration
@@ -33,7 +32,6 @@ apiClient.interceptors.response.use(
           { refresh: refreshToken },
           {
             headers: { 'Content-Type': 'application/json' },
-            withCredentials: true,
           }
         );
 

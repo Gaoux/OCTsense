@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { useTranslation } from 'react-i18next';
+import { ROUTES } from '../../constants/routes';
 
 const Login = () => {
   const { t } = useTranslation();
@@ -12,7 +13,9 @@ const Login = () => {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const handleLogin = async () => {
+  const handleLogin = async (e) => {
+    e.preventDefault();
+
     if (!email.trim() || !password.trim()) {
       setError(t('login.emptyFields'));
       return;
@@ -28,9 +31,9 @@ const Login = () => {
     try {
       const user = await login(email, password);
       if (user.is_admin) {
-        navigate('/admin-dashboard'); // futuro
+        navigate(ROUTES.ADMIN_DASHBOARD);
       } else {
-        navigate('/'); // landing page para paciente y oftalmólogo
+        navigate(ROUTES.HOME);
       }
     } catch (err) {
       const backendError = err?.response?.data?.error;
@@ -41,8 +44,6 @@ const Login = () => {
       } else {
         setError(t('login.error'));
       }
-      console.error(err);
-      setError(t('login.error'));
     } finally {
       setLoading(false);
     }
@@ -60,7 +61,8 @@ const Login = () => {
           {t('login.subtitle')}
         </p>
         {error && <p className='text-sm text-delete'>{error}</p>}
-        <div className='space-y-4'>
+
+        <form onSubmit={handleLogin} className='space-y-4'>
           <input
             type='text'
             placeholder={t('login.email')}
@@ -77,9 +79,8 @@ const Login = () => {
           />
 
           <div className='flex justify-center items-center gap-2 text-sm'>
-            {/* {t('login.forgotPassword')}{' '} */}
             <Link
-              to='/forgot-password'
+              to={ROUTES.FORGOT_PASSWORD}
               className='text-primary underline hover:text-dark-primary'
             >
               {t('login.forgotPassword')}
@@ -87,13 +88,12 @@ const Login = () => {
           </div>
 
           <button
-            onClick={handleLogin}
-            className={`w-full  px-4 py-2 text-white bg-secondary rounded-md
-                ${
-                  loading
-                    ? 'opacity-60 cursor-not-allowed'
-                    : 'hover:bg-dark-secondary transition'
-                }`}
+            type='submit'
+            className={`w-full px-4 py-2 text-white bg-secondary rounded-md ${
+              loading
+                ? 'opacity-60 cursor-not-allowed'
+                : 'hover:bg-dark-secondary transition'
+            }`}
             disabled={loading}
           >
             {loading ? (
@@ -130,13 +130,13 @@ const Login = () => {
           <p className='text-center text-sm'>
             {t('register.alreadyHaveAccount')}{' '}
             <Link
-              to='/register'
+              to={ROUTES.REGISTER}
               className='text-primary underline hover:text-dark-primary'
             >
               {t('login.registerLink')}
             </Link>
           </p>
-        </div>
+        </form>
       </div>
     </div>
   );

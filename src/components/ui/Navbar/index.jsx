@@ -28,6 +28,7 @@ import { useAuth } from '../../../context/AuthContext';
 import { useTranslation } from 'react-i18next';
 import i18n from '../../../i18n';
 import './styles.css';
+import { ROUTES } from '../../../constants/routes';
 
 export function NavbarComponent() {
   const navigate = useNavigate();
@@ -37,7 +38,7 @@ export function NavbarComponent() {
 
   const handleLogout = () => {
     logout();
-    navigate('/login');
+    navigate(ROUTES.LOGIN);
   };
 
   const isActive = (path) => location.pathname === path;
@@ -45,62 +46,57 @@ export function NavbarComponent() {
 
   const links_common = [
     {
-      path: '/',
+      path: ROUTES.HOME,
       icon: <Home className='icon-style' />,
       label: t('navbar.home'),
       protected: false,
     },
     {
-      path: '/upload',
+      path: ROUTES.UPLOAD,
       icon: <Upload className='icon-style' />,
       label: t('navbar.upload'),
       protected: true,
     },
     {
-      path: '/analysis',
+      path: ROUTES.ANALYSIS,
       icon: <BarChart3 className='icon-style' />,
       label: t('navbar.analysis'),
       protected: true,
     },
     {
-      path: '/report',
+      path: ROUTES.REPORTS,
       icon: <FileText className='icon-style' />,
       label: t('navbar.report'),
       protected: true,
-      condition: () => !isPatient(), // visible solo si NO es paciente
+      condition: () => !isPatient(),
     },
   ];
 
   const links_admin = [
     {
-      path: '/admin-dashboard',
+      path: ROUTES.ADMIN_DASHBOARD,
       icon: <Home className='icon-style' />,
-      label: t('Panel'),
+      label: t('navbar.dashboard'),
       protected: true,
     },
     {
-      path: '/usuarios',
+      path: ROUTES.ADMIN_USERS,
       icon: <Users className='icon-style' />,
-      label: t('Usuarios'),
+      label: t('navbar.users'),
       protected: true,
     },
     {
-      path: '/registrar',
-      icon: <UserPlus className='icon-style' />,
-      label: t('Registrar'),
-      protected: true,
-    },
-    {
-      path: '/admin/kpis',
+      path: ROUTES.ADMIN_KPIS,
       icon: <LineChart className='icon-style' />,
-      label: t('KPIs'),
+      label: t('navbar.kpis'),
       protected: true,
     },
     {
-      path: '/admin/upload-model',
-      icon: <Upload className='icon-style' />,
-      label: 'Cargar Modelo',
+      path: ROUTES.REPORTS,
+      icon: <FileText className='icon-style' />,
+      label: t('navbar.report'),
       protected: true,
+      condition: () => !isPatient(),
     },
   ];
 
@@ -111,7 +107,7 @@ export function NavbarComponent() {
       fluid
       className='py-2 bg-very-dark-secondary dark:bg-very-dark-secondary navbar-shadow sticky top-0 z-50'
     >
-      <Link to='/' className='flex items-center'>
+      <Link to={ROUTES.HOME} className='flex items-center'>
         <img
           src='/logo-no-background.svg'
           className='mr-3 h-6 sm:h-8 lg:h-9 w-auto'
@@ -157,7 +153,7 @@ export function NavbarComponent() {
                 {user?.email || t('navbar.email')}
               </span>
             </DropdownHeader>
-            <Link to='/settings'>
+            <Link to={ROUTES.SETTINGS}>
               <DropdownItem>{t('navbar.settings')}</DropdownItem>
             </Link>
             <DropdownDivider />
@@ -168,7 +164,7 @@ export function NavbarComponent() {
         ) : (
           <Button
             as={Link}
-            to='/login'
+            to={ROUTES.LOGIN}
             style={{ backgroundColor: 'var(--color-secondary)' }}
             className='text-base lg:text-lg flex gap-1 lg:gap-2 text-center sm:p-[20px] p-[15px] text-white'
           >
@@ -193,7 +189,7 @@ export function NavbarComponent() {
                   <NavbarLink
                     key={path}
                     as={Link}
-                    to={isProtected && !isAuthenticated ? '/login' : path}
+                    to={isProtected && !isAuthenticated ? ROUTES.LOGIN : path}
                     active={isActive(path)}
                     className={`flex items-center gap-2 relative ${
                       isActive(path) ? 'active bg-accent' : ''
