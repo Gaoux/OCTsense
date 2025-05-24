@@ -268,5 +268,8 @@
     "title": "Términos y Condiciones",
     "content": "Al registrarte y utilizar OCTsense, aceptas cumplir con todas las leyes y regulaciones aplicables. La plataforma está destinada únicamente a fines académicos y de investigación y no sustituye el consejo, diagnóstico o tratamiento médico profesional. Todos los datos se manejan de acuerdo con nuestra política de privacidad. Para más detalles, contacta con soporte.",
     "required": "Debes aceptar los términos y condiciones para registrarte."
+  },
+  "user": {
+    "name": "usuario"
   }
 }

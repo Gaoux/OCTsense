@@ -1,13 +1,19 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { getUsers } from '../../api/userService.jsx';
 import { deleteUser } from '../../api/dashboardService.js';
+import ConfirmDeleteModal from '../../components/ui/confirmDeleteModal';
+import { useTranslation } from 'react-i18next';
+import { Pencil, Trash2 } from 'lucide-react';
 
 const UsersList = () => {
   const [users, setUsers] = useState([]);
   const [role, setRole] = useState('Todos');
   const [searchQuery, setSearchQuery] = useState('');
   const [loading, setLoading] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [selectedUserId, setSelectedUserId] = useState(null);
+  const { t } = useTranslation();
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -19,19 +25,22 @@ const UsersList = () => {
     fetchUsers();
   }, [role, searchQuery]);
 
-  const handleDelete = async (id) => {
-    const confirm = window.confirm(
-      '¿Estás seguro de que deseas eliminar este usuario?'
-    );
-    if (confirm) {
-      try {
-        await deleteUser(id); // Llama al servicio para eliminar el usuario
-        setUsers(users.filter((user) => user.id !== id)); // Actualiza la lista de usuarios
-        alert('Usuario eliminado correctamente.');
-      } catch (error) {
-        console.error('Error al eliminar el usuario:', error);
-        alert('No se pudo eliminar el usuario.');
-      }
+  const openDeleteModal = (userId) => {
+    setSelectedUserId(userId);
+    setShowDeleteModal(true);
+  };
+
+  const confirmDelete = async () => {
+    if (!selectedUserId) return;
+    try {
+      await deleteUser(selectedUserId);
+      setUsers(users.filter((user) => user.id !== selectedUserId));
+      setShowDeleteModal(false);
+      setSelectedUserId(null);
+      alert('Usuario eliminado correctamente.');
+    } catch (error) {
+      console.error('Error al eliminar el usuario:', error);
+      alert('No se pudo eliminar el usuario.');
     }
   };
 
@@ -105,9 +114,7 @@ const UsersList = () => {
                 <>
                   {users.map((user) => (
                     <tr key={user.id} className='border-b border-gray-300'>
-                      <td className='py-3 flex items-center'>
-                        {user.name}
-                      </td>
+                      <td className='py-3 flex items-center'>{user.name}</td>
                       <td className='py-3'>{user.email}</td>
                       <td className='py-3'>{user.role}</td>
                       <td className='py-3 flex gap-4'>
@@ -116,41 +123,15 @@ const UsersList = () => {
                           to={`/editar-usuario/${user.id}`}
                           className='text-blue-500 hover:text-blue-700'
                         >
-                          <svg
-                            xmlns='http://www.w3.org/2000/svg'
-                            className='h-6 w-6 inline-block'
-                            fill='none'
-                            viewBox='0 0 24 24'
-                            stroke='currentColor'
-                            strokeWidth={2}
-                          >
-                            <path
-                              strokeLinecap='round'
-                              strokeLinejoin='round'
-                              d='M15.232 5.232l3.536 3.536M9 11l6.536-6.536a2 2 0 112.828 2.828L11.828 13.828a2 2 0 01-.828.536l-3 1a1 1 0 01-1.264-1.264l1-3a2 2 0 01.536-.828z'
-                            />
-                          </svg>
+                          <Pencil className='h-5 w-5 inline-block' />
                         </Link>
 
                         {/* Botón de eliminar */}
                         <button
-                          onClick={() => handleDelete(user.id)}
+                          onClick={() => openDeleteModal(user.id)}
                           className='text-red-500 hover:text-red-700'
                         >
-                          <svg
-                            xmlns='http://www.w3.org/2000/svg'
-                            className='h-6 w-6 inline-block'
-                            fill='none'
-                            viewBox='0 0 24 24'
-                            stroke='currentColor'
-                            strokeWidth={2}
-                          >
-                            <path
-                              strokeLinecap='round'
-                              strokeLinejoin='round'
-                              d="M9 3h6a1 1 0 011 1v1h3a1 1 0 110 2h-1v12a2 2 0 01-2 2H8a2 2 0 01-2-2V7H5a1 1 0 110-2h3V4a1 1 0 011-1zm1 4a1 1 0 00-1 1v9a1 1 0 002 0V8a1 1 0 00-1-1zm4 0a1 1 0 00-1 1v9a1 1 0 002 0V8a1 1 0 00-1-1z" 
-                            />
-                          </svg>
+                          <Trash2 className='h-5 w-5 inline-block' />
                         </button>
                       </td>
                     </tr>
@@ -167,6 +148,12 @@ const UsersList = () => {
           </table>
         </div>
       </div>
+      <ConfirmDeleteModal
+        show={showDeleteModal}
+        onClose={() => setShowDeleteModal(false)}
+        onConfirm={confirmDelete}
+        itemName={t('user.name')}
+      />
     </div>
   );
 };
