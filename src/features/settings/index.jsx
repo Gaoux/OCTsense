@@ -27,17 +27,17 @@ const Settings = () => {
 
   const validateForm = () => {
     const newErrors = {};
-    
+
     if (!formData.name.trim()) {
       newErrors.name = t('settings.errors.name_required');
     }
-    
+
     if (!formData.email.trim()) {
       newErrors.email = t('settings.errors.email_required');
     } else if (!validateEmail(formData.email)) {
       newErrors.email = t('settings.errors.email_invalid');
     }
-    
+
     if (formData.newPassword && formData.newPassword !== formData.confirmPassword) {
       newErrors.confirmPassword = t('settings.errors.passwords_mismatch');
     }
@@ -45,7 +45,7 @@ const Settings = () => {
     if (formData.newPassword && !formData.currentPassword) {
       newErrors.currentPassword = t('settings.errors.current_password_required');
     }
-    
+
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -53,7 +53,7 @@ const Settings = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!validateForm()) return;
-    
+
     try {
       await updateUser(formData);
       setSuccessMessage(t('settings.success.update_success'));
@@ -64,26 +64,31 @@ const Settings = () => {
   };
 
   return (
-    <div className="bg-gradient-to-br from-blue-100 to-blue-300 min-h-screen py-12 px-4 sm:px-6 lg:px-8">
-      <motion.div 
+    <div className="min-h-screen py-12 px-4 sm:px-6 lg:px-8">
+      <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        className="max-w-3xl mx-auto bg-white rounded-2xl shadow-xl overflow-hidden"
+        className="max-w-7xl mx-auto bg-white rounded-2xl shadow-xl overflow-hidden"
       >
         {/* Header */}
-        <div className="bg-very-dark-secondary px-6 py-4">
-          <h2 className="text-2xl font-bold text-white flex items-center gap-2">
-            <FaUser className="text-blue-200" />
-            {t('settings.title')}
-          </h2>
-          <p className="text-blue-100 mt-1">
-            {t('settings.subtitle')}
-          </p>
+        <div className='bg-very-dark-secondary px-6 py-6'>
+          <div className='flex items-center justify-center gap-3'>
+            <div className='bg-white p-2 rounded-full shadow-md'>
+              <FaUser className='h-6 w-6 text-very-dark-secondary' />
+            </div>
+            <h1 className='text-2xl md:text-3xl font-bold text-white'>
+              {t('settings.title')}
+            </h1>
+          </div>
         </div>
 
+        <p className='mt-8 ml-6 flex text-dark-primary text-lg'>
+          {t('settings.subtitle')}
+        </p>
+
         {/* Formulario */}
-        <form onSubmit={handleSubmit} className="px-6 py-8 space-y-6">
+        <form onSubmit={handleSubmit} className="px-6 text-dark-secondary py-8 space-y-6">
           {errors.submit && (
             <div className="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 mb-4">
               {errors.submit}
@@ -98,13 +103,13 @@ const Settings = () => {
 
           {/* Sección Información Básica */}
           <div className="space-y-4">
-            <h3 className="text-lg font-semibold text-very-dark-secondary flex items-center gap-2">
-              <FaUser className="text--very-dark-secondary" />
+            <h3 className="text-lg font-semibold text-dark-secondary flex items-center gap-2">
+              <FaUser className="text-dark-secondary" />
               {t('settings.personal_info')}
             </h3>
 
             <div>
-              <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
+              <label htmlFor="name" className="block text-sm font-medium text-dark-primary mb-1">
                 {t('settings.name')}
               </label>
               <input
@@ -113,13 +118,13 @@ const Settings = () => {
                 name="name"
                 value={formData.name}
                 onChange={handleChange}
-                className={`w-full px-4 py-2 rounded-lg border ${errors.name ? 'border-red-500' : 'border-gray-300'} focus:ring-2 focus:ring-blue-500 focus:border-transparent`}
+                className={`w-full text-dark-primary px-4 py-2 rounded-lg border ${errors.name ? 'border-red-500' : 'border-gray-300'} focus:ring-2 focus:ring-blue-500 focus:border-transparent`}
               />
               {errors.name && <p className="mt-1 text-sm text-red-600">{errors.name}</p>}
             </div>
 
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+              <label htmlFor="email" className="block text-sm font-medium text-dark-primary mb-1">
                 {t('settings.email')}
               </label>
               <input
@@ -128,7 +133,7 @@ const Settings = () => {
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
-                className={`w-full px-4 py-2 rounded-lg border ${errors.email ? 'border-red-500' : 'border-gray-300'} focus:ring-2 focus:ring-blue-500 focus:border-transparent`}
+                className={`w-full px-4 py-2 text-dark-primary rounded-lg border ${errors.email ? 'border-red-500' : 'border-gray-300'} focus:ring-2 focus:ring-blue-500 focus:border-transparent`}
               />
               {errors.email && <p className="mt-1 text-sm text-red-600">{errors.email}</p>}
             </div>
@@ -137,15 +142,15 @@ const Settings = () => {
           {/* Sección Cambio de Contraseña */}
           <div className="space-y-4 pt-6 border-t border-gray-200">
             <h3 className="text-lg font-semibold text--very-dark-secondary flex items-center gap-2">
-              <FaKey className="text-very-dark-secondary" />
+              <FaKey className="text-dark-secondary" />
               {t('settings.change_password')}
             </h3>
-            <p className="text-sm text-gray-600">
+            <p className="text-sm text-primary">
               {t('settings.password_instructions')}
             </p>
 
             <div>
-              <label htmlFor="currentPassword" className="block text-sm font-medium text-gray-700 mb-1">
+              <label htmlFor="currentPassword" className="block text-sm font-medium text-dark-primary mb-1">
                 {t('settings.current_password')}
               </label>
               <input
@@ -159,7 +164,7 @@ const Settings = () => {
             </div>
 
             <div>
-              <label htmlFor="newPassword" className="block text-sm font-medium text-gray-700 mb-1">
+              <label htmlFor="newPassword" className="block text-sm font-medium text-dark-primary mb-1">
                 {t('settings.new_password')}
               </label>
               <input
@@ -173,7 +178,7 @@ const Settings = () => {
             </div>
 
             <div>
-              <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700 mb-1">
+              <label htmlFor="confirmPassword" className="block text-sm font-medium text-dark-primary mb-1">
                 {t('settings.confirm_password')}
               </label>
               <input
@@ -201,7 +206,8 @@ const Settings = () => {
 
             <button
               type="submit"
-              className="flex items-center justify-center gap-2 px-6 py-2 bg-very-dark-secondary text-white rounded-lg hover:bg-blue-700 transition-colors"
+              className="flex items-center justify-center gap-2 px-6 py-2 bg-dark-secondary hover:bg-accent-hover text-white rounded-lg transition-all duration-300 
+              shadow-md hover:shadow-lg transform hover:scale-105 items-center'"
             >
               <FaSave />
               {t('settings.save_changes')}

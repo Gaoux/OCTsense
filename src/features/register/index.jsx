@@ -10,6 +10,8 @@ const Register = () => {
   const [form, setForm] = useState({});
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [acceptedTerms, setAcceptedTerms] = useState(false);
+  const [showTerms, setShowTerms] = useState(false);
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -51,15 +53,15 @@ const Register = () => {
       return;
     }
 
+    if (!acceptedTerms) {
+      setError(t('terms.required'));
+      return;
+    }
+
     try {
       setLoading(true);
+      console.log("FORM ENVIADO:", form);
       await register(form);
-      const newUser = {
-        email: form.email,
-        name: form.name,
-        password: form.password,
-        role: form.role,
-      };
       navigate('/login');
     } catch (err) {
       console.error(err);
@@ -83,13 +85,6 @@ const Register = () => {
         <div className='space-y-4'>
           <input
             type='text'
-            name='username'
-            placeholder={t('register.placeholders.username')}
-            onChange={handleChange}
-            className='w-full px-4 py-2 border rounded-md focus:outline-none focus:ring focus:ring-cyan-300'
-          />
-          <input
-            type='text'
             name='name'
             placeholder={t('register.placeholders.fullName')}
             onChange={handleChange}
@@ -109,9 +104,8 @@ const Register = () => {
             className='w-full px-4 py-2 border rounded-md bg-white text-gray-700 focus:outline-none focus:ring focus:ring-cyan-300'
           >
             <option value=''>{t('register.placeholders.selectRole')}</option>
-            <option value='mormal'>{t('register.roles.normal')}</option>
-            <option value='professional'>
-              {t('register.roles.professional')}
+            <option value='patient'>{t('register.role.patient')}</option>
+            <option value='professional'>{t('register.role.professional')}
             </option>
           </select>
           <input
@@ -128,11 +122,38 @@ const Register = () => {
             onChange={handleChange}
             className='w-full px-4 py-2 border rounded-md focus:outline-none focus:ring focus:ring-cyan-300'
           />
+          <div className='flex items-start gap-2'>
+            <input
+              type='checkbox'
+              id='terms-checkbox'
+              checked={acceptedTerms}
+              onChange={e => setAcceptedTerms(e.target.checked)}
+              className='mt-1'
+            />
+            <label htmlFor='terms-checkbox' className='text-sm'>
+              {t('terms.checkboxLabel')}
+              <span
+                className='text-primary underline cursor-pointer'
+                onClick={() => setShowTerms(v => !v)}
+                tabIndex={0}
+                role='button'
+                onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') setShowTerms(v => !v); }}
+              >
+                {t('terms.link')}
+              </span>
+            </label>
+          </div>
+          {showTerms && (
+            <div className='bg-gray-100 border rounded p-3 text-xs mb-2'>
+              <h3 className='font-bold mb-1'>{t('terms.title')}</h3>
+              <p>{t('terms.content')}</p>
+            </div>
+          )}
           <button
             onClick={handleSubmit}
-            disabled={loading}
+            disabled={loading || !acceptedTerms}
             className={`w-full mt-4 px-4 py-2 text-white bg-secondary rounded-md transition ${
-              loading
+              loading || !acceptedTerms
                 ? 'opacity-60 cursor-not-allowed'
                 : 'hover:bg-dark-secondary  '
             }`}

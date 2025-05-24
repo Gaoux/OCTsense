@@ -17,28 +17,37 @@ const Login = () => {
       setError(t('login.emptyFields'));
       return;
     }
-  
+
     if (!validateEmail(email)) {
       setError(t('login.invalidEmail'));
       return;
     }
-  
+
     setLoading(true);
-  
+
     try {
-      const user = await login(email, password); // Llama a la función de login
+      const user = await login(email, password);
       if (user.is_admin) {
-        navigate('/admin-dashboard'); // Redirige al Dashboard si es administrador
+        navigate('/admin-dashboard'); // futuro
       } else {
-        navigate('/'); // Redirige a la página principal si no es administrador
+        navigate('/'); // landing page para paciente y oftalmólogo
       }
     } catch (err) {
+      const backendError = err?.response?.data?.error;
+      if (
+        backendError === 'Debes confirmar tu correo antes de iniciar sesión.'
+      ) {
+        setError(t('auth.emailNotVerified'));
+      } else {
+        setError(t('login.error'));
+      }
       console.error(err);
-      setError(t('login.error')); // Muestra un mensaje de error
+      setError(t('login.error'));
     } finally {
       setLoading(false);
     }
   };
+
   return (
     <div className='flex items-center justify-center min-h-screen bg-blue-150'>
       <div className='w-full max-w-md p-8 space-y-6 bg-white rounded-lg shadow-md'>
@@ -50,7 +59,7 @@ const Login = () => {
         <p className='text-center text-gray-500 text-sm'>
           {t('login.subtitle')}
         </p>
-        {error && <p className='text-sm text-accent'>{error}</p>}
+        {error && <p className='text-sm text-delete'>{error}</p>}
         <div className='space-y-4'>
           <input
             type='text'
@@ -67,10 +76,10 @@ const Login = () => {
             className='w-full px-4 py-2 border rounded-md focus:outline-none focus:ring focus:ring-cyan-100'
           />
 
-          <div className='flex justify-end items-center gap-2 text-sm'>
+          <div className='flex justify-center items-center gap-2 text-sm'>
             {/* {t('login.forgotPassword')}{' '} */}
             <Link
-              to='/reset-password'
+              to='/forgot-password'
               className='text-primary underline hover:text-dark-primary'
             >
               {t('login.forgotPassword')}

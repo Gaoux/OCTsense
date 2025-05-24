@@ -1,90 +1,111 @@
-import React from 'react';
 import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { getAdminStats, getRecentUsers } from "../../api/dashboardService.js"; // Importa el servicio
 
 const Dashboard = () => {
-  // Datos de estadísticas quemados
-  const stats = {
-    totalUsers: 21,
-    totalOphthalmologists: 19,
-    otherUsers: 3,
-  };
+    const [stats, setStats] = useState(null);
+    const [recentUsers, setRecentUsers] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
-  // Usuarios recientes quemados
-  const recentUsers = [
-    { id: '1', name: 'Juan Mendez', profession: 'Oftalmólogo', email: 'JuanM@gmail.com' },
-    { id: '2', name: 'Laura Mojica', profession: 'Oftalmóloga', email: 'LauM@gmail.com' },
-    { id: '3', name: 'Carlos Pérez', profession: 'Paciente', email: 'CarlosP@gmail.com' },
-  ];
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                setLoading(true);
 
-  return (
-    <div className="min-h-screen bg-sky-400">
-      {/* Header */}
-      <header className="bg-sky-500 p-4 shadow-md flex justify-between items-center">
-        <div className="flex items-center">
-          <img src="/microscope-icon.png" alt="OCTsense" className="h-6 mr-2" />
-          <h1 className="text-white text-xl font-semibold">OCTsense</h1>
+                // Obtén estadísticas del dashboard
+                const statsData = await getAdminStats();
+                setStats(statsData);
+
+                // Obtén usuarios recientes
+                const usersData = await getRecentUsers();
+                setRecentUsers(usersData);
+
+            } catch (err) {
+                console.error('Error al cargar datos del Dashboard:', err);
+                setError('No se pudieron cargar los datos del Dashboard.');
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchData();
+    }, []);
+
+    if (loading) {
+        return (
+            <div className="flex justify-center items-center min-h-screen">
+                <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-blue-500"></div>
+            </div>
+        );
+    }
+
+    if (error) {
+        return (
+            <div className="flex justify-center items-center min-h-screen">
+                <p className="text-red-500 font-bold">{error}</p>
+            </div>
+        );
+    }
+
+    return (
+        <div className="bg-gradient-to-br from-blue-100 to-blue-300 min-h-screen relative overflow-hidden">
+            {/* Contenido principal */}
+            <div className="max-w-7xl mx-auto px-6 py-20 relative z-10">
+                {/* Título del Dashboard */}
+                <h2 className="text-4xl font-bold text-blue-800 mb-6">Dashboard</h2>
+
+                {/* Tarjetas de estadísticas */}
+                <div className="grid md:grid-cols-4 gap-6 mb-10">
+                    <div className="bg-white rounded-2xl shadow-lg p-6 text-center">
+                        <p className="text-gray-600 text-sm">Total Usuarios</p>
+                        <div className="text-3xl font-bold text-blue-800">
+                            {stats?.total_users ?? 0}
+                        </div>
+                    </div>
+                    <div className="bg-white rounded-2xl shadow-lg p-6 text-center">
+                        <p className="text-gray-600 text-sm">Total Pacientes</p>
+                        <div className="text-3xl font-bold text-blue-800">
+                            {stats?.total_patients ?? 0}
+                        </div>
+                    </div>
+                    <div className="bg-white rounded-2xl shadow-lg p-6 text-center">
+                        <p className="text-gray-600 text-sm">Total Profesionales</p>
+                        <div className="text-3xl font-bold text-blue-800">
+                            {stats?.total_ophthalmologists ?? 0}
+                        </div>
+                    </div>
+                    <div className="bg-white rounded-2xl shadow-lg p-6 text-center">
+                        <p className="text-gray-600 text-sm">Total Administradores</p>
+                        <div className="text-3xl font-bold text-blue-800">
+                            {stats?.total_admins ?? 0}
+                        </div>
+                    </div>
+                </div>
+
+                {/* Usuarios recientes */}
+                <div className="bg-white rounded-2xl shadow-lg p-6">
+                    <h3 className="text-xl font-bold text-blue-700 mb-4">Usuarios Recientes</h3>
+                    <ul className="space-y-4">
+                        {recentUsers.map((user) => (
+                            <li
+                                key={user.id}
+                                className="flex justify-between items-center bg-blue-50 p-4 rounded-lg shadow-sm"
+                            >
+                                <div>
+                                    <p className="text-blue-800 font-semibold">{user.name}</p>
+                                    <p className="text-gray-600 text-sm">{user.email}</p>
+                                </div>
+                                <p className="text-gray-500 text-sm">
+                                    {new Date(user.date_joined).toLocaleDateString()}
+                                </p>
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+            </div>
         </div>
-        <nav className="flex space-x-4">
-          <Link to="/" className="text-white">Inicio</Link>
-          <Link to="/usuarios" className="text-white">Usuarios</Link>
-          <Link to="/registrar" className="text-white">Registrar</Link>
-          <Link to="/usuarios" className="text-white">Editar</Link>
-          <Link to="/profile" className="text-white">
-            <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
-              <path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd" />
-            </svg>
-          </Link>
-        </nav>
-      </header>
-
-      <div className="container mx-auto p-4">
-        {/* Título del Dashboard */}
-        <h2 className="text-3xl font-bold mb-6 text-gray-800">Dashboard</h2>
-
-        {/* Tarjetas de estadísticas */}
-        <div className="bg-sky-200 rounded-lg p-6 mb-6 grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div className="text-center border-r border-sky-300">
-            <p className="text-sm text-gray-600">Total Usuarios</p>
-            <p className="text-4xl font-bold text-gray-800">{stats.totalUsers}</p>
-          </div>
-          <div className="text-center border-r border-sky-300">
-            <p className="text-sm text-gray-600">Total Oftalmólogos</p>
-            <p className="text-4xl font-bold text-gray-800">{stats.totalOphthalmologists}</p>
-          </div>
-          <div className="text-center">
-            <p className="text-sm text-gray-600">Otros Usuarios</p>
-            <p className="text-4xl font-bold text-gray-800">{stats.otherUsers}</p>
-          </div>
-        </div>
-
-        {/* Tabla de Usuarios Recientes */}
-        <div className="bg-sky-200 rounded-lg p-4">
-          <div className="flex justify-between items-center mb-4">
-            <h3 className="text-xl font-bold">Últimos Usuarios</h3>
-            <button className="bg-red-400 text-white px-3 py-1 rounded">Ver todos</button>
-          </div>
-          <table className="w-full">
-            <thead>
-              <tr className="border-b border-sky-300">
-                <th className="text-left pb-2">Nombre</th>
-                <th className="text-left pb-2">Profesión</th>
-                <th className="text-left pb-2">Correo</th>
-              </tr>
-            </thead>
-            <tbody>
-              {recentUsers.map((user) => (
-                <tr key={user.id} className="border-b border-sky-300">
-                  <td className="py-3">{user.name}</td>
-                  <td className="py-3">{user.profession}</td>
-                  <td className="py-3">{user.email}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-  );
+    );
 };
 
 export default Dashboard;

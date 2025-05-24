@@ -1,129 +1,223 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { getUsers } from '../../api/userService.jsx';
+import { deleteUser } from '../../api/dashboardService.js';
+import ConfirmDeleteModal from '../../components/ui/confirmDeleteModal';
+import { useTranslation } from 'react-i18next';
+import { Pencil, Trash2, CircleCheck, Clock } from 'lucide-react';
 
 const UsersList = () => {
-  const [users, setUsers] = useState([
-    { id: '1', name: 'Juan Mendez', profession: 'Oftalmólogo', email: 'JuanM@gmail.com', gender: 'male' },
-    { id: '2', name: 'Laura Mojica', profession: 'Oftalmóloga', email: 'LauM@gmail.com', gender: 'female' },
-    { id: '3', name: 'Juan Perez', profession: 'Oftalmólogo', email: 'Juanp@gmail.com', gender: 'male' },
-    { id: '4', name: 'Gloria Villegas', profession: 'Oftalmóloga', email: 'GV@gmail.com', gender: 'female' },
-    { id: '5', name: 'Juan Caseres', profession: 'Oftalmólogo', email: 'JuanC@gmail.com', gender: 'male' },
-    { id: '6', name: 'Penelope Gomez', profession: 'Oftalmóloga', email: 'peloG@gmail.com', gender: 'female' },
-    { id: '7', name: 'Diego Leal', profession: 'Oftalmólogo', email: 'DiegoL@gmail.com', gender: 'male' },
-    { id: '8', name: 'Omaira Caicedo', profession: 'Oftalmóloga', email: 'OmaC@gmail.com', gender: 'female' },
-    { id: '9', name: 'Omar Perez', profession: 'Oftalmólogo', email: 'Omar10@gmail.com', gender: 'male' }
-  ]);
-  
-  const [filter, setFilter] = useState('Oftalmólogos');
+  const [users, setUsers] = useState([]);
+  const [role, setRole] = useState('Todos');
   const [searchQuery, setSearchQuery] = useState('');
+  const [verifiedFilter, setVerifiedFilter] = useState('Todos');
+  const [sortOrder, setSortOrder] = useState('Newest');
+  const [loading, setLoading] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [selectedUserId, setSelectedUserId] = useState(null);
+  const { t } = useTranslation();
 
-  // Load users from backend when component mounts
   useEffect(() => {
-    // Replace with actual API call when connecting to backend
-    // Example:
-    // const fetchUsers = async () => {
-    //   try {
-    //     const response = await getUsers({ filter });
-    //     setUsers(response.data);
-    //   } catch (error) {
-    //     console.error('Error fetching users:', error);
-    //   }
-    // };
-    // fetchUsers();
-  }, [filter]);
+    const fetchUsers = async () => {
+      setLoading(true);
+      const users = await getUsers(role === 'Todos' ? null : role, searchQuery);
+      setLoading(false);
+      setUsers(users);
+    };
+    fetchUsers();
+  }, [role, searchQuery]);
+
+  const openDeleteModal = (userId) => {
+    setSelectedUserId(userId);
+    setShowDeleteModal(true);
+  };
+
+  const confirmDelete = async () => {
+    if (!selectedUserId) return;
+    try {
+      await deleteUser(selectedUserId);
+      setUsers(users.filter((user) => user.id !== selectedUserId));
+      setShowDeleteModal(false);
+      setSelectedUserId(null);
+      alert(t('user.deletedSuccess'));
+    } catch (error) {
+      console.error('Error al eliminar el usuario:', error);
+      alert(t('user.deleteError'));
+    }
+  };
+
+  const filteredUsers = users
+    .filter((user) => {
+      if (verifiedFilter === 'true') return user.is_verified;
+      if (verifiedFilter === 'false') return !user.is_verified;
+      return true;
+    })
+    .sort((a, b) => {
+      const dateA = new Date(a.date_joined);
+      const dateB = new Date(b.date_joined);
+      return sortOrder === 'Newest' ? dateB - dateA : dateA - dateB;
+    });
 
   return (
-    <div className="min-h-screen bg-sky-400">
-      {/* Header */}
-      <header className="bg-sky-500 p-4 shadow-md flex justify-between items-center">
-        <div className="flex items-center">
-          <img src="/microscope-icon.png" alt="OCTsense" className="h-6 mr-2" />
-          <h1 className="text-white text-xl font-semibold">OCTsense</h1>
-        </div>
-        <nav className="flex space-x-4">
-          <Link to="/" className="text-white">Inicio</Link>
-          <Link to="/usuarios" className="text-white">Usuarios</Link>
-          <Link to="/registrar" className="text-white">Registrar</Link>
-          <Link to="/editar" className="text-white">Editar</Link>
-          <Link to="/profile" className="text-white">
-            <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
-              <path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd" />
-            </svg>
-          </Link>
-        </nav>
-      </header>
+    <div className='bg-gradient-to-br from-blue-100 to-blue-300 min-h-screen relative overflow-hidden'>
+      <div className='max-w-7xl mx-auto px-6 py-20 relative z-10'>
+        <h2 className='text-4xl font-bold text-blue-800 mb-6'>
+          {t('user.listTitle')}
+        </h2>
 
-      <div className="container mx-auto p-4">
-        {/* Filter and Search */}
-        <div className="flex justify-between items-center mb-4">
-          <div>
-            <span className="mr-2">Filtros:</span>
-            <button className="bg-white rounded-full px-3 py-1 text-sm">
-              {filter}
-            </button>
-          </div>
-          <div className="flex space-x-2">
-            <div className="relative">
-              <input
-                type="text"
-                placeholder="Busca por nombre, correo..."
-                className="pl-10 pr-4 py-2 rounded-md w-64"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
+        <div className='w-full mb-6 bg-white p-4 rounded-xl shadow-md flex flex-col md:flex-row md:items-center md:justify-between gap-4'>
+          <div className='relative w-full md:w-1/2'>
+            <input
+              type='text'
+              placeholder={t('user.searchPlaceholder')}
+              className='w-full border border-gray-300 text-sm rounded-md pl-10 pr-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500'
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
+            <svg
+              className='absolute left-3 top-2.5 w-4 h-4 text-gray-400'
+              fill='currentColor'
+              viewBox='0 0 20 20'
+            >
+              <path
+                fillRule='evenodd'
+                d='M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z'
+                clipRule='evenodd'
               />
-              <svg className="w-4 h-4 absolute left-3 top-3 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
-                <path fillRule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clipRule="evenodd" />
-              </svg>
-            </div>
-            <button className="p-2 bg-white rounded">
-              <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                <path d="M5 4a1 1 0 00-2 0v7.268a2 2 0 000 3.464V16a1 1 0 102 0v-1.268a2 2 0 000-3.464V4zM11 4a1 1 0 10-2 0v1.268a2 2 0 000 3.464V16a1 1 0 102 0V8.732a2 2 0 000-3.464V4zM16 3a1 1 0 011 1v7.268a2 2 0 010 3.464V16a1 1 0 11-2 0v-1.268a2 2 0 010-3.464V4a1 1 0 011-1z" />
-              </svg>
-            </button>
-            <button className="p-2 bg-white rounded">
-              <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                <path fillRule="evenodd" d="M3 3a1 1 0 011-1h12a1 1 0 011 1v3a1 1 0 01-.293.707L12 11.414V15a1 1 0 01-.293.707l-2 2A1 1 0 018 17v-5.586L3.293 6.707A1 1 0 013 6V3z" clipRule="evenodd" />
-              </svg>
-            </button>
+            </svg>
           </div>
+
+          <select
+            className='w-full md:w-1/4 border border-gray-300 text-sm rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500'
+            value={role}
+            onChange={(e) => setRole(e.target.value)}
+          >
+            <option value='Todos'>{t('user.allRoles')}</option>
+            <option value='patient'>{t('user.roles.patient')}</option>
+            <option value='professional'>{t('user.roles.professional')}</option>
+            <option value='admin'>{t('user.roles.admin')}</option>
+          </select>
+
+          <select
+            className='w-full md:w-1/4 border border-gray-300 text-sm rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500'
+            value={verifiedFilter}
+            onChange={(e) => setVerifiedFilter(e.target.value)}
+          >
+            <option value='Todos'>{t('user.allVerification')}</option>
+            <option value='true'>{t('user.verified')}</option>
+            <option value='false'>{t('user.unverified')}</option>
+          </select>
+
+          <select
+            className='w-full md:w-1/4 border border-gray-300 text-sm rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500'
+            value={sortOrder}
+            onChange={(e) => setSortOrder(e.target.value)}
+          >
+            <option value='Newest'>{t('user.sortNewest')}</option>
+            <option value='Oldest'>{t('user.sortOldest')}</option>
+          </select>
         </div>
 
-        {/* Users Table */}
-        <div className="bg-sky-200 rounded-lg p-4">
-          <div className="flex justify-between items-center mb-4">
-            <button className="bg-red-400 p-1 rounded float-right">
-              <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
-                <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
-              </svg>
-            </button>
+        <div className='bg-white rounded-2xl shadow-lg overflow-hidden'>
+          <div className='divide-y divide-gray-200'>
+            <div className='px-6 py-4 hidden md:flex text-sm text-gray-500 font-semibold'>
+              <div className='w-1/5'>{t('user.name')}</div>
+              <div className='w-1/5'>{t('user.email')}</div>
+              <div className='w-1/5'>{t('user.role')}</div>
+              <div className='w-1/5'>{t('user.verified')}</div>
+              <div className='w-1/5 text-right'>{t('user.actions')}</div>
+            </div>
+            {loading ? (
+              <div className='text-center p-10'>{t('user.loading')}</div>
+            ) : filteredUsers.length === 0 ? (
+              <div className='text-center p-10 text-gray-500'>
+                {t('user.noResults')}
+              </div>
+            ) : (
+              filteredUsers.map((user) => (
+                <details key={user.id} className='group cursor-pointer'>
+                  <summary className='flex flex-col md:flex-row items-start md:items-center gap-2 md:gap-0 p-4 md:px-6 hover:bg-gray-50'>
+                    <div className='flex items-center gap-3 w-1/5'>
+                      <div className='w-10 h-10 rounded-full bg-blue-100 text-blue-600 font-semibold flex items-center justify-center'>
+                        {user.name?.charAt(0).toUpperCase() || '?'}
+                      </div>
+                      <div className='font-medium'>{user.name}</div>
+                    </div>
+                    <div className='w-1/5 text-sm text-gray-700'>
+                      {user.email}
+                    </div>
+                    <div className='w-1/5'>
+                      <span
+                        className={`px-2 py-1 text-xs rounded-full font-medium ${
+                          user.role === 'patient'
+                            ? 'bg-yellow-50 text-yellow-500'
+                            : user.role === 'admin'
+                            ? 'bg-red-50 text-red-700'
+                            : 'bg-blue-50 text-blue-700'
+                        }`}
+                      >
+                        {t(`user.roles.${user.role}`)}
+                      </span>
+                    </div>
+                    <div className='w-1/5 flex items-center'>
+                      {user.is_verified ? (
+                        <span className='flex items-center gap-1 px-2 py-1 text-xs bg-green-50 text-green-600 font-medium rounded-full'>
+                          <CircleCheck className='w-4 h-4' />
+                          {t('user.verified')}
+                        </span>
+                      ) : (
+                        <span className='flex items-center gap-1 px-2 py-1 text-xs rounded-full bg-blue-50 text-gray-700'>
+                          <Clock className='w-4 h-4' />
+                          {t('user.unverified')}
+                        </span>
+                      )}
+                    </div>
+                    <div className='w-1/5 flex justify-end gap-2'>
+                      <Link
+                        to={`/editar-usuario/${user.id}`}
+                        className='text-blue-600 hover:text-blue-800'
+                      >
+                        <Pencil className='w-4 h-4' />
+                      </Link>
+                      <button
+                        className='text-red-600 hover:text-red-800'
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          openDeleteModal(user.id);
+                        }}
+                      >
+                        <Trash2 className='w-4 h-4' />
+                      </button>
+                    </div>
+                  </summary>
+                  <div className='bg-gray-50 p-4 md:px-6 text-sm text-gray-700 space-y-2'>
+                    <div>
+                      <strong>{t('user.loginCount')}:</strong>{' '}
+                      {user.login_count}
+                    </div>
+                    <div>
+                      <strong>{t('user.joined')}:</strong>{' '}
+                      {new Date(user.date_joined).toLocaleDateString()}
+                    </div>
+                    <div>
+                      <strong>{t('user.lastLogin')}:</strong>{' '}
+                      {user.last_login
+                        ? new Date(user.last_login).toLocaleDateString()
+                        : t('user.never')}
+                    </div>
+                  </div>
+                </details>
+              ))
+            )}
           </div>
-          <table className="w-full">
-            <thead>
-              <tr>
-                <th className="text-left py-3">Nombre</th>
-                <th className="text-left py-3">Profesión</th>
-                <th className="text-left py-3">Correo</th>
-              </tr>
-            </thead>
-            <tbody>
-              {users.map((user) => (
-                <tr key={user.id} className="border-b border-sky-300">
-                  <td className="py-3 flex items-center">
-                    <img 
-                      src={`/avatars/${user.gender || 'default'}.png`}
-                      alt={user.name} 
-                      className="h-8 w-8 rounded-full mr-2" 
-                    />
-                    {user.name}
-                  </td>
-                  <td className="py-3">{user.profession}</td>
-                  <td className="py-3">{user.email}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
         </div>
       </div>
+      <ConfirmDeleteModal
+        show={showDeleteModal}
+        onClose={() => setShowDeleteModal(false)}
+        onConfirm={confirmDelete}
+        itemName={t('user.user')}
+      />
     </div>
   );
 };

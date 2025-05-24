@@ -1,23 +1,69 @@
 {
   "home": {
-    "title": "Optimiza tus imágenes OCT con",
-    "description": "Un sistema avanzado de detección en imágenes OCT basado en inteligencia artificial. Nuestro objetivo es facilitar la detección temprana de patologías oculares, proporcionando herramientas para un diagnóstico más preciso y eficiente.",
-    "benefits": {
-      "title": "¿Por qué usar OCTsense?",
-      "diagnosis": "Diagnóstico más rápido con inteligencia artificial",
-      "reduction": "Reducción de errores en el diagnóstico gracias al análisis asistido por IA",
-      "compatibility": "Compatibilidad con múltiples formatos de imagen",
-      "security": "Acceso seguro"
+    "heroTitle": "OCTsense: Análisis de Imágenes OCT Potenciado por IA",
+    "heroDescription": "Tecnología de inteligencia artificial revolucionaria que ayuda a los oftalmólogos a analizar imágenes OCT con precisión y eficiencia, mejorando las capacidades diagnósticas y ahorrando tiempo valioso.",
+    "heroAlt": "Fondo de análisis de imagen OCT",
+    "getStarted": "Comenzar",
+    "benefitsTitle": "Beneficios Clave",
+    "benefitsDescription": "Experimenta las ventajas de la tecnología de IA de vanguardia de OCTsense en tu práctica oftalmológica.",
+    "benefit1": {
+      "title": "Soporte Diagnóstico",
+      "description": "El análisis impulsado por IA proporciona una evaluación precisa e identificación de patologías en imágenes OCT, apoyando tus decisiones clínicas."
     },
-    "try_it": "Pruébalo",
-    "interactive_guide": "Guía interactiva",
-    "guide": {
-      "upload": "Carga",
-      "upload_description": "Gestión de imágenes de manera rápida y segura.",
-      "analysis": "Análisis",
-      "analysis_description": "Asistido por IA para obtener prediagnósticos confiables.",
-      "report": "Informe",
-      "report_description": "Resultados detallados del análisis."
+    "benefit2": {
+      "title": "Reducción de Tiempo",
+      "description": "Reduce el tiempo dedicado al análisis manual de imágenes hasta en un 70%, permitiéndote enfocarte más en la atención al paciente."
+    },
+    "benefit3": {
+      "title": "Compatibilidad de Dispositivos",
+      "description": "Compatible con todos los principales dispositivos y formatos OCT, asegurando una integración perfecta en tu flujo de trabajo clínico."
+    },
+    "benefit4": {
+      "title": "Seguridad de Datos",
+      "description": "Plataforma compatible con HIPAA con cifrado de extremo a extremo, garantizando que los datos de tus pacientes permanezcan seguros y privados."
+    },
+    "videoTitle": "Mira OCTsense en Acción",
+    "videoDescription": "Observa cómo nuestra tecnología de IA analiza imágenes OCT y genera informes completos en segundos.",
+    "videoAlt": "Miniatura del video de demostración de OCTsense",
+    "howItWorksTitle": "Cómo Funciona",
+    "howItWorksDescription": "Nuestro sencillo proceso de tres pasos proporciona un análisis rápido y preciso de imágenes OCT.",
+    "step1": {
+      "title": "Subir Imagen",
+      "description": "Sube tus imágenes OCT a través de nuestro portal web seguro."
+    },
+    "step2": {
+      "title": "Análisis IA",
+      "description": "Nuestro IA analiza y detecta condiciones retinianas."
+    },
+    "step3": {
+      "title": "Recibe el Reporte",
+      "description": "Descarga un informe diagnóstico detallado."
+    },
+    "faq": {
+      "title": "Preguntas Frecuentes",
+      "description": "Encuentra respuestas a las preguntas más comunes sobre la tecnología OCTsense y cómo puede beneficiar a tu práctica.",
+      "questions": [
+        {
+          "q": "¿Qué tan precisa es el análisis de IA de OCTsense?",
+          "a": "OCTsense alcanza más del 95% de precisión en la identificación de patologías retinianas comunes como CNV, DME, DRUSEN o tejido normal. El modelo de IA ha sido entrenado y validado con miles de imágenes OCT anotadas por expertos para garantizar su fiabilidad clínica."
+        },
+        {
+          "q": "¿OCTsense cumple con las normativas de protección de datos médicos?",
+          "a": "Sí, OCTsense cumple con los estándares de HIPAA en los Estados Unidos y con el GDPR en Europa. Todos los datos de pacientes se cifran durante la transmisión y almacenamiento, asegurando su protección total."
+        },
+        {
+          "q": "¿Qué tipos de enfermedades puede detectar OCTsense?",
+          "a": "Actualmente, OCTsense se enfoca en la detección automática de CNV (Neovascularización Coroidal), DME (Edema Macular Diabético), DRUSEN (marcadores de Degeneración Macular Relacionada con la Edad) y tejido retiniano normal. Próximas versiones podrían ampliar las categorías diagnósticas."
+        },
+        {
+          "q": "¿OCTsense se integra con sistemas EMR u hospitalarios?",
+          "a": "En esta etapa, OCTsense no ofrece integración directa con EMR. Sin embargo, los resultados y reportes pueden descargarse fácilmente como archivos estandarizados y adjuntarse manualmente a los sistemas de historial médico existentes."
+        },
+        {
+          "q": "¿Cómo maneja OCTsense el entrenamiento y soporte al usuario?",
+          "a": "Ofrecemos guías de inicio, tutoriales paso a paso y soporte ilimitado por correo electrónico y chat. Nuestro equipo garantiza que cada usuario pueda aprender rápidamente a utilizar OCTsense sin necesidad de conocimientos técnicos especializados."
+        }
+      ]
     }
   },
   "navbar": {
@@ -30,6 +76,9 @@
     "settings": "Configuración",
     "user": "Usuario",
     "email": "correo@ejemplo.com"
+  },
+  "auth": {
+    "emailNotVerified": "Tu correo aún no ha sido verificado. Revisa tu bandeja de entrada."
   },
   "login": {
     "title": "OCTsense",
@@ -54,9 +103,9 @@
       "password": "Contraseña",
       "confirmPassword": "Confirmar contraseña"
     },
-    "roles": {
-      "normal": "Normal",
-      "professional": "Professional"
+    "role": {
+      "patient": "Paciente",
+      "professional": "Profesional"
     },
     "button": "Registrarse",
     "alreadyHaveAccount": "¿Ya tienes cuenta?",
@@ -74,7 +123,7 @@
   "upload": {
     "title": "Carga de imagen",
     "subtitle": "Sube una tomografía",
-    "subtitle2": "Sube aquí",
+    "subtitle2": "Sube tu tomografía médica (OCT) para análisis.",
     "uploadPrompt": "Arrastra la imagen aquí",
     "buttonUpload": "Cargar imagen",
     "buttonAnalyze": "Analizar",
@@ -82,22 +131,76 @@
     "error": "Error subiendo Imagen.",
     "formats": "Formatos admitidos: JPG, JPEG y PNG."
   },
-
   "analysis": {
-    "results": "Resultados del Análisis",
-    "original_image": "Tomografía Original",
-    "analysis_details": "Detalles del Análisis",
-    "comments": "Comentarios",
+    "results": "Resultados",
+    "original_image": "Tomografía médica subida (OCT)",
+    "analysis_details": "Probabilidades de Diagnóstico",
+    "comments": "Observaciones",
+    "probabilities": "Probabilidades de diagnóstico",
     "save_comments": "Guardar Comentarios",
-    "no_data_found": "No se encontraron datos de análisis",
-    "upload_first": "Por favor, sube una imagen y realiza el análisis primero.",
-    "most_likely": "Más probable",
+    "no_data_found": "No hay datos disponibles",
+    "upload_first": "Por favor, sube una imagen primero.",
+    "most_likely": "Diagnóstico Principal",
+    "primary_diagnosis": "Diagnóstico Principal",
+    "unknown": "Desconocido",
+    "comments_placeholder": "Agrega tus observaciones clínicas aquí...",
+    "save_report": "Guardar Reporte",
+    "download_report": "Descargar Reporte",
+    "generated_on": "Reporte generado el",
+    "observations": "Observaciones",
     "category1": "CNV",
     "category2": "DME",
     "category3": "DRUSEN",
-    "category4": "NORMAL"
+    "category4": "NORMAL",
+    "description": "Resumen de tu diagnóstico",
+    "no_description_available": "Descripción no disponible para este diagnóstico",
+    "patient_information": "Información del Paciente",
+    "patient_name": "Nombre completo",
+    "document_id": "Número de documento",
+    "eye_side": "Lado del ojo (OD/OS)",
+    "visual_acuity": "Agudeza visual",
+    "select_option": "Seleccione una opción",
+    "eye_od": "OD (Ojo derecho)",
+    "eye_os": "OS (Ojo izquierdo)"
   },
-
+  "diagnoses": {
+    "CNV": "Neovascularización Coroidea",
+    "DME": "Edema Macular Diabético",
+    "DRUSEN": "Drusas Retinianas",
+    "NORMAL": "Retina Normal",
+    "description": {
+      "CNV": "La neovascularización coroidea (CNV) es el crecimiento anormal de nuevos vasos sanguíneos en la coroides, la capa vascular que se encuentra entre la esclerótica y la retina. Estos nuevos vasos pueden crecer desde la coroides hacia la retina, a través de una ruptura en la membrana de Bruch, causando fugas y cicatrización, lo que puede llevar a una pérdida de visión. ",
+      "DME": "El edema macular diabético (DME) es una complicación de la retinopatía diabética que se caracteriza por la acumulación de líquido en la mácula, la parte central de la retina responsable de la visión nítida. Esta acumulación de líquido puede provocar visión borrosa, distorsionada o pérdida de visión central. ",
+      "DRUSEN": "Las drusas retinianas son depósitos amarillentos que se acumulan debajo de la retina, a menudo en la mácula, la zona central de la retina encargada de la visión detallada.",
+      "NORMAL": "Tus resultados no muestran anomalías significativas."
+    }
+  },
+  "report": {
+    "detailsTitle": "Detalles del Reporte",
+    "id": "ID del Reporte",
+    "createdAt": "Fecha de Creación",
+    "Ddagnostic": "Diagnóstico",
+    "predictedDiagnostic": "Diagnóstico Previsto",
+    "probabilities": "Probabilidades de Diagnóstico",
+    "userComment": "Comentario del Usuario",
+    "noComment": "No se proporcionó comentario.",
+    "loading": "Cargando reporte...",
+    "notFound": "Reporte no encontrado",
+    "pdfTitle": "Detalles del Reporte OCT",
+    "name": "reporte",
+    "historyTitle": "Historial de Reportes",
+    "historySubtitle": "Consulta y gestiona tus reportes médicos anteriores",
+    "searchPlaceholder": "Buscar por nombre del paciente, documento o ID del reporte...",
+    "empty": "No hay reportes disponibles.",
+    "unknownPatient": "Paciente desconocido",
+    "noDocument": "Sin documento",
+    "eyeRight": "OD",
+    "eyeLeft": "OS",
+    "predictedDiagnosis": "Diagnóstico Predictivo",
+    "comments": "Comentarios",
+    "filterAllDiagnostics": "Todos los diagnósticos",
+    "filterAllEyes": "Ambos ojos"
+  },
   "settings": {
     "title": "Configuración de Usuario",
     "subtitle": "Administra tu información de cuenta y seguridad",
@@ -121,5 +224,93 @@
       "passwords_mismatch": "Las contraseñas no coinciden",
       "current_password_required": "La contraseña actual es requerida"
     }
+  },
+  "footer": {
+    "project_by": "Proyecto de investigación desarrollado en",
+    "quick_links": "Enlaces rápidos",
+    "contact": "Contacto",
+    "follow_us": "Síguenos",
+    "view_code": "Ver código del proyecto",
+    "all_rights": "Todos los derechos reservados",
+    "disclaimer": "Este es un proyecto académico. No para uso clínico."
+  },
+  "crop": {
+    "alt": "Para recortar",
+    "instructions": "Arrastra las esquinas para ajustar el área de recorte. También puedes mover el área.",
+    "minSize": "Tamaño mínimo de recorte: {{size}}px",
+    "button": "Recortar imagen"
+  },
+  "deleteModal": {
+    "title": "Confirmar Eliminación",
+    "confirm": "¿Estás seguro de que deseas eliminar este",
+    "warning": "Esta acción es irreversible. Por favor confirma."
+  },
+  "buttons": {
+    "save": "Guardar",
+    "edit": "Editar",
+    "cancel": "Cancelar",
+    "download": "Descargar",
+    "delete": "Eliminar",
+    "previous": "Reporte Anterior",
+    "next": "Siguiente Reporte",
+    "back": "Volver",
+    "viewDetails": "Ver detalles"
+  },
+  "pdf": {
+    "disclaimer": "Este documento es generado automáticamente por OCTsense y no constituye un diagnóstico médico certificado. Por favor, consulte a un oftalmólogo licenciado para su interpretación y seguimiento.",
+    "patient_name": "Nombre",
+    "email": "Correo electrónico"
+  },
+  "terms": {
+    "checkboxLabel": "He leído y acepto los ",
+    "link": "términos y condiciones",
+    "checkboxLabel_short": "Términos y condiciones",
+    "title": "Términos y Condiciones",
+    "content": "Al registrarte y utilizar OCTsense, aceptas cumplir con todas las leyes y regulaciones aplicables. La plataforma está destinada únicamente a fines académicos y de investigación y no sustituye el consejo, diagnóstico o tratamiento médico profesional. Todos los datos se manejan de acuerdo con nuestra política de privacidad. Para más detalles, contacta con soporte.",
+    "required": "Debes aceptar los términos y condiciones para registrarte."
+  },
+  "user": {
+    "user": "usuario",
+    "listTitle": "Lista de Usuarios",
+    "searchPlaceholder": "Buscar por nombre o correo...",
+    "allRoles": "Todos los roles",
+    "editDescription": "Actualiza los datos del usuario como nombre, rol, contraseña y estado de verificación.",
+    "roles": {
+      "patient": "Paciente",
+      "professional": "Profesional",
+      "admin": "Administrador"
+    },
+    "allVerification": "Todos",
+    "verified": "Verificado",
+    "unverified": "Pendiente",
+    "sortNewest": "Fecha de registro (más reciente)",
+    "sortOldest": "Fecha de registro (más antigua)",
+    "name": "Nombre",
+    "email": "Correo",
+    "role": "Rol",
+    "actions": "Acciones",
+    "loading": "Cargando...",
+    "noResults": "No usuarios encontrados.",
+    "loginCount": "Cantidad de ingresos",
+    "joined": "Fecha de registro",
+    "lastLogin": "Último acceso",
+    "never": "Nunca",
+    "deletedSuccess": "Usuario eliminado correctamente.",
+    "deleteError": "No se pudo eliminar el usuario.",
+    "editTitle": "Editar Usuario",
+    "fieldName": "Nombre",
+    "fieldEmail": "Correo Electrónico",
+    "fieldPassword": "Contraseña (dejar en blanco para mantener la actual)",
+    "fieldRole": "Rol",
+    "fieldVerified": "Cuenta Verificada",
+    "saveChanges": "Guardar Cambios",
+    "loadingUser": "Cargando datos del usuario...",
+    "errorLoadUser": "Error al cargar los datos del usuario.",
+    "errorUpdateUser": "Error al actualizar el usuario.",
+    "updateSuccess": "Usuario actualizado correctamente."
+  },
+  "common": {
+    "yes": "Sí",
+    "no": "No"
   }
 }

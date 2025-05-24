@@ -7,7 +7,7 @@ interface User {
   id: string;
   email: string;
   name: string;
-  role: string;
+  role: 'patient' | 'professional' | 'admin';
 }
 
 interface AuthContextProps {
@@ -18,6 +18,9 @@ interface AuthContextProps {
   isAuthenticated: boolean;
   validateEmail: (email: string) => boolean;
   updateUser: (updatedUser: Partial<User>) => Promise<User>;
+  isPatient: () => boolean;
+  isOftalmologo: () => boolean;
+  isAdmin: () => boolean;
 }
 
 const AuthContext = createContext<AuthContextProps>({
@@ -36,6 +39,9 @@ const AuthContext = createContext<AuthContextProps>({
   updateUser: async () => {
     throw new Error("updateUser function not implemented");
   },
+  isPatient: () => false,
+  isOftalmologo: () => false,
+  isAdmin: () => false,
 });
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
@@ -60,15 +66,20 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   }, []);
 
   const login = async (email: string, password: string): Promise<User> => {
-    const { user, accessToken, refreshToken } = await loginUser(
-      email,
-      password
-    );
-    setUser(user);
-    Cookies.set('token', accessToken, { expires: 7 });
-    Cookies.set('refreshToken', refreshToken, { expires: 7 });
-    Cookies.set('user', JSON.stringify(user), { expires: 7 });
-    return user;
+    try {
+      const { user, accessToken, refreshToken } = await loginUser(
+        email,
+        password
+      );
+      setUser(user);
+      Cookies.set('token', accessToken, { expires: 7 });
+      Cookies.set('refreshToken', refreshToken, { expires: 7 });
+      Cookies.set('user', JSON.stringify(user), { expires: 7 });
+      return user;
+    } catch (error) {
+      console.error("Error en login:", error);
+      return Promise.reject(error);
+    }
   };
 
   const register = async (form: any): Promise<void> => {
@@ -98,6 +109,10 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     return newUser;
   };
 
+  const isPatient = () => user?.role === 'patient';
+  const isOftalmologo = () => user?.role === 'professional';
+  const isAdmin = () => user?.role === 'admin';
+
   return (
     <AuthContext.Provider
       value={{
@@ -108,6 +123,9 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         isAuthenticated: !!user,
         validateEmail,
         updateUser,
+        isPatient,
+        isOftalmologo,
+        isAdmin
       }}
     >
       {children}
