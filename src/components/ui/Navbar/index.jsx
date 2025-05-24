@@ -86,12 +86,6 @@ export function NavbarComponent() {
       protected: true,
     },
     {
-      path: ROUTES.ADMIN_USER_CREATE,
-      icon: <UserPlus className='icon-style' />,
-      label: t('navbar.register'),
-      protected: true,
-    },
-    {
       path: ROUTES.ADMIN_KPIS,
       icon: <LineChart className='icon-style' />,
       label: t('navbar.kpis'),

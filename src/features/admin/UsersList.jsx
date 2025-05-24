@@ -4,7 +4,8 @@ import { getUsers } from '../../api/userService.jsx';
 import { deleteUser } from '../../api/dashboardService.js';
 import ConfirmDeleteModal from '../../components/ui/confirmDeleteModal';
 import { useTranslation } from 'react-i18next';
-import { Pencil, Trash2, CircleCheck, Clock } from 'lucide-react';
+import { Pencil, Trash2, CircleCheck, Clock, UserPlus2 } from 'lucide-react';
+import { ROUTES } from '../../constants/routes';
 
 const UsersList = () => {
   const [users, setUsers] = useState([]);
@@ -64,6 +65,15 @@ const UsersList = () => {
         <h2 className='text-4xl font-bold text-blue-800 mb-6'>
           {t('user.listTitle')}
         </h2>
+        <div className='flex justify-end mb-4'>
+          <Link
+            to={ROUTES.ADMIN_USER_CREATE}
+            className='bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-lg font-medium transition duration-200'
+          >
+            <UserPlus2 className='inline-block mr-2 w-4 h-4' />
+            {t('user.addUser')}
+          </Link>
+        </div>
 
         <div className='w-full mb-6 bg-white p-4 rounded-xl shadow-md flex flex-col md:flex-row md:items-center md:justify-between gap-4'>
           <div className='relative w-full md:w-1/2'>
@@ -174,7 +184,7 @@ const UsersList = () => {
                     </div>
                     <div className='w-1/5 flex justify-end gap-2'>
                       <Link
-                        to={`/editar-usuario/${user.id}`}
+                        to={`${ROUTES.ADMIN_USER_EDIT(user.id)}`}
                         className='text-blue-600 hover:text-blue-800'
                       >
                         <Pencil className='w-4 h-4' />

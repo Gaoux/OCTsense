@@ -15,7 +15,7 @@ const navigate = useNavigate(); // Hook para la navegación
   
 
   const handleViewDetails = (reportId) => {
-      navigate(`/report/${reportId}`); // Redirige a la página de detalles del reporte
+      navigate(`/reports/${reportId}`); // Redirige a la página de detalles del reporte
     };
 
   useEffect(() => {

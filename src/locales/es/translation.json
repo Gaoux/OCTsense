@@ -75,6 +75,10 @@
     "logout": "Cerrar sesión",
     "settings": "Configuración",
     "user": "Usuario",
+    "dashboard": "Dashboard",
+    "users": "Usuarios",
+    "register": "Registrar Usuario",
+    "kpis": "Indicadores",
     "email": "correo@ejemplo.com"
   },
   "auth": {
@@ -254,7 +258,8 @@
     "previous": "Reporte Anterior",
     "next": "Siguiente Reporte",
     "back": "Volver",
-    "viewDetails": "Ver detalles"
+    "viewDetails": "Ver detalles",
+    "register": "Registrar"
   },
   "pdf": {
     "disclaimer": "Este documento es generado automáticamente por OCTsense y no constituye un diagnóstico médico certificado. Por favor, consulte a un oftalmólogo licenciado para su interpretación y seguimiento.",
@@ -280,6 +285,7 @@
       "professional": "Profesional",
       "admin": "Administrador"
     },
+    "addUser": "Agregar Usuario",
     "allVerification": "Todos",
     "verified": "Verificado",
     "unverified": "Pendiente",
@@ -308,6 +314,28 @@
     "errorLoadUser": "Error al cargar los datos del usuario.",
     "errorUpdateUser": "Error al actualizar el usuario.",
     "updateSuccess": "Usuario actualizado correctamente."
+  },
+  "dashboard": {
+    "title": "Panel de Control",
+    "loadError": "No se pudieron cargar los datos del Dashboard.",
+    "totalUsers": "Total Usuarios",
+    "totalPatients": "Total Pacientes",
+    "totalProfessionals": "Total Profesionales",
+    "totalAdmins": "Total Administradores",
+    "recentUsers": "Usuarios Recientes"
+  },
+  "userRegister": {
+    "title": "Registrar Usuario",
+    "name": "Nombre",
+    "namePlaceholder": "Nombre completo",
+    "email": "Correo",
+    "emailPlaceholder": "correo@ejemplo.com",
+    "password": "Contraseña",
+    "passwordPlaceholder": "Contraseña",
+    "role": "Rol",
+    "rolePlaceholder": "Seleccionar rol",
+    "success": "Usuario registrado exitosamente.",
+    "error": "Error al registrar el usuario. Verifica los datos."
   },
   "common": {
     "yes": "Sí",
