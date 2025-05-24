@@ -18,7 +18,9 @@ const Register = () => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
     const requiredFields = [
       'email',
       'name',
@@ -47,7 +49,6 @@ const Register = () => {
       return;
     }
 
-    // Password validation: at least 8 characters, one uppercase, and one number
     const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,}$/;
     if (!passwordRegex.test(form.password)) {
       setError(t('register.errors.passwordRequirements'));
@@ -61,7 +62,6 @@ const Register = () => {
 
     try {
       setLoading(true);
-      console.log("FORM ENVIADO:", form);
       await register(form);
       navigate(ROUTES.LOGIN);
     } catch (err) {
@@ -83,7 +83,8 @@ const Register = () => {
           {t('register.subtitle')}
         </p>
         {error && <p className='text-sm text-red-600'>{error}</p>}
-        <div className='space-y-4'>
+
+        <form className='space-y-4' onSubmit={handleSubmit}>
           <input
             type='text'
             name='name'
@@ -98,7 +99,6 @@ const Register = () => {
             onChange={handleChange}
             className='w-full px-4 py-2 border rounded-md focus:outline-none focus:ring focus:ring-cyan-300'
           />
-
           <select
             name='role'
             onChange={handleChange}
@@ -106,7 +106,8 @@ const Register = () => {
           >
             <option value=''>{t('register.placeholders.selectRole')}</option>
             <option value='patient'>{t('register.role.patient')}</option>
-            <option value='professional'>{t('register.role.professional')}
+            <option value='professional'>
+              {t('register.role.professional')}
             </option>
           </select>
           <input
@@ -123,40 +124,46 @@ const Register = () => {
             onChange={handleChange}
             className='w-full px-4 py-2 border rounded-md focus:outline-none focus:ring focus:ring-cyan-300'
           />
+
           <div className='flex items-start gap-2'>
             <input
               type='checkbox'
               id='terms-checkbox'
               checked={acceptedTerms}
-              onChange={e => setAcceptedTerms(e.target.checked)}
+              onChange={(e) => setAcceptedTerms(e.target.checked)}
               className='mt-1'
             />
             <label htmlFor='terms-checkbox' className='text-sm'>
-              {t('terms.checkboxLabel')}
+              {t('terms.checkboxLabel')}{' '}
               <span
                 className='text-primary underline cursor-pointer'
-                onClick={() => setShowTerms(v => !v)}
+                onClick={() => setShowTerms((v) => !v)}
                 tabIndex={0}
                 role='button'
-                onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') setShowTerms(v => !v); }}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ')
+                    setShowTerms((v) => !v);
+                }}
               >
                 {t('terms.link')}
               </span>
             </label>
           </div>
+
           {showTerms && (
             <div className='bg-gray-100 border rounded p-3 text-xs mb-2'>
               <h3 className='font-bold mb-1'>{t('terms.title')}</h3>
               <p>{t('terms.content')}</p>
             </div>
           )}
+
           <button
-            onClick={handleSubmit}
+            type='submit'
             disabled={loading || !acceptedTerms}
             className={`w-full mt-4 px-4 py-2 text-white bg-secondary rounded-md transition ${
               loading || !acceptedTerms
                 ? 'opacity-60 cursor-not-allowed'
-                : 'hover:bg-dark-secondary  '
+                : 'hover:bg-dark-secondary'
             }`}
           >
             {loading ? (
@@ -193,13 +200,13 @@ const Register = () => {
           <p className='text-center text-sm'>
             {t('register.alreadyHaveAccount')}{' '}
             <Link
-              to='/login'
+              to={ROUTES.LOGIN}
               className='text-primary underline hover:text-dark-primary'
             >
               {t('register.loginLink')}
             </Link>
           </p>
-        </div>
+        </form>
       </div>
     </div>
   );

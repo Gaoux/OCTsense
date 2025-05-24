@@ -107,7 +107,7 @@ export function NavbarComponent() {
       fluid
       className='py-2 bg-very-dark-secondary dark:bg-very-dark-secondary navbar-shadow sticky top-0 z-50'
     >
-      <Link to='/' className='flex items-center'>
+      <Link to={ROUTES.HOME} className='flex items-center'>
         <img
           src='/logo-no-background.svg'
           className='mr-3 h-6 sm:h-8 lg:h-9 w-auto'
@@ -153,7 +153,7 @@ export function NavbarComponent() {
                 {user?.email || t('navbar.email')}
               </span>
             </DropdownHeader>
-            <Link to='/settings'>
+            <Link to={ROUTES.SETTINGS}>
               <DropdownItem>{t('navbar.settings')}</DropdownItem>
             </Link>
             <DropdownDivider />
