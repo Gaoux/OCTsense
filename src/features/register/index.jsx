@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { useTranslation } from 'react-i18next';
+import { ROUTES } from '../../constants/routes';
 
 const Register = () => {
   const { t } = useTranslation();
@@ -62,7 +63,7 @@ const Register = () => {
       setLoading(true);
       console.log("FORM ENVIADO:", form);
       await register(form);
-      navigate('/login');
+      navigate(ROUTES.LOGIN);
     } catch (err) {
       console.error(err);
       setError(t('register.errors.registrationFailed'));

@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { ROUTES } from '../../constants/routes';
 
 function VerifyEmailPage() {
   const location = useLocation();
@@ -14,7 +15,7 @@ function VerifyEmailPage() {
 
     if (token) {
       axios
-      .get(`http://localhost:8000/api/users/verify-email?token=${token}`)
+        .get(`http://localhost:8000/api/users/verify-email?token=${token}`)
         .then(() => {
           setMessage('Tu correo fue verificado exitosamente.');
           setSuccess(true);
@@ -28,12 +29,12 @@ function VerifyEmailPage() {
   }, [location]);
 
   return (
-    <div className="text-center mt-20">
-      <h2 className="text-xl font-semibold mb-4">{message}</h2>
+    <div className='text-center mt-20'>
+      <h2 className='text-xl font-semibold mb-4'>{message}</h2>
       {success && (
         <button
-          onClick={() => navigate('/login')}
-          className="bg-blue-500 text-white px-4 py-2 rounded"
+          onClick={() => navigate(ROUTES.LOGIN)}
+          className='bg-blue-500 text-white px-4 py-2 rounded'
         >
           Ir al login
         </button>

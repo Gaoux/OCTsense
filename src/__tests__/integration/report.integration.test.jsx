@@ -193,7 +193,7 @@ describe('Report Module Integration Tests', () => {
         await waitFor(() => {
             const viewButtons = screen.getAllByText('View');
             fireEvent.click(viewButtons[0]);
-            expect(mockNavigate).toHaveBeenCalledWith('/report/1');
+            expect(mockNavigate).toHaveBeenCalledWith('/reports/1');
         });
     });
 

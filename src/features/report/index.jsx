@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getReportHistory, deleteReport } from '../../api/reportService';
 import ReportCard from '../../components/ui/reportCard';
@@ -7,11 +7,12 @@ import { useAuth } from '../../context/AuthContext';
 import { useTranslation } from 'react-i18next';
 import { ClipboardPlus } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { ROUTES } from '../../constants/routes';
 
 const Report = () => {
   const { isAuthenticated } = useAuth();
   const navigate = useNavigate();
-
+  const { user } = useAuth();
   const [reports, setReports] = useState([]);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [selectedReportId, setSelectedReportId] = useState(null);
@@ -19,6 +20,7 @@ const Report = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [diagnosticFilter, setDiagnosticFilter] = useState('');
   const [eyeFilter, setEyeFilter] = useState('');
+  const [creatorFilter, setCreatorFilter] = useState('');
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -57,7 +59,7 @@ const Report = () => {
   };
 
   const handleView = (report) => {
-    navigate(`/report/${report.id}`);
+    navigate(`${ROUTES.REPORTS}/${report.id}`);
   };
 
   const filteredReports = reports.filter((report) => {
@@ -69,9 +71,20 @@ const Report = () => {
     const matchesDiagnostic = diagnosticFilter
       ? report.predicted_diagnostic === diagnosticFilter
       : true;
+
     const matchesEye = eyeFilter ? report.eye_side === eyeFilter : true;
 
-    return matchesSearch && matchesDiagnostic && matchesEye;
+    const matchesCreator =
+      creatorFilter && user?.role === 'admin'
+        ? report.created_by?.name
+            ?.toLowerCase()
+            .includes(creatorFilter.toLowerCase()) ||
+          report.created_by?.email
+            ?.toLowerCase()
+            .includes(creatorFilter.toLowerCase())
+        : true;
+
+    return matchesSearch && matchesDiagnostic && matchesEye && matchesCreator;
   });
 
   const uniqueDiagnostics = [
@@ -103,48 +116,68 @@ const Report = () => {
           </div>
         </div>
         <p className='mt-8 ml-8 flex text-dark-primary text-lg'>
-          {t('report.historySubtitle')}
+          {user?.role === 'admin'
+            ? t('report.historySubtitleAdmin')
+            : t('report.historySubtitle')}
         </p>
-        {/* Search + Filters */}
-        <div className='px-8 mt-4 mb-4 flex flex-col md:flex-row gap-3 items-start md:items-center'>
-          {/* Search */}
-          <input
-            type='text'
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder={
-              t('report.searchPlaceholder') ||
-              'Search by patient, ID, or report...'
-            }
-            className='border border-gray-300 rounded-md px-3 py-1.5 text-sm w-full md:w-1/2 focus:outline-none focus:ring-2 focus:ring-blue-500 transition'
-          />
-
-          {/* Diagnostic Filter */}
-          <select
-            value={diagnosticFilter}
-            onChange={(e) => setDiagnosticFilter(e.target.value)}
-            className='border border-gray-300 rounded-md px-3 py-1.5 text-sm w-full md:w-[180px] focus:outline-none focus:ring-2 focus:ring-blue-500 transition'
-          >
-            <option value=''>
-              {t('report.filterAllDiagnostics') || 'All Diagnoses'}
-            </option>
-            {uniqueDiagnostics.map((diagnostic, idx) => (
-              <option key={idx} value={diagnostic}>
-                {diagnostic}
+        {/* Filters and Search - Two Rows */}
+        <div className='px-8 mt-4 mb-4 flex flex-col gap-3'>
+          {/* Row 1: Filters */}
+          <div className='flex flex-col md:flex-row gap-3 items-start md:items-center'>
+            {/* Diagnostic Filter */}
+            <select
+              value={diagnosticFilter}
+              onChange={(e) => setDiagnosticFilter(e.target.value)}
+              className='border border-gray-300 rounded-md px-3 py-1.5 text-sm w-full md:w-[180px] focus:outline-none focus:ring-2 focus:ring-blue-500 transition'
+            >
+              <option value=''>
+                {t('report.filterAllDiagnostics') || 'All Diagnoses'}
               </option>
-            ))}
-          </select>
+              {uniqueDiagnostics.map((diagnostic, idx) => (
+                <option key={idx} value={diagnostic}>
+                  {diagnostic}
+                </option>
+              ))}
+            </select>
 
-          {/* Eye Filter */}
-          <select
-            value={eyeFilter}
-            onChange={(e) => setEyeFilter(e.target.value)}
-            className='border border-gray-300 rounded-md px-3 py-1.5 text-sm w-full md:w-[140px] focus:outline-none focus:ring-2 focus:ring-blue-500 transition'
-          >
-            <option value=''>{t('report.filterAllEyes') || 'All Eyes'}</option>
-            <option value='OD'>{t('report.eyeRight')}</option>
-            <option value='OS'>{t('report.eyeLeft')}</option>
-          </select>
+            {/* Creator Filter (Only Admin) */}
+            {user?.role === 'admin' && (
+              <input
+                type='text'
+                value={creatorFilter}
+                onChange={(e) => setCreatorFilter(e.target.value)}
+                placeholder={t('report.filterByCreator') || 'Filter by creator'}
+                className='border border-gray-300 rounded-md px-3 py-1.5 text-sm w-full md:w-[200px] focus:outline-none focus:ring-2 focus:ring-blue-500 transition'
+              />
+            )}
+
+            {/* Eye Filter */}
+            <select
+              value={eyeFilter}
+              onChange={(e) => setEyeFilter(e.target.value)}
+              className='border border-gray-300 rounded-md px-3 py-1.5 text-sm w-full md:w-[140px] focus:outline-none focus:ring-2 focus:ring-blue-500 transition'
+            >
+              <option value=''>
+                {t('report.filterAllEyes') || 'All Eyes'}
+              </option>
+              <option value='OD'>{t('report.eyeRight')}</option>
+              <option value='OS'>{t('report.eyeLeft')}</option>
+            </select>
+          </div>
+
+          {/* Row 2: Search */}
+          <div className='w-full'>
+            <input
+              type='text'
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder={
+                t('report.searchPlaceholder') ||
+                'Search by patient, ID, or report...'
+              }
+              className='border border-gray-300 rounded-md px-3 py-1.5 text-sm w-full focus:outline-none focus:ring-2 focus:ring-blue-500 transition'
+            />
+          </div>
         </div>
 
         {/* REPORT CARDS */}
@@ -168,6 +201,7 @@ const Report = () => {
               >
                 <ReportCard
                   report={report}
+                  showCreator={user?.role === 'admin'}
                   onView={handleView}
                   onDelete={openDeleteModal}
                 />
