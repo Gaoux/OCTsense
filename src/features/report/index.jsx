@@ -22,7 +22,20 @@ const Report = () => {
 
   useEffect(() => {
     if (isAuthenticated) {
-      getReportHistory().then(setReports).catch(console.error);
+      getReportHistory()
+        .then((data) => {
+          console.log('Fetched reports:', data); // DEBUG
+          if (Array.isArray(data)) {
+            setReports(data);
+          } else {
+            console.error('Invalid reports format:', data);
+            setReports([]); // fallback to avoid crash
+          }
+        })
+        .catch((err) => {
+          console.error('Failed to load reports:', err);
+          setReports([]);
+        });
     }
   }, [isAuthenticated]);
 
