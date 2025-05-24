@@ -327,6 +327,13 @@
     "totalAdmins": "Total Administradores",
     "recentUsers": "Usuarios Recientes"
   },
+  "kpis": {
+    "title": "KPIs Administrativos",
+    "usersLast30Days": "Usuarios registrados en los últimos 30 días",
+    "activeUsersLastMonth": "Usuarios activos en el último mes",
+    "avgLoginsPerUser": "Promedio de inicios de sesión por usuario",
+    "loadError": "No se pudieron cargar los datos. Intenta nuevamente más tarde."
+  },
   "userRegister": {
     "title": "Registrar Usuario",
     "name": "Nombre",

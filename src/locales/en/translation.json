@@ -328,6 +328,13 @@
     "totalAdmins": "Total Admins",
     "recentUsers": "Recent Users"
   },
+  "kpis": {
+    "title": "Administrative KPIs",
+    "usersLast30Days": "Users registered in the last 30 days",
+    "activeUsersLastMonth": "Active users in the last month",
+    "avgLoginsPerUser": "Average logins per user",
+    "loadError": "Unable to load KPI data. Please try again later."
+  },
   "userRegister": {
     "title": "Register User",
     "name": "Name",
