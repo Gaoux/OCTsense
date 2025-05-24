@@ -70,7 +70,7 @@
     "home": "Home",
     "upload": "Upload",
     "analysis": "Analysis",
-    "report": "Report",
+    "report": "Reports",
     "login": "Login",
     "logout": "Sign out",
     "settings": "Settings",
@@ -194,6 +194,7 @@
     "name": "report",
     "historyTitle": "Reports History",
     "historySubtitle": "View and manage your previous medical reports",
+    "historySubtitleAdmin": "View and manage all submitted reports",
     "searchPlaceholder": "Search by patient name, document ID, or report ID...",
     "empty": "No reports available.",
     "unknownPatient": "Unknown Patient",
@@ -203,7 +204,9 @@
     "predictedDiagnosis": "Predicted Diagnosis",
     "comments": "Comments",
     "filterAllDiagnostics": "All Diagnoses",
-    "filterAllEyes": "All Eyes"
+    "filterAllEyes": "All Eyes",
+    "filterByCreator": "Filter by creator",
+    "createdBy": "Created by"
   },
   "settings": {
     "title": "User Settings",

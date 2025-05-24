@@ -70,7 +70,7 @@
     "home": "Inicio",
     "upload": "Carga",
     "analysis": "Análisis",
-    "report": "Informe",
+    "report": "Reportes",
     "login": "Iniciar sesión",
     "logout": "Cerrar sesión",
     "settings": "Configuración",
@@ -194,6 +194,7 @@
     "name": "reporte",
     "historyTitle": "Historial de Reportes",
     "historySubtitle": "Consulta y gestiona tus reportes médicos anteriores",
+    "historySubtitleAdmin": "Ver y gestionar todos los informes enviados",
     "searchPlaceholder": "Buscar por nombre del paciente, documento o ID del reporte...",
     "empty": "No hay reportes disponibles.",
     "unknownPatient": "Paciente desconocido",
@@ -203,7 +204,9 @@
     "predictedDiagnosis": "Diagnóstico Predictivo",
     "comments": "Comentarios",
     "filterAllDiagnostics": "Todos los diagnósticos",
-    "filterAllEyes": "Ambos ojos"
+    "filterAllEyes": "Ambos ojos",
+    "filterByCreator": "Filtrar por creador",
+    "createdBy": "Creado por"
   },
   "settings": {
     "title": "Configuración de Usuario",

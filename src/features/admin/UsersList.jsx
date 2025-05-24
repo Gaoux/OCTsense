@@ -202,6 +202,9 @@ const UsersList = () => {
                   </summary>
                   <div className='bg-gray-50 p-4 md:px-6 text-sm text-gray-700 space-y-2'>
                     <div>
+                      <strong>ID: </strong> {user.id}
+                    </div>
+                    <div>
                       <strong>{t('user.loginCount')}:</strong>{' '}
                       {user.login_count}
                     </div>

@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import { Trash2, IdCard, Calendar, ArrowRight } from 'lucide-react';
 
-const ReportCard = ({ report, onView, onDelete }) => {
+const ReportCard = ({ report, showCreator, onView, onDelete }) => {
   const { t } = useTranslation();
 
   const {
@@ -18,6 +18,13 @@ const ReportCard = ({ report, onView, onDelete }) => {
       className='w-full sm:w-full md:max-w-sm bg-white rounded-lg shadow-md hover:shadow-lg transition-all duration-300 cursor-pointer overflow-hidden border border-gray-200 group'
       onClick={() => onView(report)}
     >
+      {showCreator && report.created_by && (
+        <p className='text-xs text-gray-500 mt-2 px-4'>
+          {t('report.createdBy')}:{' '}
+          <span className='font-medium'>{report.created_by.email}</span>
+        </p>
+      )}
+
       <div className='relative'>
         {/* Top-right controls */}
         <div className='absolute top-3 right-3 flex items-center gap-2 z-10'>
