@@ -3,14 +3,24 @@
 OCTsense is a **web platform (SPA)** for the **automated analysis of OCT (Optical Coherence Tomography) images** using **artificial intelligence**.  
 It is designed for **ophthalmologists** who need support diagnosing ocular diseases such as **Choroidal Neovascularization (CNV)**, **Age-Related Macular Degeneration (AMD)**, macular edema, and others — without relying on image interpretation experts.
 
-OCTsense also serves **patients and ophthalmologists** by automatically detecting:  
-- Choroidal Neovascularization (CNV)  
-- Diabetic Macular Edema (DME)  
-- Drusen lesions (DRUSEN)  
-- Healthy retinal tissue  
+OCTsense also serves **patients and ophthalmologists** by automatically detecting:
+
+- Choroidal Neovascularization (CNV)
+- Diabetic Macular Edema (DME)
+- Drusen lesions (DRUSEN)
+- Healthy retinal tissue
 
 —all without depending on expert image analysis.
 
+---
+
+## 🔗 Related Repositories
+
+- **Backend (Django + REST API)**  
+  [https://github.com/gaoux/OCT-diagnosis-backend](https://github.com/Gaoux/OCT-diagnosis-backend)
+
+- **IA Model (Hugging Face – OCT Classification)**  
+  [https://huggingface.co/gaoux/OCT_class](https://huggingface.co/gaoux/OCT_class)
 
 ---
 

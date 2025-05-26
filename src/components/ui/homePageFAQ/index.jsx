@@ -8,10 +8,10 @@ const HomePageFAQ = () => {
       question: t('home.faq.questions.0.q'),
       answer: t('home.faq.questions.0.a'),
     },
-    {
-      question: t('home.faq.questions.1.q'),
-      answer: t('home.faq.questions.1.a'),
-    },
+    // {
+    //   question: t('home.faq.questions.1.q'),
+    //   answer: t('home.faq.questions.1.a'),
+    // },
     {
       question: t('home.faq.questions.2.q'),
       answer: t('home.faq.questions.2.a'),
