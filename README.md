@@ -19,7 +19,7 @@ OCTsense also serves **patients and ophthalmologists** by automatically detectin
 - **Backend (Django + REST API)**  
   [https://github.com/gaoux/OCT-diagnosis-backend](https://github.com/Gaoux/OCT-diagnosis-backend)
 
-- **IA Model (Hugging Face – OCT Classification)**  
+- **AI Model (Hugging Face – OCT Classification)**  
   [https://huggingface.co/gaoux/OCT_class](https://huggingface.co/gaoux/OCT_class)
 
 ---
@@ -81,7 +81,7 @@ Follow the instructions in that repository to set up and run the backend server 
 Create a `.env` file in the frontend folder:
 
 ```env
-VITE_API_BASE_URL=http://127.0.0.1:8000/api/
+VITE_API_BASE_URL=http://127.0.0.1:8000/
 ```
 
 ---
