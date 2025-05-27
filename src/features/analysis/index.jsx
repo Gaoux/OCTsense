@@ -13,7 +13,7 @@ import { createReport } from '../../api/reportService';
 import { useAuth } from '../../context/AuthContext';
 import { motion } from 'framer-motion';
 import { generateSimplePDFReport } from '../../utils/pdfUtils';
-
+import { ROUTES } from '../../constants/routes';
 const Analysis = () => {
   const { t } = useTranslation();
   const location = useLocation();
@@ -87,7 +87,7 @@ const Analysis = () => {
         'diagnostic_probabilities',
         JSON.stringify(probabilitiesLabeled)
       );
-
+      console.log('isPatient:', isPatient());
       // Añadir descripción automática si es paciente
       if (isPatient()) {
         const autoDescription = t(
@@ -96,16 +96,15 @@ const Analysis = () => {
             defaultValue: t('analysis.no_description_available'),
           }
         );
+        formData.append('comments', autoDescription);
+      } else {
+        // Añadir observaciones del profesional
         formData.append('patient_name', patientName);
         formData.append('document_id', documentId);
         formData.append('eye_side', eyeSide);
         formData.append('visual_acuity', visualAcuity);
-        formData.append('description', autoDescription);
-      } else {
-        // Añadir observaciones del profesional
         formData.append('comments', comments);
       }
-
       const response = await createReport(formData);
 
       if (response && response.data.id) {
