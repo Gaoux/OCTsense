@@ -4,13 +4,12 @@ import {
   Pencil,
   Trash2,
   Download,
-  ChevronLeft,
-  ChevronRight,
   Save,
   Calendar,
 } from 'lucide-react';
 import CancelBtn from '../cancelBtn';
 import { useTranslation } from 'react-i18next';
+import { useAuth } from '../../../context/AuthContext';
 
 const ReportDetailsInfo = ({
   report,
@@ -19,8 +18,6 @@ const ReportDetailsInfo = ({
   handleUpdateReport,
   imageUrl,
   onImageClick,
-  onPrevious,
-  onNext,
   onDownload,
   onDelete,
   newPatientName,
@@ -37,7 +34,8 @@ const ReportDetailsInfo = ({
   setEditingPatientInfo,
 }) => {
   const { t } = useTranslation();
-  const [user] = useState({ role: 'admin' }); // Simulating user role, replace with actual user context
+  const { user } = useAuth();
+
   return (
     <div className='rounded-lg bg-white lg:px-4 py-3 transition-all duration-300 shadow-sm'>
       {/* Title + Scan Image */}

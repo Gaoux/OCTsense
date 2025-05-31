@@ -270,53 +270,55 @@ export const generateReportPDF = (report, imageUrl, t) => {
   doc.setTextColor(...colors.black);
 
   // Enhanced probability bars with disease title on top and progress bar below
-  if (report.probabilities) {
-    Object.entries(report.probabilities).forEach(([diagnosis, prob]) => {
-      const percent = (prob * 100).toFixed(1);
-      const barMaxWidth = pageWidth - 50 - 40;
-      const barWidth = prob * barMaxWidth;
+  if (report.diagnostic_probabilities) {
+    Object.entries(report.diagnostic_probabilities).forEach(
+      ([diagnosis, prob]) => {
+        const percent = (prob * 100).toFixed(1);
+        const barMaxWidth = pageWidth - 50 - 40;
+        const barWidth = prob * barMaxWidth;
 
-      // Choose color based on probability
-      let barColor =
-        prob < 0.3
-          ? colors.bars.low
-          : prob < 0.6
-          ? colors.bars.medium
-          : colors.bars.high;
+        // Choose color based on probability
+        let barColor =
+          prob < 0.3
+            ? colors.bars.low
+            : prob < 0.6
+            ? colors.bars.medium
+            : colors.bars.high;
 
-      // Disease title on top with improved typography
-      doc.setFont('helvetica', 'bold');
-      doc.text(`${t(`diagnoses.${diagnosis}`) || diagnosis}`, 15, currentY);
-      doc.setFont('helvetica', 'normal');
+        // Disease title on top with improved typography
+        doc.setFont('helvetica', 'bold');
+        doc.text(`${t(`diagnoses.${diagnosis}`) || diagnosis}`, 15, currentY);
+        doc.setFont('helvetica', 'normal');
 
-      currentY += 5; // Move down for progress bar
+        currentY += 5; // Move down for progress bar
 
-      // Enhanced bar background with subtle shadow
-      doc.setFillColor(...colors.mediumGray);
-      doc.roundedRect(15, currentY - 3, barMaxWidth, 4, 2, 2, 'F');
-      doc.setFillColor(...colors.lightGray);
-      doc.roundedRect(15, currentY - 3, barMaxWidth, 4, 2, 2, 'F');
+        // Enhanced bar background with subtle shadow
+        doc.setFillColor(...colors.mediumGray);
+        doc.roundedRect(15, currentY - 3, barMaxWidth, 4, 2, 2, 'F');
+        doc.setFillColor(...colors.lightGray);
+        doc.roundedRect(15, currentY - 3, barMaxWidth, 4, 2, 2, 'F');
 
-      // Progress bar with improved styling
-      doc.setFillColor(...barColor);
-      doc.roundedRect(15, currentY - 3, barWidth, 4, 2, 2, 'F');
+        // Progress bar with improved styling
+        doc.setFillColor(...barColor);
+        doc.roundedRect(15, currentY - 3, barWidth, 4, 2, 2, 'F');
 
-      // Add subtle highlight to top of bar
-      doc.setFillColor(
-        barColor[0] + 40,
-        barColor[1] + 40,
-        barColor[2] + 40,
-        0.5
-      );
-      doc.roundedRect(15, currentY - 3, barWidth, 2, 2, 2, 'F');
+        // Add subtle highlight to top of bar
+        doc.setFillColor(
+          barColor[0] + 40,
+          barColor[1] + 40,
+          barColor[2] + 40,
+          0.5
+        );
+        doc.roundedRect(15, currentY - 3, barWidth, 2, 2, 2, 'F');
 
-      // Percentage text with improved alignment
-      doc.setFontSize(9);
-      doc.setTextColor(...colors.black);
-      doc.text(`${percent}%`, 15 + barMaxWidth + 5, currentY);
+        // Percentage text with improved alignment
+        doc.setFontSize(9);
+        doc.setTextColor(...colors.black);
+        doc.text(`${percent}%`, 15 + barMaxWidth + 5, currentY);
 
-      currentY += 12; // More space between entries
-    });
+        currentY += 12; // More space between entries
+      }
+    );
   } else {
     doc.text(
       t('report.noProbabilities') || 'No probability data available',
